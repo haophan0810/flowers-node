@@ -1,0 +1,29 @@
+extends includes/layout.pug
+
+mixin product(item)
+    .col-lg-3
+        .card
+            .card-img-top.product__relative
+                img(src=item.srcImage, alt=item.productName)
+                if item.state
+                    .lable-promotion
+                        .btn.btn-danger(class=item.state) #{item.state}
+            .card-body
+                h5.card-title Card #{item.productName}
+                p.card-text
+                    - for(let i = 0 ; i<item.star; i++){
+                        i.fas.fa-star.star--color
+                    - }
+                p.card-text
+                    span #{item.productCost}               
+                a.btn.btn-primary(href='#') Add to Cart
+            
+
+
+block nav
+    
+    main.container.products#products
+        h2.container Hoa Bán Chạy        
+        .row
+            +product(test)
+block footer

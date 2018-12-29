@@ -1,0 +1,23 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;;
+}
+
+img {
+    width: 100%;
+}
+
+.lable-promotion {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.product__relative {
+    position: relative;
+}
+
+.star--color {
+    color:#ffc120;
+}
