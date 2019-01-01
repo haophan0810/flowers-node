@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     productId: {type: DataTypes.INTEGER, field: 'product_id'},
     productName: {type: DataTypes.STRING, field: 'product_name'},
     star: {type: DataTypes.INTEGER, field: 'star'},
-    promotion_id: {type: DataTypes.INTEGER, field: 'promotion_id'},
+    promotionId: {type: DataTypes.INTEGER, field: 'promotion_id'},
     description: {type: DataTypes.TEXT, field: 'description'},
     productCost: {type: DataTypes.STRING, field: 'product_cost'},
     productImage: {type: DataTypes.STRING, field: 'product_image'},
@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
   });
   Products.associate = function(models) {
     // associations can be defined here
-    Products.belongToMany(models.Categories,{
-      as: 'Belong',
-      through: 'ProductCategories',
+    Products.belongsToMany(models.Categories,{
+      // as: 'Belong',
+      through: models.ProductCategories,
       foreignKey: 'productId'
     });
-    
+
   };
   return Products;
 };

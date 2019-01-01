@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       promotion_description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       created_at: {
         allowNull: false,

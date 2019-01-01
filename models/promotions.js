@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Promotions = sequelize.define('Promotions', {
     promotionId: {type: DataTypes.INTEGER, field: 'promotion_id'},
     promotionName: {type: DataTypes.STRING, field: 'promotion_name'},
-    promotionDescription: {tyepe:DataTypes.STRING, field: 'promotion_description'}
+    promotionDescription: {type:DataTypes.TEXT, field: 'promotion_description'}
   }, {
     underscored: true,
     tableName: 'promotions',
