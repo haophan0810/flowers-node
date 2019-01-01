@@ -8,35 +8,29 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      product_code: {
-        type: Sequelize.STRING
+      product_id: {
+        type: Sequelize.INTEGER
       },
       product_name: {
-        type: Sequelize.STRING
-      },
-      product_store: {
-        type: Sequelize.STRING
-      },
-      quantity: {
-        type: Sequelize.INTEGER
-      },
-      state: {
-        type: Sequelize.STRING
-      },
-      product_cost: {
-        type: Sequelize.INTEGER
-      },
-      description: {
         type: Sequelize.STRING
       },
       star: {
         type: Sequelize.INTEGER
       },
-      src_image: {
+      promotion_id: {
+        type: Sequelize.INTEGER
+      },
+      description: {
+        type: Sequelize.TEXT
+      },
+      product_cost: {
         type: Sequelize.STRING
       },
-      note: {
+      product_image: {
         type: Sequelize.STRING
+      },
+      product_quantity: {
+        type: Sequelize.INTEGER
       },
       created_at: {
         allowNull: false,
