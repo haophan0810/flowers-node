@@ -21,3 +21,10 @@ img {
 .star--color {
     color:#ffc120;
 }
+
+
+.card-link {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -19,11 +19,28 @@ mixin product(item)
                 p.card-text
                     span #{item.productCost}               
                 a.btn.btn-primary(href='#') Add to Cart
+block head
+    link(rel='stylesheet', href='../css/style.css')
+
 block nav
     
     main.container.products#products
-        h3.container.mb-5.mt-5 Hoa Bán Chạy        
+        .container.mb-5.mt-5 Tất cả sản phẩm       
         .row
             each value in response
                 +product(value)
+
+    nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
+        ul.pagination
+            li.page-item
+                a.page-link(href='#') Previous
+            li.page-item
+                a.page-link(href='#') 1
+            li.page-item
+                a.page-link(href='#') 2
+            li.page-item
+                a.page-link(href='#') 3
+            li.page-item
+                a.page-link(href='#') Next
+
 block footer

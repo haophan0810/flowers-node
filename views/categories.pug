@@ -19,11 +19,17 @@ mixin product(item)
                 p.card-text
                     span #{item.productCost}               
                 a.btn.btn-primary(href='#') Add to Cart
+block head
+    link(rel='stylesheet', href='../../css/style.css')
+
 block nav
     
     main.container.products#products
-        h3.container.mb-5.mt-5 Hoa Bán Chạy        
+        .container.mb-5.mt-5 #{category}     
         .row
             each value in response
                 +product(value)
+
+
+
 block footer

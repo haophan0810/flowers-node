@@ -3,10 +3,9 @@ const db = require('./../models');
 
 // get opject option of sequelize
 const Op = Sequelize.Op;
-
-
-exports.getIndex = async (req, res) => {
+exports.getProducts =  async (req, res) => {
     try {
+        
         const response = await db.Products.findAll({
             where: {
                 productId: {
@@ -16,12 +15,17 @@ exports.getIndex = async (req, res) => {
         });
         // res.send(typeof response);
         // res.status(200).json(response);       
-        res.render('index', {
+        res.render('products', {
             response: response,
-            logoImage: `./images/logo.png`
+            logoImage: `../images/logo.png`
         });
 
     } catch (error) {
         throw Error(error.message);
     }
+}
+
+exports.getProductWithId = (req, res, next) => {
+    console.log(req.params)
+    res.send(req.params.id);
 }
