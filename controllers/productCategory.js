@@ -18,13 +18,13 @@ exports.getProductCategory = async (req, res) => {
         // })
 
         // const response = cate.getProducts()
-        // res.send(response);
+        res.send(response);
         // res.status(200).json(response);       
-        res.render('categories', {
-            response: response,
-            logoImage: `../../images/logo.png`,
-            category: response[0].Categories[0].categoryName
-        });
+        // res.render('categories', {
+        //     response: response,
+        //     logoImage: `../../images/logo.png`,
+        //     category: response[0].Categories[0].categoryName
+        // });
 
     } catch (error) {
         throw Error(error.message);
