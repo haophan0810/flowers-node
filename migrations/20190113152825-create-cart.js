@@ -1,21 +1,26 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('categories', {
+    return queryInterface.createTable('Cart', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      category_id: {
+      quantity: {
         type: Sequelize.INTEGER
       },
-      category_name: {
-        type: Sequelize.STRING
+      total_bill: {
+        type: Sequelize.FLOAT
       },
-      category_description: {
-        type: Sequelize.TEXT
+      user_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        references: {
+          model: 'User',
+          key: 'id'
+        }
       },
       created_at: {
         allowNull: false,
@@ -28,6 +33,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('categories');
+    return queryInterface.dropTable('Cart');
   }
 };

@@ -10,7 +10,6 @@ head
     // Bootstrap CSS
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
     link(rel='stylesheet', href='css/style.css')
-    link(rel="stylesheet", href="../css/login.css")
     link(rel="stylesheet", href="../css/register.css")
 
 body    
@@ -26,16 +25,20 @@ body
                         .form-label-group
                             input#inputUserame.form-control(type='text', placeholder='Username', required='', autofocus='')
                             label(for='inputUserame') Username
+                            .errorValidate Username invalid!
                         .form-label-group
                             input#inputEmail.form-control(type='email', placeholder='Email address', required='')
                             label(for='inputEmail') Email address
+                            .errorValidate Email invalid!
                         hr
                         .form-label-group
                             input#inputPassword.form-control(type='password', placeholder='Password', required='')
                             label(for='inputPassword') Password
+                            .errorValidate Password invalid!
                         .form-label-group
                             input#inputConfirmPassword.form-control(type='password', placeholder='Password', required='')
                             label(for='inputConfirmPassword') Confirm password
+                            .errorValidate Confirm not match Password!
                         button.btn.btn-lg.btn-primary.btn-block.text-uppercase(type='submit') Register
                         .text-or.text-center.mt-3.text-uppercase or
                         a.d-block.text-center.mt-2.btn-lg.btn-warning.btn-block.text-uppercase.route-log(href='/login') Login
@@ -52,3 +55,4 @@ body
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
+    script(src='./js/validateRegister.js')

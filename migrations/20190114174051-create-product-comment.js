@@ -1,24 +1,28 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('logins', {
+    return queryInterface.createTable('Product-comment', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_name: {
-        type: Sequelize.STRING
+      product_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Product',
+          key: 'id'
+        }
       },
-      password_salt: {
-        type: Sequelize.STRING
-      },
-      password_hash: {
-        type: Sequelize.STRING
-      },
-      user_id: {
-        type: Sequelize.STRING
+      comment_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Comment',
+          key: 'id'
+        }
       },
       created_at: {
         allowNull: false,
@@ -31,6 +35,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('logins');
+    return queryInterface.dropTable('Product-comment');
   }
 };

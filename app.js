@@ -1,9 +1,31 @@
 const express = require('express');
+// const Sequelize = require('sequelize');
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
+const session = require('express-session');
+
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const db = require('./models');
 const app = express();
 
+// console.log(db.sequelize);
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: true
+})); // for parsing application/x-www-form-urlencoded
+
+app.use(cookieParser());
+// app.use(session({
+//     secret: 'keyboard cat',
+//     store: new SequelizeStore({
+//         db: db.sequelize,
+//         checkExpirationInterval: 10 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
+//         expiration: 20 * 1000 // The maximum age (in milliseconds) of a valid session.
+//     }),
+//     saveUninitialized: false,
+//     resave: false, // we support the touch method so per the express-session docs this should be set to false
+//     proxy: true // if you do SSL outside of node.
+// }))
 
 
 
@@ -15,7 +37,7 @@ const oneManyRoute = require('./routers/oneMany');
 const productCategoryRoute = require('./routers/productCategory');
 const loginRoute = require('./routers/login');
 const registerRoute = require('./routers/register');
-
+const controller = require('./utils');
 
 app.set('views', './views'); // specify the views directory
 app.set('view engine', 'pug'); // register the template engine
@@ -26,10 +48,9 @@ app.use('/', indexRoute);
 app.use('/products', productRoute);
 app.use('/onemany', oneManyRoute);
 app.use('/category', productCategoryRoute);
-app.use('/login',loginRoute);
-app.use('/register',registerRoute);
+app.use('/login', loginRoute);
+app.use('/register', registerRoute);
 
 
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));
-
