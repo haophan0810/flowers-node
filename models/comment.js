@@ -19,19 +19,19 @@ module.exports = (sequelize, DataTypes) => {
       field: 'user_id',
       onDelete: 'CASCADE',
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       }
     }
   }, {
     underscored: true,
-    tableName: 'Comment',
+    tableName: 'comment',
     timestamp: true
   });
   Comment.associate = function(models) {
     // associations can be defined here
     Comment.belongsTo(models.User, {
-      foreignKey: 'UserId',
+      foreignKey: 'userId',
       onDelete: 'CASCADE'
     })
   };

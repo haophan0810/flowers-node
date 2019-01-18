@@ -6,6 +6,12 @@ const session = require('express-session');
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./models');
+
+const indexRoute = require('./routers');
+const productRoute = require('./routers/products');
+const categoryRoute = require('./routers/category');
+const productDescriptionRoute = require('./routers/productDescription');
+
 const app = express();
 
 // console.log(db.sequelize);
@@ -27,30 +33,19 @@ app.use(cookieParser());
 //     proxy: true // if you do SSL outside of node.
 // }))
 
-
-
 const PORT = process.env.PORT || 6996;
-
-const indexRoute = require('./routers/index');
-const productRoute = require('./routers/products');
-const oneManyRoute = require('./routers/oneMany');
-const productCategoryRoute = require('./routers/productCategory');
-const loginRoute = require('./routers/login');
-const registerRoute = require('./routers/register');
-const controller = require('./utils');
 
 app.set('views', './views'); // specify the views directory
 app.set('view engine', 'pug'); // register the template engine
 
 app.use(express.static('public'))
 
+
+
 app.use('/', indexRoute);
 app.use('/products', productRoute);
-app.use('/onemany', oneManyRoute);
-app.use('/category', productCategoryRoute);
-app.use('/login', loginRoute);
-app.use('/register', registerRoute);
-
+app.use('/category', categoryRoute);
+app.use('/',productDescriptionRoute);
 
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));

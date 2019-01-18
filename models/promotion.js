@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     underscored: true,
     timestamp: true,
-    tableName: 'Promotion'
+    tableName: 'promotion'
   });
   Promotion.associate = function (models) {
     // associations can be defined here
@@ -21,11 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'promotionId',
       onDelete: 'CASCADE'
     });
-
-    Promotion.hasMany(models.SaleCode, {
-      foreignKey: 'promotionId',
-      onDelete: 'CASCADE'
-    });
+   
   };
   return Promotion;
 };

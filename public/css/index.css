@@ -1,0 +1,35 @@
+.btnOutLineWhite {
+    /* background-color: white !important; */
+    color: white !important;
+    border:1px solid white !important;
+    padding: 5px 10px;
+}
+
+.btnOutLineWhite:hover {
+    background-color: #744DA9 !important;
+    border-color: #744DA9 !important;
+    color: white !important;
+}
+
+.activeLogin {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+}
+
+.nonLogin {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+}
+
+.alignCenter {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.paddingZero {
+    padding-right: 0;
+    padding-left: 0;
+}

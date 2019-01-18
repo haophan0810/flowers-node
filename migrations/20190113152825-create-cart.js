@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Cart', {
+    return queryInterface.createTable('cart', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,12 +15,7 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       user_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
-        references: {
-          model: 'User',
-          key: 'id'
-        }
+        type: Sequelize.INTEGER
       },
       created_at: {
         allowNull: false,
@@ -33,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Cart');
+    return queryInterface.dropTable('cart');
   }
 };

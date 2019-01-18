@@ -1,26 +1,50 @@
 const Sequelize = require('sequelize');
-const db = require('./../models');
-
-// get opject option of sequelize
 const Op = Sequelize.Op;
+const db = require('../models');
 
-
-exports.getIndex = async (req, res) => {
+module.exports.getIndex = async (req, res, next) => {
     try {
-        const response = await db.Products.findAll({
-            where: {
-                productId: {
-                    [Op.lte]: 16
+        const resHot = await db.Product.findAll({
+            limit: 8,
+            attributes: ['productName', 'productStar', 'productCost', 'productImage'],
+            include: [{
+                model: db.Promotion,
+                attributes: ['promotionName'],
+                where: {
+                    id: 3
                 }
-            }
-        });
-        // res.send(typeof response);
-        // res.status(200).json(response);       
-        res.render('index', {
-            response: response,
-            logoImage: `./images/logo.png`
+            }]
         });
 
+        const resNew = await db.Product.findAll({
+            limit: 8,
+            attributes: ['productName', 'productStar', 'productCost', 'productImage'],
+
+            include: [{
+                model: db.Promotion,
+                attributes: ['promotionName'],
+                where: {
+                    id: 2
+                }
+            }]
+        });
+
+        const resSale = await db.Product.findAll({
+            limit: 8,
+            include: [{
+                    model: db.Promotion,
+                    where: {
+                        id: 1
+                    }
+                },
+                {
+                    model: db.CodeSale
+                }
+            ]
+        });
+
+        // res.status(200).json(resSale);
+        res.render('index');
     } catch (error) {
         throw Error(error.message);
     }

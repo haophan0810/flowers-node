@@ -4,42 +4,84 @@ head
     // Required meta tags
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    //fontawesome
-    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.6.3/css/all.css', integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/', crossorigin='anonymous')
-
-    // Bootstrap CSS
-    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
-    link(rel='stylesheet', href='css/style.css')
+    // Font Awesome
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.6.3/css/all.css')
+    // Bootstrap core CSS
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css', rel='stylesheet')
+    // Material Design Bootstrap
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/css/mdb.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='css/index.css')
     block head    
 body
-    header.container
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light
-            a.navbar-brand.col-lg-1(href='./')
-                img(src=logoImage, alt='sad')
-            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+    header.container-fluid.paddingZero
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+            a.navbar-brand(href='#')
+                img(src='https://mdbootstrap.com/img/logo/mdb-transparent.png', height='20', alt='Route 66 in navbar')
+                
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarExample', aria-controls='navbarExample', aria-expanded='false', aria-label='Toggle navigation')
                 span.navbar-toggler-icon
-            #navbarSupportedContent.collapse.navbar-collapse
+            #navbarExample.collapse.navbar-collapse
                 ul.navbar-nav.mr-auto
-                    li.nav-item.active
-                        a.nav-link(href='/') Home
-                            span.sr-only (current)
-                    li.nav-item
-                        a.nav-link(href='/category/1') Hoa Sinh Nh&#x1EAD;t
-                    li.nav-item
-                        a.nav-link(href='/category/2') Hoa C&#x1B0;&#x1EDB;i
-                    li.nav-item
-                        a.nav-link(href='/category/3') Hoa T&#x1EBF;t
-                form.form-inline.my-2.my-lg-0
-                    input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
-                    button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
-                .d-flex.col-lg-3.justify-content-center
-                    button.btn.btn-outline-info(type='button') Login
+                    li.nav-item.dropdown.active
+                        a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                            | Category
+                        .dropdown-menu(aria-labelledby='navbarDropdown')
+                            a.dropdown-item(href='#') Anniversary
+                            a.dropdown-item(href='#') Birthday
+                            a.dropdown-item(href='#') Orchid
+                            a.dropdown-item(href='#') Rose
+                            a.dropdown-item(href='#') Funeral and Sympathy
+                            a.dropdown-item(href='#') Lily
+                            a.dropdown-item(href='#') Everyday
 
-    block nav  
+                            
+                    li.nav-item
+                        a.nav-link.disabled(href='#') Disabled
+                ul.navbar-nav.ml-auto.nav-flex-icons.nonLogin
+                    li.nav-item
+                        button.btn.btn-outline-success.btnOutLineWhite(type='button') Login
+                    li.nav-item
+                        button.btn.btn-outline-success.btnOutLineWhite(type='button') Register
+                ul.navbar-nav.ml-auto.nav-flex-icons
+                    li.nav-item
+                        a.nav-link.waves-effect.waves-light
+                            i.fab.fa-twitter
+                    li.nav-item
+                        a.nav-link.waves-effect.waves-light
+                            i.fab.fa-google-plus-g
+                    li.nav-item
+                        a.nav-link.waves-effect.waves-light
+                            | 1
+                            button.btn.btn-outline-secondary.btnOutLineWhite(type='button')
+                            i.fab.fa-facebook-f.pr-1
+                            |                                 Facebook
+                            span.badge.badge-danger.ml-2 4
+                    li.nav-item.dropdown.avatar.alignCenter
+                        a#navbarDropdownMenuLink-333.nav-link.dropdown-toggle.p-0(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                            img.rounded-circle.z-depth-0(src='https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg', alt='avatar image', height='35')
+                        .dropdown-menu.dropdown-menu-right.dropdown-default(aria-labelledby='navbarDropdownMenuLink-333')
 
-    // Optional JavaScript
-    // jQuery first, then Popper.js, then Bootstrap JS
-    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
-    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
-    block footer
+                            a.dropdown-item(href='#') Hi 
+                                span Phan Huu Hao
+                            .dropdown-divider
+                            a.dropdown-item(href='/customer/profile') Your profile
+                            a.dropdown-item(href='/customer/history') History
+                            a.dropdown-item(href='/checkout/cart') Cart
+                            a.dropdown-item(href='/customer/notification') Notification
+                            .dropdown-divider
+                            a.dropdown-item(href='#')
+                                button.btn.btn-primary(type='submit') Sign out
+
+
+        block nav  
+
+    // JQuery
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    // Bootstrap tooltips
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js')
+    // Bootstrap core JavaScript
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js')
+    // MDB core JavaScript
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js')
+
+        block footer

@@ -27,13 +27,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     underscored: true,
-    tableName: 'User',
+    tableName: 'user',
     timestamp: true
   });
   User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Comment, {
-      foreignKey: 'UserId',
+      foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
 

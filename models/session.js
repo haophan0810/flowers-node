@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       field: 'userId',
       onDelete: 'CASCADE',
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       }
     }
   }, {
     underscored: true,
-    tableName: 'Session',
+    tableName: 'session',
     timestamp: true
   });
   Session.associate = function(models) {

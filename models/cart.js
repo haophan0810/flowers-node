@@ -14,19 +14,19 @@ module.exports = (sequelize, DataTypes) => {
       field: 'user_id',
       onDelete: 'SET NULL',
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       },
     },
   }, {
     underscored: true,
     timestamp: true,
-    tableName: 'Cart'
+    tableName: 'cart'
   });
   Cart.associate = function (models) {
     // associations can be defined here
     Cart.belongsToMany(models.Product, {
-      through: models.ProductCart,
+      through: models.CartProduct,
       foreignKey: 'cartId',
       onDelete: 'CASCADE'
     });

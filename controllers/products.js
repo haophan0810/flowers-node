@@ -1,31 +1,33 @@
+/*eslint no-empty: "error"*/
 const Sequelize = require('sequelize');
-const db = require('./../models');
 
-// get opject option of sequelize
-const Op = Sequelize.Op;
-exports.getProducts =  async (req, res) => {
+const Op = Sequelize.Op
+const db = require('../models');
+
+
+exports.getAllProducts = async (req, res, next) => {
+    //indexPage use to pagination
+    const indexPage = parseInt(req.query.page) || 1;
+    console.log(indexPage);
     try {
-        
-        const response = await db.Products.findAll({
-            where: {
-                productId: {
-                    [Op.lte]: 16
+        const dataProduct = await db.Product.findAll({
+            offset: (indexPage-1) * 16,
+            limit: 16,
+            order: [
+                ['updated_at', 'DESC']
+            ],
+            include: [{
+                    model: db.Promotion
+                },
+                {
+                    model: db.CodeSale
                 }
-            }
+            ]
         });
-        // res.send(typeof response);
-        // res.status(200).json(response);       
-        res.render('products', {
-            response: response,
-            logoImage: `../images/logo.png`
-        });
+        res.status(200).json(dataProduct);
 
     } catch (error) {
-        throw Error(error.message);
-    }
-}
 
-exports.getProductWithId = (req, res, next) => {
-    console.log(req.params)
-    res.send(req.params.id);
-}
+    }
+
+};

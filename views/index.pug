@@ -1,5 +1,6 @@
 extends includes/layout.pug
 
+
 mixin product(item)
     .col-lg-3.mb-5        
         .card
@@ -21,9 +22,9 @@ mixin product(item)
                 a.btn.btn-primary(href='#') Add to Cart
 block nav
     
-    main.container.products#products
-        h3.container.mb-5.mt-5 Hoa Bán Chạy        
-        .row
-            each value in response
-                +product(value)
+    //- main.container.products#products
+    //-     h3.container.mb-5.mt-5 Hoa Bán Chạy        
+    //-     //- .row
+    //-     //-     each value in response
+    //-     //-         +product(value)
 block footer

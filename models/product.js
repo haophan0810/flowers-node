@@ -24,11 +24,20 @@ module.exports = (sequelize, DataTypes) => {
     productQuantity: {
       type: DataTypes.STRING,
       field: 'product_quantity'
+    },
+    codeSaleId: {
+      type: DataTypes.INTEGER,
+      field: 'code_sale_id',
+      references: {
+        model: 'code_sale',
+        key: 'id',
+      },
+      onDelete: 'CASCADE'
     }
   }, {
     underscored: true,
     timestamp: true,
-    tableName: 'Product'
+    tableName: 'product'
   });
   Product.associate = function (models) {
     // associations can be defined here
@@ -47,6 +56,11 @@ module.exports = (sequelize, DataTypes) => {
     Product.belongsToMany(models.Promotion, {
       through: models.ProductPromotion,
       foreignKey: 'productId',
+      onDelete: 'CASCADE'
+    });
+
+    Product.belongsTo(models.CodeSale, {      
+      foreignKey: 'codeSaleId',
       onDelete: 'CASCADE'
     })
 

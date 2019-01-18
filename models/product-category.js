@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'product_id',
       onDelete: 'CASCADE',
       references: {
-        model: 'Product',
+        model: 'product',
         key: 'id'
       }
     },
@@ -15,14 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       field: 'category_id',
       onDelete: 'CASCADE',
       references: {
-        model: 'Category',
+        model: 'category',
         key: 'id'
       }
     }
   }, {
     underscored: true,
     timestamp: true,
-    tableName: 'Product-category'
+    tableName: 'product_category'
   });
   ProductCategory.associate = function (models) {
     // associations can be defined here

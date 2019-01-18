@@ -9,9 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       field: 'category_description'
     },
+    nameUrl: {
+      type: DataTypes.STRING,
+      field: 'name_url'
+    }
   }, {
     underscored: true,
-    tableName: 'Category',
+    tableName: 'category',
     timestamp: true
   });
   Category.associate = function (models) {

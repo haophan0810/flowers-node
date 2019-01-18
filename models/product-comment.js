@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'product_id',
       onDelete: 'CASCADE',
       references: {
-        model: 'Product',
+        model: 'product',
         key: 'id'
       }
     },
@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       field: 'comment_id',
       onDelete: 'CASCADE',
       references: {
-        model: 'Comment',
+        model: 'comment',
         key: 'id'
       }
     }
   }, {
     underscored: true,
-    tableName: 'Product-comment',
+    tableName: 'product_comment',
     timestamp:true
   });
   ProductComment.associate = function(models) {
