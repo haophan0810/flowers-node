@@ -4,19 +4,16 @@ const db = require('../models');
 
 module.exports.getIndex = async (req, res, next) => {
     try {
-        const resHot = await db.Product.findAll({
+        const productsHot = await db.Product.findAll({
             limit: 8,
-            attributes: ['productName', 'productStar', 'productCost', 'productImage'],
+            attributes: ['id', 'productName', 'productStar', 'productCost', 'productImage'],
             include: [{
                 model: db.Promotion,
-                attributes: ['promotionName'],
-                where: {
-                    id: 3
-                }
+                attributes: ['promotionName']                
             }]
         });
 
-        const resNew = await db.Product.findAll({
+        const productsNew = await db.Product.findAll({
             limit: 8,
             attributes: ['productName', 'productStar', 'productCost', 'productImage'],
 
@@ -29,7 +26,7 @@ module.exports.getIndex = async (req, res, next) => {
             }]
         });
 
-        const resSale = await db.Product.findAll({
+        const productsSale = await db.Product.findAll({
             limit: 8,
             include: [{
                     model: db.Promotion,
@@ -42,9 +39,16 @@ module.exports.getIndex = async (req, res, next) => {
                 }
             ]
         });
-
-        // res.status(200).json(resSale);
-        res.render('index');
+        const cookieLogin = req.get('Cookie');
+        console.log(cookieLogin);
+        // res.status(200).json(productsHot);
+        res.render('index', {
+            productsHot : productsHot,
+            productsNew: productsNew,
+            productsSale: productsSale,
+            title: 'flowers-shop | home',
+            loggedIn: req.session.isLoggedIn
+        });
     } catch (error) {
         throw Error(error.message);
     }

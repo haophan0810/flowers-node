@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       field: 'expries'
     },
-    date: {
+    data: {
       type: DataTypes.TEXT,
-      field: 'date'
+      field: 'data'
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     underscored: true,
-    tableName: 'session',
+    tableName: 'Sessions',
     timestamp: true
   });
   Session.associate = function(models) {

@@ -1,0 +1,72 @@
+extends includes/layout.pug
+block head
+    link(rel='stylesheet', href='../css/index.css')
+
+block nav
+    main.mt-5.pt-4
+        .container.dark-grey-text.mt-5
+            // Grid row
+            .row.wow.fadeIn
+                // Grid column
+                .col-md-5.mb-4
+                    img.img-fluid(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL16.jpg', alt='')
+                // Grid column
+                // Grid column
+                .col-md-7.mb-4
+                    // Content
+                    .p-4
+                        .mb-3
+                            a(href='')
+                                span.badge.purple.mr-1 Category 2
+                            a(href='')
+                                span.badge.blue.mr-1 New
+                            a(href='')
+                                span.badge.red.mr-1 Bestseller
+                        p.lead
+                            span.mr-1
+                                del $200
+                            span $100
+                        p.lead.font-weight-bold Description
+                        p
+                            | Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa sint voluptatibus!
+                            | Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.
+                        form.d-flex.justify-content-left
+                            // Default input
+                            input.form-control(type='number', value='1', aria-label='Search', style='width: 100px')
+                            button.btn.btn-primary.btn-md.my-0.p(type='submit')
+                                | Add to cart
+                                i.fas.fa-shopping-cart.ml-1
+                       
+            hr
+            // Grid row
+            .row.d-flex.justify-content-center.wow.fadeIn
+                // Grid column
+                .col-md-6.text-center
+                    h4.my-4.h4 Additional information
+                    p
+                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates,
+                    | quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.
+                // Grid column
+                // Grid row
+                // Grid row
+            .row.wow.fadeIn
+                // Grid column
+                .col-lg-4.col-md-12.mb-4
+                    img.img-fluid(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL16.jpg', alt='')
+                // Grid column
+                // Grid column
+                .col-lg-4.col-md-6.mb-4
+                    img.img-fluid(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL16.jpg', alt='')
+                // Grid column
+                // Grid column
+                .col-lg-4.col-md-6.mb-4
+                    img.img-fluid(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL16.jpg', alt='')
+
+
+    
+    //- main.container.products#products
+    //-     h3.container.mb-5.mt-5 Hoa Bán Chạy        
+    //-     //- .row
+    //-     //-     each value in response
+    //-     //-         +product(value)
+block footer

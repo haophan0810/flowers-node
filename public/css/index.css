@@ -5,9 +5,13 @@
     padding: 5px 10px;
 }
 
+.bgAdv {
+    background-color: #a4c078;
+}
+
 .btnOutLineWhite:hover {
-    background-color: #744DA9 !important;
-    border-color: #744DA9 !important;
+    background-color: #a4c078 !important;
+    border-color: #a4c078 !important;
     color: white !important;
 }
 
@@ -32,4 +36,148 @@
 .paddingZero {
     padding-right: 0;
     padding-left: 0;
+}
+
+.bgNav {
+    background-color: #6d7622 !important;
+
+}
+
+.paddingNav {
+    padding: 0 1rem;
+}
+
+.categoryItem:hover {
+    background-color: #a4c078;
+    color: white !important;
+}
+
+.slideInner {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.alignCenterCol {
+    align-items: center;
+}
+
+.bgBtnMain {
+    background-color: #a4c078 !important;
+}
+
+.bgBtnMain:hover {
+    background-color: #90a86a !important;
+    color: white;
+}
+
+.productImg {
+    width: 100%;
+}
+
+
+#search_Input.navSearch__input {
+    color: black;
+    border: 0 solid white;
+}
+
+#searchBox .navSearch__input:focus {
+    
+    /* border: 1px solid white;  */
+    -webkit-box-shadow: 0 0px 0 0 white;
+    box-shadow: 0 0px 0 0 white;
+    color: black;
+    /* border: none; */
+    border-color: white;
+}
+
+#searchBox .navSearch__input::placeholder {
+    color: gray;
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+.navSearch__form {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.navSearch__wrap {
+    background-color: white;
+    color: black;
+    padding: 0;
+    margin: 0;
+}
+
+#search__btn {
+    background-color: #a4c078;
+    border: none;
+    border-radius: 0; 
+    margin-left: 0;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+#search__btn .search__icon-wrap {
+    background-color: #a4c078;
+    border: none;
+    border-radius: 0; 
+}
+
+.fixed-top {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.scrolling-navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.intro__link {
+    color: inherit;
+    font-weight: bold;
+}
+
+.intro__link:hover {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.aboutMe {
+    margin-bottom: 100px !important;
+}
+
+.footer__socials a {
+    color: #a4c078;
+    padding: 0;
+}
+
+.footer__socials a:hover {
+    color: white;
+}
+
+.footer-copyright {
+    color: #a4c078;
+    
+}
+.footer-copyright a{
+    color: #a4c078;
+    
+}
+.footer-copyright a:hover{
+    color: white;
+    
+}
+
+hr {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    line-height: 0;
+    border-color: #90a86a;
 }

@@ -1,26 +1,251 @@
 extends includes/layout.pug
-
+    
 
 mixin product(item)
-    .col-lg-3.mb-5        
+    .col-lg-3.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`products/${item.productId}`)
-                    img(src=item.productImage, alt=item.productName)
+                a.card-link(href=`products/${item.id}`)
+                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547256/LL10.jpg', alt=item.productName)
                     if item.state
                         .lable-promotion
                             .btn.btn-danger(class=item.state) #{item.state}
             .card-body
-                a.card-link(href=`products/${item.productId}`)
+                a.card-link(href=`products/${item.Promotions.promotionName}`)
                     h5.card-title #{item.productName}
                 p.card-text
-                    - for(let i = 0 ; i<item.star; i++){
+                    - for(let i = 0 ; i<item.productStar; i++){
                         i.fas.fa-star.star--color
                     - }
                 p.card-text
-                    span #{item.productCost}               
+                    if(test) 
+                        span.productCostBase #{item.productCost}
+                    else                    
+                        span.productCostDiscount 5454               
                 a.btn.btn-primary(href='#') Add to Cart
 block nav
+    -var test = false
+    //- slide
+    // Carousel Wrapper
+    section#carousel-example-2.carousel.slide.carousel-fade(data-ride='carousel')
+        // Indicators
+        ol.carousel-indicators
+            li.active(data-target='#carousel-example-2', data-slide-to='0')
+            li(data-target='#carousel-example-2', data-slide-to='1')
+            li(data-target='#carousel-example-2', data-slide-to='2')
+        // /.Indicators
+        // Slides
+        .carousel-inner(role='listbox')
+            .carousel-item.active
+                .view
+                    img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547870012/SL1.jpg', alt='First slide')
+                    .mask.rgba-black-light
+                .carousel-caption
+                    h3.h3-responsive Light mask
+                    p First text
+            .carousel-item
+                // Mask color
+                .view
+                    img.d-block.w-100(src='https://mdbootstrap.com/img/Photos/Slides/img%20(6).jpg', alt='Second slide')
+                    .mask.rgba-black-strong
+                .carousel-caption
+                    h3.h3-responsive Strong mask
+                    p Secondary text
+            .carousel-item
+                // Mask color
+                .view
+                    img.d-block.w-100(src='https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg', alt='Third slide')
+                    .mask.rgba-black-slight
+                .carousel-caption
+                    h3.h3-responsive Slight mask
+                    p Third text
+            // /.Slides
+        // Controls
+        a.carousel-control-prev(href='#carousel-example-2', role='button', data-slide='prev')
+            span.carousel-control-prev-icon(aria-hidden='true')
+            span.sr-only Previous
+        a.carousel-control-next(href='#carousel-example-2', role='button', data-slide='next')
+            span.carousel-control-next-icon(aria-hidden='true')
+            span.sr-only Next
+        // /.Controls
+        // /.Carousel Wrapper
+
+    section#advertisement-1.container-fluid.adv.p-4.pgAdv.d-flex.justify-content-center.alignCenterCol.bgNav
+        h4.text-center.mr-3.white-text Big sale for TET
+        .btn.btn-primary.bgBtnMain.p-3 Shop now!
+        
+    section#introShop.my-4
+        .container
+            .row
+                .col.d-flex.align-items-stretch.p-3                              
+                    .card
+                        // Card image
+                        .view.overlay
+                            img.card-img-top(src='https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg', alt='Card image cap')
+                            a(href='#!')
+                                .mask.rgba-white-slight
+                        // Card content
+                        .card-body
+                            // Title
+                            a.intro__link(href="")
+                                h4.card-title Card title
+                            // Text
+                            // Button
+                            a.btn.btn-primary.bgBtnMain(href='#') Button
+                        // Card
+                
+                .col.d-flex.align-items-stretch.p-3                          
+                    .card
+                        // Card image
+                        .view.overlay
+                            img.card-img-top(src='https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg', alt='Card image cap')
+                            a(href='#!')
+                                .mask.rgba-white-slight
+                        // Card content
+                        .card-body
+                            // Title
+                            a.intro__link(href="")
+                                h4.card-title Card title
+                            // Text
+                            // Button
+                            a.btn.btn-primary.bgBtnMain(href='#') Button
+                        // Card
+
+                .col.d-flex.align-items-stretch.p-3                            
+                    .card
+                        // Card image
+                        .view.overlay
+                            img.card-img-top(src='https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg', alt='Card image cap')
+                            a(href='#!')
+                                .mask.rgba-white-slight
+                        // Card content
+                        .card-body
+                            // Title
+                            a.intro__link(href="")
+                                h4.card-title Card title
+                            // Text
+                            // Button
+                            a.btn.btn-primary.bgBtnMain(href='#') Button
+                        // Card
+    
+
+    section.aboutMe.my-5
+        h2.about-me__title.mb-5.text-center About Me
+            .line-break.text-center
+                img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+        .container
+            .row
+                .col-8.pr-5
+                    h2.about-me__title Hello
+                    p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, alias sed! Rerum veniam facere tempora corporis voluptatum autem est et voluptate rem alias? Magni ut quos autem blanditiis nesciunt quaerat.
+                    a.btn.bgBtnMain(href="") Shop Now
+                .col-4
+                    #carouselExampleSlidesOnly.carousel.slide(data-ride='carousel')
+                        .carousel-inner
+                            .carousel-item.active
+                                img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547960453/mini-slide/1.jpg')
+                            .carousel-item
+                                img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547960453/mini-slide/3.jpg')
+                            .carousel-item
+                                img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547960453/mini-slide/4.jpg')
+                            .carousel-item
+                                img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547960453/mini-slide/5.jpg')
+                            .carousel-item
+                                img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547960453/mini-slide/2.jpg')
+
+
+    section#products-hot.products-hot.my-5
+        .container
+            h2.product-title.mb-5.text-center Products Hot
+                .line-break.text-center
+                    img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+
+            .row
+                each value in productsHot
+                    +product(value)
+
+    section#products-new.products.products-new.my-5
+        .container
+            h2.product-title.mb-5.text-center Products New
+                .line-break.text-center
+                    img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+
+            .row
+                each value in productsNew
+                    +product(value)
+
+    
+    section#products-sale.products.products-sale.my-5
+        .container
+            h2.product-title.mb-5.text-center Products Sale
+                .line-break.text-center
+                    img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+
+            .row
+                each value in productsSale
+                    +product(value)
+
+    
+    //- main.mt-5.pt-4
+    //-     .container.dark-grey-text.mt-5
+    //-         // Grid row
+    //-         .row.wow.fadeIn
+    //-             // Grid column
+    //-             .col-md-6.mb-4
+    //-                 img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg', alt='')
+    //-             // Grid column
+    //-             // Grid column
+    //-             .col-md-6.mb-4
+    //-                 // Content
+    //-                 .p-4
+    //-                     .mb-3
+    //-                         a(href='')
+    //-                             span.badge.purple.mr-1 Category 2
+    //-                         a(href='')
+    //-                             span.badge.blue.mr-1 New
+    //-                         a(href='')
+    //-                             span.badge.red.mr-1 Bestseller
+    //-                     p.lead
+    //-                         span.mr-1
+    //-                             del $200
+    //-                         span $100
+    //-                     p.lead.font-weight-bold Description
+    //-                     p
+    //-                         | Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa sint voluptatibus!
+    //-                         | Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.
+    //-                     form.d-flex.justify-content-left
+    //-                         // Default input
+    //-                         input.form-control(type='number', value='1', aria-label='Search', style='width: 100px')
+    //-                         button.btn.btn-primary.btn-md.my-0.p(type='submit')
+    //-                             | Add to cart
+    //-                             i.fas.fa-shopping-cart.ml-1
+
+    //-         hr
+    //-         // Grid row
+    //-         .row.d-flex.justify-content-center.wow.fadeIn
+    //-             // Grid column
+    //-             .col-md-6.text-center
+    //-                 h4.my-4.h4 Additional information
+    //-                 p
+    //-                 | Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates,
+    //-                 | quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.
+    //-             // Grid column
+    //-             // Grid row
+    //-             // Grid row
+    //-         .row.wow.fadeIn
+    //-             // Grid column
+    //-             .col-lg-4.col-md-12.mb-4
+    //-                 img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg', alt='')
+    //-             // Grid column
+    //-             // Grid column
+    //-             .col-lg-4.col-md-6.mb-4
+    //-                 img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg', alt='')
+    //-             // Grid column
+    //-             // Grid column
+    //-             .col-lg-4.col-md-6.mb-4
+    //-                 img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg', alt='')
+
+
     
     //- main.container.products#products
     //-     h3.container.mb-5.mt-5 Hoa Bán Chạy        

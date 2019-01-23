@@ -23,7 +23,11 @@ exports.getProductDescription = async (req, res, next) => {
         if (product.length === 0) {
             res.redirect('/products');
         }
-        res.send(product);
+        // res.send(product);
+        const cookieLogin = req.get('Cookie');
+        res.render('productDescription', {
+            loggedIn: cookieLogin
+        });
     } catch (error) {
         throw Error(error.message);
     }

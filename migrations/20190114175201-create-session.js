@@ -1,11 +1,11 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('session', {
+    return queryInterface.createTable('Sessions', {
       sid: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID
+        type: Sequelize.STRING
       },
       expries: {
         type: Sequelize.DATE
@@ -32,6 +32,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('session');
+    return queryInterface.dropTable('Sessions');
   }
 };
