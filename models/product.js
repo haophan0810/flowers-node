@@ -47,12 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    Product.belongsToMany(models.Cart, {
-      through: models.CartProduct,
-      foreignKey: 'productId',
-      onDelete: 'CASCADE'
-    });
-
+   
     Product.belongsToMany(models.Promotion, {
       through: models.ProductPromotion,
       foreignKey: 'productId',

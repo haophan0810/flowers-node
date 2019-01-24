@@ -21,18 +21,18 @@ body
                 // Background image for card set in CSS!
                 .card-body
                     h5.card-title.text-center Register
-                    form.form-signin
+                    form.form-signin(method='POST' action='/register')
                         .form-label-group
-                            input#inputUserame.form-control(type='text', placeholder='Username', required='', autofocus='')
+                            input#inputUserame.form-control(type='text', placeholder='Username', required='', autofocus='', name='username')
                             label(for='inputUserame') Username
                             .errorValidate Username invalid!
                         .form-label-group
-                            input#inputEmail.form-control(type='email', placeholder='Email address', required='')
+                            input#inputEmail.form-control(type='email', placeholder='Email address', required='', name='email')
                             label(for='inputEmail') Email address
                             .errorValidate Email invalid!
                         hr
                         .form-label-group
-                            input#inputPassword.form-control(type='password', placeholder='Password', required='')
+                            input#inputPassword.form-control(type='password', placeholder='Password', required='', name='password')
                             label(for='inputPassword') Password
                             .errorValidate Password invalid!
                         .form-label-group

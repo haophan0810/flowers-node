@@ -40,14 +40,30 @@ module.exports.getIndex = async (req, res, next) => {
             ]
         });
         const cookieLogin = req.get('Cookie');
-        console.log(cookieLogin);
-        // res.status(200).json(productsHot);
+        // console.log('userId', req.session.userId);
+        const idLogged = req.session.userId;
+        let userProfile;
+        if(idLogged) {
+            userProfile = await db.User.findAll({
+                where: {
+                    id: idLogged
+                },
+                include : [{
+                    model: db.UserProfile
+                }]
+            });
+            // res.send(userProfile[0].UserProfile);
+        }
+        // console.log('user profile', userProfile);
+        // res.status(200).json(userProfile);
         res.render('index', {
             productsHot : productsHot,
             productsNew: productsNew,
             productsSale: productsSale,
             title: 'flowers-shop | home',
-            loggedIn: req.session.isLoggedIn
+            loggedIn: req.session.userId,
+            userProfile : userProfile,
+            test: 'ddgd'
         });
     } catch (error) {
         throw Error(error.message);

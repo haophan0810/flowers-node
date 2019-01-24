@@ -3,23 +3,23 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Sessions', {
       sid: {
-        allowNull: false,
+        allowNull: false,       
         primaryKey: true,
         type: Sequelize.STRING
       },
-      expries: {
+      expires: {
         type: Sequelize.DATE
       },
-      date: {
+      data: {
         type: Sequelize.TEXT
       },
-      user_id: {
+      user_sid: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
-          model: 'user',
+          model: 'Users',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       created_at: {
         allowNull: false,

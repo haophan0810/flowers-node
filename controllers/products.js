@@ -27,7 +27,7 @@ exports.getAllProducts = async (req, res, next) => {
         res.status(200).json(dataProduct);
 
     } catch (error) {
-
+        throw Error(error.message);
     }
 
 };

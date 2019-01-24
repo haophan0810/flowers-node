@@ -7,6 +7,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./models');
 
+
 const indexRoute = require('./routers');
 const productRoute = require('./routers/products');
 const categoryRoute = require('./routers/category');
@@ -29,7 +30,7 @@ app.use(session({
         secure: false 
     },
     store: new SequelizeStore({
-        db: db.sequelize
+        db: db.sequelize   
         // checkExpirationInterval: 10 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
         // expiration: 20 * 1000 // The maximum age (in milliseconds) of a valid session.
     }),

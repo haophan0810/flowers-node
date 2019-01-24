@@ -1,28 +1,35 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('product_comment', {
+    return queryInterface.createTable('User_profiles', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      product_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'product',
-          key: 'id'
-        }
+      first_name: {
+        type: Sequelize.STRING
       },
-      comment_id: {
+      last_name: {
+        type: Sequelize.STRING
+      },
+      age: {
+        type: Sequelize.STRING
+      },
+      avatar: {
+        type: Sequelize.STRING
+      },
+      phone: {
+        type: Sequelize.STRING
+      },
+      user_sid: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
-          model: 'comment',
+          model: 'Users',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       created_at: {
         allowNull: false,
@@ -35,6 +42,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('product_comment');
+    return queryInterface.dropTable('User_profiles');
   }
 };

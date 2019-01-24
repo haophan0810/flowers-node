@@ -1,27 +1,24 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Session = sequelize.define('Session', {
-    expries: {
+    expires: {
       type: DataTypes.DATE,
       field: 'expries'
     },
-    data: {
-      type: DataTypes.TEXT,
-      field: 'data'
-    },
-    user_id: {
+    data: DataTypes.TEXT,
+    userId: {
       type: DataTypes.INTEGER,
-      field: 'userId',
-      onDelete: 'CASCADE',
+      field: 'user_id',
       references: {
-        model: 'user',
+        model: 'Users',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     }
   }, {
     underscored: true,
     tableName: 'Sessions',
-    timestamp: true
+    timestampt: true
   });
   Session.associate = function(models) {
     // associations can be defined here
