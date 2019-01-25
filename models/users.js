@@ -23,6 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     User.hasOne(models.Session);
 
     User.hasOne(models.UserProfile);
+
+    User.belongsToMany(models.Role, {
+      through: models.ProductCategory,
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
   };
   return User;
 };

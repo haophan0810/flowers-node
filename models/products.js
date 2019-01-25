@@ -48,8 +48,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'productId',
       onDelete: 'CASCADE'
     });
-
-    
   };
   return Product;
 };
