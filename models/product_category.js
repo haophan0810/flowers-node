@@ -4,27 +4,28 @@ module.exports = (sequelize, DataTypes) => {
     productId: {
       type: DataTypes.INTEGER,
       field: 'product_id',
-      onDelete: 'CASCADE',
       references: {
-        model: 'product',
+        model: 'Products',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     categoryId: {
       type: DataTypes.INTEGER,
       field: 'category_id',
-      onDelete: 'CASCADE',
       references: {
-        model: 'category',
+        model: 'Categories',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE'
     }
   }, {
     underscored: true,
-    timestamp: true,
-    tableName: 'product_category'
+    tableName: 'Product_categories',
+    timestampt: true
+
   });
-  ProductCategory.associate = function (models) {
+  ProductCategory.associate = function(models) {
     // associations can be defined here
   };
   return ProductCategory;

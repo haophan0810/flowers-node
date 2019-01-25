@@ -1,28 +1,35 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('product_category', {
+    return queryInterface.createTable('Category_discounts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      product_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'product',
-          key: 'id'
-        }
-      },
       category_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
-          model: 'category',
+          model: 'Categories',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
+      },
+      discount_value: {
+        type: Sequelize.INTEGER
+      },
+      discount_unit: {
+        type: Sequelize.STRING
+      },
+      date_created: {
+        type: Sequelize.DATE
+      },
+      valid_until: {
+        type: Sequelize.DATE
+      },
+      coupon_code: {
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
@@ -35,6 +42,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('product_category');
+    return queryInterface.dropTable('Category_discounts');
   }
 };
