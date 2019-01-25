@@ -2,18 +2,18 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const db = require('../models');
 
-module.exports.getIndex = async (req, res, next) => {
+module.exports.getIndex = async (req, res, next) => {  
     try {
-        const productsHot = await db.Product.findAll({
+        const productsHot = db.Product.findAll({
             limit: 8,
             attributes: ['id', 'productName', 'productStar', 'productCost', 'productImage'],
             include: [{
                 model: db.Promotion,
-                attributes: ['promotionName']                
+                attributes: ['promotionName']
             }]
         });
 
-        const productsNew = await db.Product.findAll({
+        const productsNew = db.Product.findAll({
             limit: 8,
             attributes: ['productName', 'productStar', 'productCost', 'productImage'],
 
@@ -26,7 +26,7 @@ module.exports.getIndex = async (req, res, next) => {
             }]
         });
 
-        const productsSale = await db.Product.findAll({
+        const productsSale = db.Product.findAll({
             limit: 8,
             include: [{
                     model: db.Promotion,
@@ -39,32 +39,32 @@ module.exports.getIndex = async (req, res, next) => {
                 }
             ]
         });
-        const cookieLogin = req.get('Cookie');
+        
         // console.log('userId', req.session.userId);
         const idLogged = req.session.userId;
         let userProfile;
-        if(idLogged) {
-            userProfile = await db.User.findAll({
+        if (idLogged) {
+            userProfile = db.UserProfile.findOne({
                 where: {
-                    id: idLogged
-                },
-                include : [{
-                    model: db.UserProfile
-                }]
+                    userId: idLogged
+                }
             });
             // res.send(userProfile[0].UserProfile);
         }
         // console.log('user profile', userProfile);
         // res.status(200).json(userProfile);
+        const [resHot, resNew, resSale, resUserProfile] = await Promise.all([productsHot, productsNew, productsSale, userProfile]);
+        // res.status(200).json(result);
+
         res.render('index', {
-            productsHot : productsHot,
-            productsNew: productsNew,
-            productsSale: productsSale,
+            productsHot : resHot,
+            productsNew: resNew,
+            productsSale: resSale,
             title: 'flowers-shop | home',
             loggedIn: req.session.userId,
-            userProfile : userProfile,
+            userProfile : resUserProfile,
             test: 'ddgd'
-        });
+        });       
     } catch (error) {
         throw Error(error.message);
     }
