@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     imageName: {
       type: DataTypes.STRING,
       field: 'image_name'
+    },
+    imageSrc: {
+      type: DataTypes.STRING,
+      field: 'image_src'
     }
   }, {
     underscored: true,

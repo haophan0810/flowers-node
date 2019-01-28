@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
   });
   CategoryDiscount.associate = function(models) {
     // associations can be defined here
+    CategoryDiscount.belongsTo(models.Category, {
+      foreignKey: 'categoryId',
+      onDelete: 'CASCADE'
+    })
   };
   return CategoryDiscount;
 };

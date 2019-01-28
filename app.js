@@ -14,6 +14,8 @@ const categoryRoute = require('./routers/category');
 const productDescriptionRoute = require('./routers/productDescription');
 const loginRoute = require('./routers/login');
 const registerRoute = require('./routers/register');
+const adminRoute = require('./routers/admin/admin');
+
 const app = express();
 
 // console.log(db.sequelize);
@@ -54,6 +56,6 @@ app.use('/category', categoryRoute);
 app.use('/',productDescriptionRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
-
+app.use('/admin', adminRoute);
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));

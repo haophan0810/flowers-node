@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Role_permission = sequelize.define('Role_permission', {
+  const RolePermission = sequelize.define('RolePermission', {
     roleId: {
       type: DataTypes.INTEGER,
       field: 'role_id',
@@ -21,9 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     underscored: true,
+    tableName: 'Role_permissions',
+    timestampt: true
   });
-  Role_permission.associate = function(models) {
+  RolePermission.associate = function(models) {
     // associations can be defined here
   };
-  return Role_permission;
+  return RolePermission;
 };

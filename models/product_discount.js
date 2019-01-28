@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     couponCode: {
       type: DataTypes.STRING,
       field: 'coupon_code'
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      field: 'is_active'
     }
   }, {
     underscored: true,
