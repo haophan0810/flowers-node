@@ -2,26 +2,30 @@ extends includes/layout.pug
     
 
 mixin product(item)
+    -var nameSlug = item.productNameSlug
     .col-lg-3.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`products/${item.id}`)
-                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547256/LL10.jpg', alt=item.productName)
-                    if item.state
+                a.card-link(href=`product/${nameSlug}.${item.id}.html`)
+                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547312102/SN13.jpg', alt=item.ProductImages.imageName)
+                    if item.ProductDiscounts.length>0 && item.ProductDiscounts[0].isActive
                         .lable-promotion
-                            .btn.btn-danger(class=item.state) #{item.state}
+                            .btn.btn-danger #{item.ProductDiscounts[0].discountUnit}
             .card-body
-                a.card-link(href=`products/${item.Promotions.promotionName}`)
+                a.card-link(href=`product/${item.productNameSlug}.${item.id}.html`)
                     h5.card-title #{item.productName}
                 p.card-text
                     - for(let i = 0 ; i<item.productStar; i++){
                         i.fas.fa-star.star--color
                     - }
+                    - for(let i = item.productStar ; i<5; i++){
+                        i.fas.fa-star
+                    - }
                 p.card-text
-                    if(test) 
-                        span.productCostBase #{item.productCost}
+                    if item.ProductDiscounts.length>0 && item.ProductDiscounts[0].isActive 
+                        span.productCostBase #{item.ProductDiscounts.discountValue}
                     else                    
-                        span.productCostDiscount 5454               
+                        span.productCostDiscount #{item.ProductPricings[0].basePrice}           
                 a.btn.btn-primary(href='#') Add to Cart
 block nav
     -var test = false
@@ -161,7 +165,7 @@ block nav
                     img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
 
             .row
-                each value in productsHot
+                each value in productsHot.Products
                     +product(value)
 
     section#products-new.products.products-new.my-5
@@ -171,7 +175,7 @@ block nav
                     img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
 
             .row
-                each value in productsNew
+                each value in productsNew.Products
                     +product(value)
 
     
@@ -182,7 +186,7 @@ block nav
                     img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
 
             .row
-                each value in productsSale
+                each value in productsSale.Products
                     +product(value)
 
     

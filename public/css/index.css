@@ -181,3 +181,24 @@ hr {
     line-height: 0;
     border-color: #90a86a;
 }
+
+.lable-promotion {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.product__relative {
+    position: relative;
+}
+
+.star--color {
+    color: #ffc120;
+}
+
+
+.card-link {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
