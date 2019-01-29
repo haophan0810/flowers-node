@@ -4,7 +4,7 @@ const productDesctiptionController = require('../controllers/productDescription'
 
 const router = express.Router();
 
-router.get('/product/:productName.:idProduct.html', productDesctiptionController.getProductDescription);
+router.get('/:productNameSlug.:idProduct.html', productDesctiptionController.getProductDescription);
 
 
 

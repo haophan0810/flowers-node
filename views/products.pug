@@ -1,46 +1,78 @@
 extends includes/layout.pug
 
-mixin product(item)
-    .col-lg-3.mb-5        
+    
+
+mixin product(item)    
+    - const nameProductSlug = item.productNameSlug
+    - const nameProduct = item.productName
+    - const idProduct = item.id
+    - const imageSrc = item.ProductImages[0].imageSrc
+    - const nameImageProduct = item.ProductImages[0].imageName
+    - const lengthProductDiscount = item.ProductDiscounts.length
+    - const isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
+    - const discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
+    - const costBase = item.ProductPricings[0].basePrice
+    - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
+    - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
+    - costDiscount = Math.round(costDiscount)
+
+    
+    .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`products/${item.productId}`)
-                    img(src=item.productImage, alt=item.productName)
-                    if item.state
+                a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
+                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
+                    if lengthProductDiscount>0 && isActiveProductDiscount
                         .lable-promotion
-                            .btn.btn-danger(class=item.state) #{item.state}
+                            .btn.btn-danger.btn--sale -#{discountUnit}
             .card-body
-                a.card-link(href=`products/${item.productId}`)
-                    h5.card-title #{item.productName}
+                a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
+                    h5.card-title.card--title #{nameProduct}
                 p.card-text
-                    - for(let i = 0 ; i<item.star; i++){
+                    - for(let i = 0 ; i<item.productStar; i++){
                         i.fas.fa-star.star--color
                     - }
+                    - for(let i = item.productStar ; i<5; i++){
+                        i.fas.fa-star.star--disable
+                    - }
                 p.card-text
-                    span #{item.productCost}               
-                a.btn.btn-primary(href='#') Add to Cart
+                    if lengthProductDiscount>0 && isActiveProductDiscount 
+                        span.productCostDiscount.mr-2.cost #{costDiscount} $
+                        span.productCostBase.productCostBase--line-through #{costBase} $
+                    else     
+                        span.productCostBase.cost #{costBase} $
+                                  
+                a.btn.btn-primary.m-0(href='#') Add to Cart
 block head
-    link(rel='stylesheet', href='../css/style.css')
+    link(rel='stylesheet', href='../css/index.css')
+    link(rel='stylesheet', href='../css/products.css')
 
-block nav
-    
+
+block nav  
+    - let currentPage = (indexPage === 1)? 2:indexPage
     main.container.products#products
-        .container.mb-5.mt-5 Tất cả sản phẩm       
+        h2.product-title.mb-5.text-center All Products
+            .line-break.text-center
+                img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
         .row
-            each value in response
+            each value in products
                 +product(value)
 
     nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
         ul.pagination
+            li.page-item(class= indexPage<2? 'page-item--hidden': '')
+                a.page-link(href=`/products?page=${indexPage-1}`) Previous
+
             li.page-item
-                a.page-link(href='#') Previous
+                a.page-link(href=`/products?page=${currentPage-1}`, class= indexPage===1? 'page-item--active' : '') #{currentPage-1}
+
             li.page-item
-                a.page-link(href='#') 1
-            li.page-item
-                a.page-link(href='#') 2
-            li.page-item
-                a.page-link(href='#') 3
-            li.page-item
-                a.page-link(href='#') Next
+                a.page-link(href=`/products?page=${currentPage}`, class= indexPage===1? '' : 'page-item--active') #{currentPage}
+                
+            li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
+                a.page-link(href=`/products?page=${currentPage+1}`) #{currentPage+1}
+                
+            li.page-item(class= indexPage>maxPage-2 ? 'page-item--hidden': '')
+                a.page-link(href=`/products?page=${indexPage+1}`) Next
 
 block footer

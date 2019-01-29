@@ -53,7 +53,7 @@ app.use(express.static('public'))
 app.use('/', indexRoute);
 app.use('/products', productRoute);
 app.use('/category', categoryRoute);
-app.use('/',productDescriptionRoute);
+app.use('/product',productDescriptionRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/admin', adminRoute);

@@ -3,31 +3,17 @@ const db = require('../models');
 exports.getProductDescription = async (req, res, next) => {
     //thieu truong hop tim ten
     const {
-        productName,
+        productNameSlug,
         idProduct
     } = req.params;
     try {
         const product = await db.Product.findAll({
             where: {
-                id: parseInt(idProduct)
-                // productName: productName
-            },
-            include: [{
-                    model: db.Promotion
-                },
-                {
-                    model: db.CodeSale
-                }
-            ]
+                id: idProduct,
+                productNameSlug: productNameSlug.toLowerCase()
+            }
         })
-        if (product.length === 0) {
-            res.redirect('/products');
-        }
-        // res.send(product);
-        const cookieLogin = req.get('Cookie');
-        res.render('productDescription', {
-            loggedIn: cookieLogin
-        });
+        // res.status(200).json(product);
     } catch (error) {
         throw Error(error.message);
     }
