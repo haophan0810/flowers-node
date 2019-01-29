@@ -2,31 +2,46 @@ extends includes/layout.pug
     
 
 mixin product(item)
-    -var nameSlug = item.productNameSlug
-    .col-lg-3.mb-5.d-flex.align-items-stretch       
+    - let nameProductSlug = item.productNameSlug
+    - let nameProduct = item.productName
+    - let idProduct = item.id
+    - let imageSrc = item.ProductImages[0].imageSrc
+    - let nameImageProduct = item.ProductImages[0].imageName
+    - let lengthProductDiscount = item.ProductDiscounts.length
+    - let isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
+    - let discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
+    - let costBase = item.ProductPricings[0].basePrice
+    - let discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
+    - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
+    - costDiscount = Math.round(costDiscount)
+
+    
+    .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`product/${nameSlug}.${item.id}.html`)
-                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547312102/SN13.jpg', alt=item.ProductImages.imageName)
-                    if item.ProductDiscounts.length>0 && item.ProductDiscounts[0].isActive
+                a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
+                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
+                    if lengthProductDiscount>0 && isActiveProductDiscount
                         .lable-promotion
-                            .btn.btn-danger #{item.ProductDiscounts[0].discountUnit}
+                            .btn.btn-danger.btn--sale -#{discountUnit}
             .card-body
-                a.card-link(href=`product/${item.productNameSlug}.${item.id}.html`)
-                    h5.card-title #{item.productName}
+                a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
+                    h5.card-title.card--title #{nameProduct}
                 p.card-text
                     - for(let i = 0 ; i<item.productStar; i++){
                         i.fas.fa-star.star--color
                     - }
                     - for(let i = item.productStar ; i<5; i++){
-                        i.fas.fa-star
+                        i.fas.fa-star.star--disable
                     - }
                 p.card-text
-                    if item.ProductDiscounts.length>0 && item.ProductDiscounts[0].isActive 
-                        span.productCostBase #{item.ProductDiscounts.discountValue}
-                    else                    
-                        span.productCostDiscount #{item.ProductPricings[0].basePrice}           
-                a.btn.btn-primary(href='#') Add to Cart
+                    if lengthProductDiscount>0 && isActiveProductDiscount 
+                        span.productCostDiscount.mr-2.cost #{costDiscount} $
+                        span.productCostBase.productCostBase--line-through #{costBase} $
+                    else     
+                        span.productCostBase.cost #{costBase} $
+                                  
+                a.btn.btn-primary.m-0(href='#') Add to Cart
 block nav
     -var test = false
     //- slide
@@ -37,12 +52,14 @@ block nav
             li.active(data-target='#carousel-example-2', data-slide-to='0')
             li(data-target='#carousel-example-2', data-slide-to='1')
             li(data-target='#carousel-example-2', data-slide-to='2')
+            li(data-target='#carousel-example-2', data-slide-to='3')
+
         // /.Indicators
         // Slides
         .carousel-inner(role='listbox')
             .carousel-item.active
                 .view
-                    img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547870012/SL1.jpg', alt='First slide')
+                    img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1548744139/slide/SL1.jpg', alt='First slide')
                     .mask.rgba-black-light
                 .carousel-caption
                     h3.h3-responsive Light mask
@@ -50,7 +67,7 @@ block nav
             .carousel-item
                 // Mask color
                 .view
-                    img.d-block.w-100(src='https://mdbootstrap.com/img/Photos/Slides/img%20(6).jpg', alt='Second slide')
+                    img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1548744140/slide/SL2.jpg', alt='Second slide')
                     .mask.rgba-black-strong
                 .carousel-caption
                     h3.h3-responsive Strong mask
@@ -58,11 +75,20 @@ block nav
             .carousel-item
                 // Mask color
                 .view
-                    img.d-block.w-100(src='https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg', alt='Third slide')
+                    img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1548744140/slide/SL4.jpg', alt='Third slide')
                     .mask.rgba-black-slight
                 .carousel-caption
                     h3.h3-responsive Slight mask
                     p Third text
+            .carousel-item
+                // Mask color
+                .view
+                    img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1548744139/slide/SL5.jpg', alt='Third slide')
+                    .mask.rgba-black-slight
+                .carousel-caption
+                    h3.h3-responsive Slight mask
+                    p Third text
+
             // /.Slides
         // Controls
         a.carousel-control-prev(href='#carousel-example-2', role='button', data-slide='prev')
@@ -165,8 +191,10 @@ block nav
                     img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
 
             .row
-                each value in productsHot.Products
-                    +product(value)
+                - for (let i = 0; i<8; i++){
+                    +product(productsHot.Products[i])
+                -}
+                
 
     section#products-new.products.products-new.my-5
         .container
@@ -175,10 +203,10 @@ block nav
                     img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
 
             .row
-                each value in productsNew.Products
-                    +product(value)
-
-    
+                - for (let i = 0; i<8; i++){
+                    +product(productsNew.Products[i])
+                -}
+                
     section#products-sale.products.products-sale.my-5
         .container
             h2.product-title.mb-5.text-center Products Sale
@@ -186,9 +214,9 @@ block nav
                     img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
 
             .row
-                each value in productsSale.Products
-                    +product(value)
-
+                - for (let i = 0; i<8; i++){
+                    +product(productsSale.Products[i])
+                -}
     
     //- main.mt-5.pt-4
     //-     .container.dark-grey-text.mt-5

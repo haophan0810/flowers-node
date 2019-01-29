@@ -196,9 +196,36 @@ hr {
     color: #ffc120;
 }
 
+.star--disable {
+    color: #d8d8d8;
+}
 
 .card-link {
     display: block;
     text-decoration: none;
     cursor: pointer;
+}
+
+.btn--sale {
+    padding: .375rem .75rem;
+}
+
+.productCostBase--line-through {
+    text-decoration: line-through
+}
+
+.cost {
+    font-size: 1.1rem;
+    color: black;
+}
+
+.card--title {
+    height: 2.4rem;
+    font-size: 1rem;
+    color: #717070;
+    transition: 0.4s;
+}
+
+.card--title:hover {
+    color: black;
 }
