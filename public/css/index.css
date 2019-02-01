@@ -5,6 +5,10 @@
     padding: 5px 10px;
 }
 
+.carousel {
+    margin-top: 80px;
+}
+
 .bgAdv {
     background-color: #a4c078;
 }
@@ -228,4 +232,9 @@ hr {
 
 .card--title:hover {
     color: black;
+}
+
+
+.img-adv {
+    width: 100%;
 }

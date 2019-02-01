@@ -43,7 +43,7 @@ mixin product(item)
                                   
                 a.btn.btn-primary.m-0(href='#') Add to Cart
 block nav
-    -var test = false
+    
     //- slide
     // Carousel Wrapper
     section#carousel-example-2.carousel.slide.carousel-fade(data-ride='carousel')
@@ -195,6 +195,8 @@ block nav
                     +product(productsHot.Products[i])
                 -}
                 
+    section#adv-1
+        img.img-adv(src='https://res.cloudinary.com/haophan/image/upload/v1548948245/slide/ADV/bg3.jpg', alt='')
 
     section#products-new.products.products-new.my-5
         .container
@@ -206,7 +208,10 @@ block nav
                 - for (let i = 0; i<8; i++){
                     +product(productsNew.Products[i])
                 -}
-                
+
+    section#adv-2
+        img.img-adv(src='https://res.cloudinary.com/haophan/image/upload/v1548948244/slide/ADV/bg2.jpg', alt='') 
+
     section#products-sale.products.products-sale.my-5
         .container
             h2.product-title.mb-5.text-center Products Sale
@@ -285,3 +290,7 @@ block nav
     //-     //-     each value in response
     //-     //-         +product(value)
 block footer
+    script(type='text/javascript').
+      $('.carousel').carousel({
+        interval: 2000
+        })

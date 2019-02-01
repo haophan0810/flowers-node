@@ -1,4 +1,6 @@
+require('dotenv').config()
 const express = require('express');
+const path = require('path');
 // const Sequelize = require('sequelize');
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
@@ -14,7 +16,8 @@ const categoryRoute = require('./routers/category');
 const productDescriptionRoute = require('./routers/productDescription');
 const loginRoute = require('./routers/login');
 const registerRoute = require('./routers/register');
-const adminRoute = require('./routers/admin/admin');
+const adminRouteLogin = require('./routers/admin/login');
+const adminRouteAddProducts = require('./routers/admin/products');
 
 const app = express();
 
@@ -46,8 +49,7 @@ const PORT = process.env.PORT || 6996;
 app.set('views', './views'); // specify the views directory
 app.set('view engine', 'pug'); // register the template engine
 
-app.use(express.static('public'))
-
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 app.use('/', indexRoute);
@@ -56,6 +58,8 @@ app.use('/category', categoryRoute);
 app.use('/product',productDescriptionRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
-app.use('/admin', adminRoute);
+app.use('/admin', adminRouteLogin);
+app.use('/admin', adminRouteAddProducts);
+
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));
