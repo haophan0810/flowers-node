@@ -4,7 +4,9 @@ const uuidv4 = require('uuid/v4');
 const db = require('../models');
 
 exports.getRegister = (req, res, next) => {
-    res.render('register');
+    res.render('register', {
+        title: 'Register'
+    });
 };
 
 exports.postRegister = async (req, res, next) => {
@@ -26,10 +28,11 @@ exports.postRegister = async (req, res, next) => {
         });
 
         if (response) {
-            res.status(200).json({
-                resutl: response,
-                httpCode: 200
-            })
+            // res.status(200).json({
+            //     resutl: response,
+            //     httpCode: 200
+            // })
+            res.redirect('/login');
         } else {
             next()
         }

@@ -87,7 +87,7 @@ body
                                     span.badge.badge-danger.ml-2 4
                         li.nav-item.dropdown.avatar.alignCenter
                             a#navbarDropdownMenuLink-333.nav-link.dropdown-toggle.p-0(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                                img.rounded-circle.z-depth-0(src=userProfile[0].UserProfile.avatar, alt='avatar image', height='40')
+                                img.rounded-circle.z-depth-0(src='https://res.cloudinary.com/haophan/image/upload/v1549145699/avatar-user.png', alt='avatar image', height='40')
                             .dropdown-menu.dropdown-menu-right.dropdown-default(aria-labelledby='navbarDropdownMenuLink-333')
 
                                 a.dropdown-item(href='#') Hi 
@@ -99,7 +99,8 @@ body
                                 a.dropdown-item(href='/customer/notification') Notification
                                 .dropdown-divider
                                 a.dropdown-item(href='#')
-                                    button.btn.bgBtnMain(type='submit') Sign out
+                                    form(action="/logout", method="post")
+                                        button.btn.bgBtnMain(type='submit') Sign out
                 else
                     ul.navbar-nav.ml-auto.nav-flex-icons.nonLogin
                         li.nav-item

@@ -34,13 +34,24 @@ module.exports.getIndex = async (req, res, next) => {
       ]
     });
     const [productsHot, productsNew, productsSale] = dataProducts;
+    const userId = req.session.userId;
+    let dataUser;
+    if(userId){
+      dataUser = await db.User.findAll({
+        where: {
+          id: parseInt(userId)
+        }
+      })
+    }
     // console.log('product hot',productsHot.Products);
     // res.status(200).json(productsHot.Products);
+    console.log('dataUser :', dataUser);
     res.render('index', {
         productsHot: productsHot,
         productsNew: productsNew,
         productsSale: productsSale,
-        title: 'Flowers-shop | Home'
+        title: 'Flowers-shop | Home',
+        loggedIn : dataUser
     })
   } catch (error) {
     throw Error(error.message);

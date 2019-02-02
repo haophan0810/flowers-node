@@ -18,6 +18,8 @@ const loginRoute = require('./routers/login');
 const registerRoute = require('./routers/register');
 const adminRouteLogin = require('./routers/admin/login');
 const adminRouteAddProducts = require('./routers/admin/products');
+const logoutRoute = require('./routers/logout');
+
 
 const app = express();
 
@@ -39,7 +41,7 @@ app.use(session({
         // checkExpirationInterval: 10 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
         // expiration: 20 * 1000 // The maximum age (in milliseconds) of a valid session.
     }),
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: false, // we support the touch method so per the express-session docs this should be set to false
     proxy: true // if you do SSL outside of node.
 }))
@@ -60,6 +62,6 @@ app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/admin', adminRouteLogin);
 app.use('/admin', adminRouteAddProducts);
-
+app.use('/logout', logoutRoute);
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));

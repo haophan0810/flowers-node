@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onDelete: 'CASCADE'
+      // allowNull: false
     }
   }, {
     underscored: true,
