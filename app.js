@@ -5,6 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const { body } = require('express-validator/check');
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./models');
@@ -20,6 +21,7 @@ const adminRouteLogin = require('./routers/admin/login');
 const adminRouteAddProducts = require('./routers/admin/products');
 const logoutRoute = require('./routers/logout');
 
+console.log('check validate', body);
 
 const app = express();
 

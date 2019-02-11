@@ -1,3 +1,6 @@
+- const validEmail = validationErrors.find( e => e.param === 'email')
+- const validPassword = validationErrors.find( e => e.param === 'password')
+
 doctype html
 head
     title #{title}
@@ -18,15 +21,31 @@ body
                 .card.card-signin.my-5
                     .card-body
                         h5.card-title.text-center Sign In
-                        form#formLogin.form-signin(method='POST' action='/login' target='blank')
+                        form#formLogin.form-signin(method='POST' action='/login' novalidate)
                             .form-label-group
-                                input#inputEmail.form-control(type='text',name='email', placeholder='Email address or Username', required='', autofocus='')
+                                input#inputEmail.form-control(
+                                    type='text'
+                                    name='email'
+                                    placeholder='Email address or Username'
+                                    required=''
+                                    autofocus=''
+                                    value= oldData.email
+                                )
                                 label(for='inputEmail') Email address
-                                .errorValidate Username or Email invalid!
+                                .errorValidate(class= validEmail ? "errorActive" : "") 
+                                    |#{ validEmail ? validEmail.msg : ""}
                             .form-label-group
-                                input#inputPassword.form-control(type='password',name='password', placeholder='Password', required='')
+                                input#inputPassword.form-control(
+                                    type='password'
+                                    name='password'
+                                    placeholder='Password'
+                                    required=''
+                                    value= oldData.password
+                                )
                                 label(for='inputPassword') Password
-                                .errorValidate Password invalid!
+                                .errorValidate(class= validPassword ? "errorActive" : "") 
+                                    |#{ validPassword ? validPassword.msg : ""}
+                                
                             .custom-control.custom-checkbox.mb-3
                                 input#customCheck1.custom-control-input(type='checkbox')
                                 label.custom-control-label(for='customCheck1') Remember password

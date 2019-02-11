@@ -1,3 +1,4 @@
+
 doctype html
 head
     title #{title}
@@ -11,86 +12,46 @@ head
     link(href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css', rel='stylesheet')
     // Material Design Bootstrap
     link(href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/css/mdb.min.css', rel='stylesheet')
-    link(rel="stylesheet", href="../css/admin/login.css")
-    
-body.grey.lighten-3
-    header
-        // Navbar
-        nav.navbar.fixed-top.navbar-expand-lg.navbar-light.white.scrolling-navbar
-            .container-fluid
-                // Brand
-                a.navbar-brand.waves-effect(href='https://mdbootstrap.com/docs/jquery/', target='_blank')
-                    strong.blue-text MDB
-                // Collapse
-                button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
-                    span.navbar-toggler-icon
-                // Links
-                #navbarSupportedContent.collapse.navbar-collapse
-                    // Left
-                    ul.navbar-nav.mr-auto
-                        li.nav-item.active
-                            a.nav-link.waves-effect(href='#')
-                                | Home
-                            
-                        
-                    // Right
-                    ul.navbar-nav.nav-flex-icons
-                        li.nav-item
-                            a.nav-link.waves-effect(href='https://www.facebook.com/mdbootstrap', target='_blank')
-                                i.fab.fa-facebook-f
-                        li.nav-item
-                            a.nav-link.waves-effect(href='https://twitter.com/MDBootstrap', target='_blank')
-                                i.fab.fa-twitter
-                        li.nav-item
-                            a.nav-link.border.border-light.rounded.waves-effect(href='https://github.com/mdbootstrap/bootstrap-material-design', target='_blank')
-                                i.fab.fa-github.mr-2
-                                | MDB GitHub
-                    ul.navbar-nav.ml-auto.nav-flex-icons.nonLogin
-                        
-                        li.nav-item.dropdown.avatar.alignCenter
-                            a#navbarDropdownMenuLink-333.nav-link.dropdown-toggle.p-0(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                                img.rounded-circle.z-depth-0(src='https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg', alt='avatar image', height='40')
-                            .dropdown-menu.dropdown-menu-right.dropdown-default(aria-labelledby='navbarDropdownMenuLink-333')
+    link(rel='stylesheet', href='../css/index.css')
+body
+  header.container-fluid.paddingZero
+    nav.navbar.fixed-top.navbar-expand-lg.navbar-dark.bg-primary.bgNav.paddingNav.scrolling-navbar
+      a.navbar-brand(href='/')
+        img(src='https://res.cloudinary.com/haophan/image/upload/v1547865735/logo-2.png', height='40', alt='Route 66 in navbar')
+          
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarExample', aria-controls='navbarExample', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarExample.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+            li.nav-item.active
+                a.nav-link.px-3(href='/') Admin
+  // Default form login
+  .container.d-flex.justify-content-center.mt-5
+ 
+    form.text-center.border.border-light.p-5.mt-5.w-50
+      p.h4.mb-4 Login
+      // Email
+      input#defaultLoginFormEmail.form-control.mb-4(type='email', placeholder='User')
+      // Password
+      input#defaultLoginFormPassword.form-control.mb-4(type='password', placeholder='Password')
+      .d-flex.justify-content-between
+        div
+          // Remember me
+          .custom-control.custom-checkbox
+            input#defaultLoginFormRemember.custom-control-input(type='checkbox')
+            label.custom-control-label(for='defaultLoginFormRemember') Remember me
+        div
+          // Forgot password
+          a(href='') Forgot password?
+      // Sign in button
+      button.btn.btn-info.btn-block.my-4.bgNav(type='submit') Sign in
+      
 
-                                a.dropdown-item(href='#') Hi 
-                                    span Phan Huu Hao
-                                .dropdown-divider
-                                a.dropdown-item(href='/customer/profile') Your profile
-                                a.dropdown-item(href='/customer/history') History
-                                a.dropdown-item(href='/checkout/cart') Cart
-                                a.dropdown-item(href='/customer/notification') Notification
-                                .dropdown-divider
-                                a.dropdown-item(href='#')
-                                    button.btn.bgBtnMain(type='submit') Sign out
-        // Navbar
-        // Sidebar
-        .sidebar-fixed.position-fixed
-            a.logo-wrapper.waves-effect
-                img.img-fluid(src='https://res.cloudinary.com/haophan/image/upload/v1547865735/logo-2.png', alt='')
-            hr
-            .list-group.list-group-flush
-                a.list-group-item.active.waves-effect(href='#')
-                    i.fas.fa-chart-pie.mr-3
-                    | Dashboard
-                a.list-group-item.list-group-item-action.waves-effect(href='#')
-                    i.fas.fa-user.mr-3
-                    | Profile
-                a.list-group-item.list-group-item-action.waves-effect(href='#')
-                    i.fas.fa-table.mr-3
-                    | Tables
-                a.list-group-item.list-group-item-action.waves-effect(href='#')
-                    i.fas.fa-map.mr-3
-                    | Maps
-                a.list-group-item.list-group-item-action.waves-effect(href='#')
-                    i.fas.fa-money-bill-alt.mr-3
-                    | Orders
-            
-
-    // JQuery
-    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-    // Bootstrap tooltips
-    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js')
-    // Bootstrap core JavaScript
-    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js')
-    // MDB core JavaScript
-    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js')
+  // JQuery
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  // Bootstrap tooltips
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js')
+  // Bootstrap core JavaScript
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js')
+  // MDB core JavaScript
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js')

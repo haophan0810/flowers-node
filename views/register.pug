@@ -21,7 +21,7 @@ body
                 // Background image for card set in CSS!
                 .card-body
                     h5.card-title.text-center Register
-                    form.form-signin(method='POST' action='/register')
+                    form.form-signin(method='POST' action='/register' novalidate)
                         .form-label-group
                             input#inputUserame.form-control(type='text', placeholder='Username', required='', autofocus='', name='username')
                             label(for='inputUserame') Username

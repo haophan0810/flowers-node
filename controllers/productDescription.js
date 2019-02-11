@@ -9,7 +9,7 @@ exports.getProductDescription = async (req, res, next) => {
     try {
         const product = await db.Product.findAll({
             where: {
-                id: idProduct,
+                id: parseInt(idProduct),
                 productNameSlug: productNameSlug.toLowerCase()
             }
         })
