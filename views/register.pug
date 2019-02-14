@@ -1,3 +1,9 @@
+- const validUsername = validationErrors.find( e => e.param === 'username')
+- const validEmail = validationErrors.find( e => e.param === 'email')
+- const validPassword = validationErrors.find( e => e.param === 'password')
+- const validConfirmPassword = validationErrors.find( e => e.param === 'confirmPassword')
+
+
 doctype html
 head
     title #{title}
@@ -23,22 +29,49 @@ body
                     h5.card-title.text-center Register
                     form.form-signin(method='POST' action='/register' novalidate)
                         .form-label-group
-                            input#inputUserame.form-control(type='text', placeholder='Username', required='', autofocus='', name='username')
+                            input#inputUserame.form-control(type='text'
+                                placeholder='Username'
+                                required=''
+                                autofocus=''
+                                name='username'
+                                value= oldData.username
+                            )
                             label(for='inputUserame') Username
-                            .errorValidate Username invalid!
+                            .errorValidate(class= validUsername ? "errorActive" : "") 
+                                |#{ validUsername ? validUsername.msg : ""}
                         .form-label-group
-                            input#inputEmail.form-control(type='email', placeholder='Email address', required='', name='email')
+                            input#inputEmail.form-control(type='email'
+                                placeholder='Email address'
+                                required=''
+                                name='email'
+                                value= oldData.email
+                            )
                             label(for='inputEmail') Email address
-                            .errorValidate Email invalid!
+                            .errorValidate(class= validEmail ? "errorActive" : "") 
+                                |#{ validEmail ? validEmail.msg : ""}
+                            .errorValidate(class= validRegister ? "errorActive" : "") 
+                                |#{ validRegister ? validRegister : ""}
                         hr
                         .form-label-group
-                            input#inputPassword.form-control(type='password', placeholder='Password', required='', name='password')
+                            input#inputPassword.form-control(type='password'
+                                placeholder='Password'
+                                required=''
+                                name='password'
+                                value= oldData.password    
+                            )
                             label(for='inputPassword') Password
-                            .errorValidate Password invalid!
+                            .errorValidate(class= validPassword ? "errorActive" : "") 
+                                |#{ validPassword ? validPassword.msg : ""}
                         .form-label-group
-                            input#inputConfirmPassword.form-control(type='password', placeholder='Password', required='')
+                            input#inputConfirmPassword.form-control(type='password'
+                                placeholder='Password'
+                                name='confirmPassword'
+                                required=''
+                                value= oldData.confirmPassword
+                            )
                             label(for='inputConfirmPassword') Confirm password
-                            .errorValidate Confirm not match Password!
+                            .errorValidate(class= validConfirmPassword ? "errorActive" : "") 
+                                |#{ validConfirmPassword ? validConfirmPassword.msg : ""}
                         button.btn.btn-lg.btn-primary.btn-block.text-uppercase(type='submit') Register
                         .text-or.text-center.mt-3.text-uppercase or
                         a.d-block.text-center.mt-2.btn-lg.btn-warning.btn-block.text-uppercase.route-log(href='/login') Login

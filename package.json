@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon --inspect app.js"
+    "dev": "nodemon --inspect app.js",
+    "heroku-postbuild": "npm install --production"
   },
   "keywords": [],
   "author": "Hao Phan",

@@ -21,6 +21,7 @@ body
                 .card.card-signin.my-5
                     .card-body
                         h5.card-title.text-center Sign In
+                        
                         form#formLogin.form-signin(method='POST' action='/login' novalidate)
                             .form-label-group
                                 input#inputEmail.form-control(
@@ -34,6 +35,7 @@ body
                                 label(for='inputEmail') Email address
                                 .errorValidate(class= validEmail ? "errorActive" : "") 
                                     |#{ validEmail ? validEmail.msg : ""}
+                                    
                             .form-label-group
                                 input#inputPassword.form-control(
                                     type='password'
@@ -45,7 +47,8 @@ body
                                 label(for='inputPassword') Password
                                 .errorValidate(class= validPassword ? "errorActive" : "") 
                                     |#{ validPassword ? validPassword.msg : ""}
-                                
+                                .errorValidate(class= validLogin ? "errorActive" : "") 
+                                    |Email or password invalid
                             .custom-control.custom-checkbox.mb-3
                                 input#customCheck1.custom-control-input(type='checkbox')
                                 label.custom-control-label(for='customCheck1') Remember password
