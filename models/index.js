@@ -11,14 +11,16 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  // sequelize = new Sequelize(process.env[config.use_env_variable], {
-  //   dialect:  'postgres',
-  //   protocol: 'postgres',
-  //   port:     match[4],
-  //   host:     match[3],
-  //   logging:  true //false
-  // });
+  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
+    username: "skapqcfrmvdcdm",
+    password: "51a18033264772ed5e8faa795356bc74f14eb88d75bb5cfbebc3a4637eb02f01",
+    database: "d5ror6g774l4tt",
+    host: "ec2-54-243-223-245.compute-1.amazonaws.com",
+    dialect: "postgres",
+    loggin: true,
+    port: 5432
+  });
   
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
