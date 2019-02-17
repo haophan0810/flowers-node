@@ -43,8 +43,8 @@ module.exports.getIndex = async (req, res, next) => {
         }
       })
     }
-    console.log('product hot',productsHot.Products);
-    res.status(200).json(dataProducts);
+    // console.log('product hot',productsHot.Products);
+    // res.status(200).json(dataProducts);
     res.render('index', {
         productsHot: productsHot,
         productsNew: productsNew,
