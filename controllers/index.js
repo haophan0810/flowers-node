@@ -34,7 +34,7 @@ module.exports.getIndex = async (req, res, next) => {
       ]
     });
     const [productsHot, productsNew, productsSale] = dataProducts;
-    const userId = req.session.userId;
+    // const userId = req.session.userId;
     let dataUser;
     // if(userId){
     //   dataUser = await db.User.findAll({
