@@ -34,17 +34,17 @@ module.exports.getIndex = async (req, res, next) => {
       ]
     });
     const [productsHot, productsNew, productsSale] = dataProducts;
-    // const userId = req.session.userId;
+    const userId = req.session.userId;
     let dataUser;
-    // if(userId){
-    //   dataUser = await db.User.findAll({
-    //     where: {
-    //       id: parseInt(userId)
-    //     }
-    //   })
-    // }
-    // console.log('product hot',productsHot.Products);
-    // res.status(200).json(dataProducts);
+    if(userId){
+      dataUser = await db.User.findAll({
+        where: {
+          id: parseInt(userId)
+        }
+      })
+    }
+    console.log('product hot',productsHot.Products);
+    res.status(200).json(dataProducts);
     res.render('index', {
         productsHot: productsHot,
         productsNew: productsNew,

@@ -32,21 +32,21 @@ app.use(bodyParser.urlencoded({
 })); // for parsing application/x-www-form-urlencoded
 
 app.use(cookieParser());
-// app.use(session({
-//     secret: 'keyboard cat',
-//     cookie: { 
-//         maxAge: 300000,
-//         secure: false 
-//     },
-//     store: new SequelizeStore({
-//         db: db.sequelize   
-//         // checkExpirationInterval: 10 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
-//         // expiration: 20 * 1000 // The maximum age (in milliseconds) of a valid session.
-//     }),
-//     saveUninitialized: false,
-//     resave: false, // we support the touch method so per the express-session docs this should be set to false
-//     proxy: true // if you do SSL outside of node.
-// }))
+app.use(session({
+    secret: 'keyboard cat',
+    cookie: { 
+        maxAge: 300000,
+        secure: false 
+    },
+    store: new SequelizeStore({
+        db: db.sequelize   
+        // checkExpirationInterval: 10 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
+        // expiration: 20 * 1000 // The maximum age (in milliseconds) of a valid session.
+    }),
+    saveUninitialized: false,
+    resave: false, // we support the touch method so per the express-session docs this should be set to false
+    proxy: true // if you do SSL outside of node.
+}))
 
 const PORT = process.env.PORT || 6996;
 
