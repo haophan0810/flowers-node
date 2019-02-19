@@ -48,84 +48,45 @@ body
                             button#search__btn.btn.input-group-append
                                 span#basic-text1.input-group-text.search__icon-wrap
                                     i.fas.fa-search.text-grey(aria-hidden='true')
-                if loggedIn
-                    ul.navbar-nav.ml-auto.nav-flex-icons.nonLogin
-                        li.nav-item
-                                a.nav-link.waves-effect.waves-light
-                                    button.btn.btn-outline-secondary.btnOutLineWhite(type='button')
-                                        i.fas.fa-shopping-cart.pr-1
-                                        | Cart
-                                        span.badge.badge-danger.ml-2 4
-                        li.nav-item
-                            a.nav-link.waves-effect.waves-light.pr-0(href='/login')                
-                                button.btn.btn-outline-success.btnOutLineWhite(type='button') Login
-                        li.nav-item
-                            a.nav-link.waves-effect.waves-light.pl-0(href='register')
-                                button.btn.btn-outline-success.btnOutLineWhite(type='button') Register
-                else
-                    ul.navbar-nav.ml-auto.nav-flex-icons
-                        li.nav-item
-                                a.nav-link.waves-effect.waves-light
-                                    button.btn.btn-outline-secondary.btnOutLineWhite(type='button')
-                                        i.fas.fa-shopping-cart.pr-1
-                                        | Cart
-                                        span.badge.badge-danger.ml-2 4
-                        li.nav-item
-                            a.nav-link.waves-effect.waves-light.pr-0(href='/login')                
-                                button.btn.btn-outline-success.btnOutLineWhite(type='button') Login
-                        li.nav-item
-                            a.nav-link.waves-effect.waves-light.pl-0(href='register')
-                                button.btn.btn-outline-success.btnOutLineWhite(type='button') Register
-                //-loggedIn is value of cookie
-                if loggedIn
-                    ul.navbar-nav.ml-auto.nav-flex-icons
-                        li.nav-item
+                
+                ul.navbar-nav.ml-auto.nav-flex-icons(class= loggedIn ? 'nonLogin' : '')
+                    li.nav-item
                             a.nav-link.waves-effect.waves-light
                                 button.btn.btn-outline-secondary.btnOutLineWhite(type='button')
                                     i.fas.fa-shopping-cart.pr-1
                                     | Cart
                                     span.badge.badge-danger.ml-2 4
-                        li.nav-item.dropdown.avatar.alignCenter
-                            a#navbarDropdownMenuLink-333.nav-link.dropdown-toggle.p-0(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                                img.rounded-circle.z-depth-0(src='https://res.cloudinary.com/haophan/image/upload/v1549145699/avatar-user.png', alt='avatar image', height='40')
-                            .dropdown-menu.dropdown-menu-right.dropdown-default(aria-labelledby='navbarDropdownMenuLink-333')
+                    li.nav-item
+                        a.nav-link.waves-effect.waves-light.pr-0(href='/login')                
+                            button.btn.btn-outline-success.btnOutLineWhite(type='button') Login
+                    li.nav-item
+                        a.nav-link.waves-effect.waves-light.pl-0(href='register')
+                            button.btn.btn-outline-success.btnOutLineWhite(type='button') Register
+                
+                //-loggedIn is value of cookie            
+                ul.navbar-nav.ml-auto.nav-flex-icons(class= loggedIn ? '' : 'nonLogin')
+                    li.nav-item
+                        a.nav-link.waves-effect.waves-light
+                            button.btn.btn-outline-secondary.btnOutLineWhite(type='button')
+                                i.fas.fa-shopping-cart.pr-1
+                                | Cart
+                                span.badge.badge-danger.ml-2 4
+                    li.nav-item.dropdown.avatar.alignCenter
+                        a#navbarDropdownMenuLink-333.nav-link.dropdown-toggle.p-0(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                            img.rounded-circle.z-depth-0(src='https://res.cloudinary.com/haophan/image/upload/v1549145699/avatar-user.png', alt='avatar image', height='40')
+                        .dropdown-menu.dropdown-menu-right.dropdown-default(aria-labelledby='navbarDropdownMenuLink-333')
 
-                                a.dropdown-item(href='#') Hi 
-                                    span Phan Huu Hao
-                                .dropdown-divider
-                                a.dropdown-item(href='/customer/profile') Your profile
-                                a.dropdown-item(href='/customer/history') History
-                                a.dropdown-item(href='/checkout/cart') Cart
-                                a.dropdown-item(href='/customer/notification') Notification
-                                .dropdown-divider
-                                a.dropdown-item(href='#')
-                                    form(action="/logout", method="post")
-                                        button.btn.bgBtnMain(type='submit') Sign out
-                else
-                    ul.navbar-nav.ml-auto.nav-flex-icons.nonLogin
-                        li.nav-item
-                            a.nav-link.waves-effect.waves-light
-                                button.btn.btn-outline-secondary.btnOutLineWhite(type='button')
-                                    i.fas.fa-shopping-cart.pr-1
-                                    | Cart
-                                    span.badge.badge-danger.ml-2 4
-                        li.nav-item.dropdown.avatar.alignCenter
-                            a#navbarDropdownMenuLink-333.nav-link.dropdown-toggle.p-0(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                                img.rounded-circle.z-depth-0(src='https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg', alt='avatar image', height='40')
-                            .dropdown-menu.dropdown-menu-right.dropdown-default(aria-labelledby='navbarDropdownMenuLink-333')
-
-                                a.dropdown-item(href='#') Hi 
-                                    span Phan Huu Hao
-                                .dropdown-divider
-                                a.dropdown-item(href='/customer/profile') Your profile
-                                a.dropdown-item(href='/customer/history') History
-                                a.dropdown-item(href='/checkout/cart') Cart
-                                a.dropdown-item(href='/customer/notification') Notification
-                                .dropdown-divider
-                                a.dropdown-item(href='#')
+                            a.dropdown-item(href='#') Hi 
+                                span Phan Huu Hao
+                            .dropdown-divider
+                            a.dropdown-item(href='/customer/profile') Your profile
+                            a.dropdown-item(href='/customer/history') History
+                            a.dropdown-item(href='/checkout/cart') Cart
+                            a.dropdown-item(href='/customer/notification') Notification
+                            .dropdown-divider
+                            a.dropdown-item(href='#')
+                                form(action="/logout", method="post")
                                     button.btn.bgBtnMain(type='submit') Sign out
-
-
     block nav  
 
     footer.bgNav.font-small.mt-4.wow.fadeIn       

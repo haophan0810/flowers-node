@@ -13,7 +13,10 @@ exports.getProductDescription = async (req, res, next) => {
                 productNameSlug: productNameSlug.toLowerCase()
             }
         })
-        res.status(200).json(product);
+        res.status(200).render('productDescription', {
+            product: product
+        })
+        // res.status(200).json(product);
     } catch (error) {
         throw Error(error.message);
     }
