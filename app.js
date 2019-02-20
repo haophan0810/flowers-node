@@ -18,7 +18,7 @@ const productDescriptionRoute = require('./routers/productDescription');
 const loginRoute = require('./routers/login');
 const registerRoute = require('./routers/register');
 const adminRouteLogin = require('./routers/admin/login');
-const adminRouteAddProducts = require('./routers/admin/products');
+const adminRouteAddProducts = require('./routers/admin/addProducts');
 const logoutRoute = require('./routers/logout');
 
 console.log('check validate', body);

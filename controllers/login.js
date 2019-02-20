@@ -14,7 +14,8 @@ module.exports.getLogin = (req, res, next) => {
             email: '',
             password: ''
         },
-        validLogin: false
+        validLogin: false,
+        path: req.originalUrl
     });
 };
 
@@ -60,6 +61,7 @@ module.exports.postLogin = async (req, res, next) => {
                 
                 req.session.userId = response.id;                
                 // res.status(200).json({ resutl: response.id, httpCode: 200 })
+                // res.redirect('/');
                 res.redirect('/');
                 return;
             }
