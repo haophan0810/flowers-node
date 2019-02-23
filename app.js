@@ -20,6 +20,7 @@ const registerRoute = require('./routers/register');
 const adminRouteLogin = require('./routers/admin/login');
 const adminRouteAddProducts = require('./routers/admin/addProducts');
 const logoutRoute = require('./routers/logout');
+const adminRouteDeleteProducts = require('./routers/admin/deleteProducts');
 
 console.log('check validate', body);
 
@@ -64,6 +65,8 @@ app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/admin', adminRouteLogin);
 app.use('/admin', adminRouteAddProducts);
+app.use('/admin', adminRouteDeleteProducts);
+
 app.use('/logout', logoutRoute);
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));
