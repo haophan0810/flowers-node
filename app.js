@@ -21,6 +21,7 @@ const adminRouteLogin = require('./routers/admin/login');
 const adminRouteAddProducts = require('./routers/admin/addProducts');
 const logoutRoute = require('./routers/logout');
 const adminRouteDeleteProducts = require('./routers/admin/deleteProducts');
+const adminRouterAllProducts = require('./routers/admin/allProducts');
 
 console.log('check validate', body);
 
@@ -66,6 +67,7 @@ app.use('/register', registerRoute);
 app.use('/admin', adminRouteLogin);
 app.use('/admin', adminRouteAddProducts);
 app.use('/admin', adminRouteDeleteProducts);
+app.use('/admin', adminRouterAllProducts);
 
 app.use('/logout', logoutRoute);
 

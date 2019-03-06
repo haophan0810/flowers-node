@@ -1,6 +1,4 @@
-extends includes/layout.pug
-
-    
+extends ../includes/admin.pug
 
 mixin product(item)    
     - const nameProductSlug = item.productNameSlug
@@ -13,15 +11,14 @@ mixin product(item)
     - const discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
     - const costBase = item.ProductPricings[0].basePrice
     - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
-    - const idCategory = item.Categories.length ? item.Categories[0].id : 0
     - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
     - costDiscount = Math.round(costDiscount)
 
     
-    .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
+    .col-sm-12.col-md-6.col-lg-4.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
+                a.card-link(href=`/product/${nameProductSlug}.${idProduct}.html`)
                     img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
                     if lengthProductDiscount>0 && isActiveProductDiscount
                         .lable-promotion
@@ -42,31 +39,38 @@ mixin product(item)
                         span.productCostBase.productCostBase--line-through #{costBase} $
                     else     
                         span.productCostBase.cost #{costBase} $
+                .row
+                  .col-6.p-2
+                    form(method = 'POST', action='./admin/delete-product')
+                      input(type="hidden", value=idProduct, name='productId')
+                      button.btn.btn-danger(type='submit') DELETE
+                  .col-6.p-2
+                    .btn.btn-success EDIT
+block head-admin
+  link(href='css/validateErr.css', rel='stylesheet')
+  link(rel='stylesheet', href='../../css/index.css')
+  link(rel='stylesheet', href='../../css/products.css')
+block nav-admin
+  - let currentPage = (indexPage === 1)? 2:indexPage
 
-block head
-    link(rel='stylesheet', href='../css/index.css')
-    link(rel='stylesheet', href='../css/products.css')
-
-
-block nav  
-    - let currentPage = (indexPage === 1)? 2:indexPage
-    main.container.products#products
-        h2.product-title.mb-5.text-center All Products
-            .line-break.text-center
-                img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+  main.pt-5.mx-lg-5
+    .container-fluid.mt-5
+      h2.product-title.mb-5.text-center All Products
+        .line-break.text-center
+          img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
         .row
             each value in products
                 +product(value)
 
-    nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
+      nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
         ul.pagination
             li.page-item(class= indexPage<2? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${indexPage-1}`) Previous
 
-            li.page-item
+            li.page-item(class= maxPage===1? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${currentPage-1}`, class= indexPage===1? 'page-item--active' : '') #{currentPage-1}
 
-            li.page-item
+            li.page-item(class= maxPage===1? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${currentPage}`, class= indexPage===1? '' : 'page-item--active') #{currentPage}
                 
             li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
@@ -74,5 +78,4 @@ block nav
                 
             li.page-item(class= indexPage>maxPage-2 ? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${indexPage+1}`) Next
-
-block footer
+block footer-admin

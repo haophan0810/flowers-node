@@ -24,10 +24,13 @@ exports.getAllProducts = async (req, res, next) => {
                 },
                 {
                     model: db.ProductDiscount
+                },
+                {
+                    model: db.Category
                 }
             ]
         });
-        // res.status(200).json(products);
+        // res.status(200).json(products[0].Categories[0].id);
 
         res.render('products', {
             maxPage: Math.ceil(products.length/16),

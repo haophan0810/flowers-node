@@ -1,20 +1,63 @@
 extends includes/layout.pug
 
+
+mixin product(item)
+    - const nameProductSlug = item.productNameSlug
+    - const nameProduct = item.productName
+    - const idProduct = item.id
+    - const imageSrc = item.ProductImages[0].imageSrc
+    - const nameImageProduct = item.ProductImages[0].imageName
+    - const lengthProductDiscount = item.ProductDiscounts.length
+    - const isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
+    - const discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
+    - const costBase = item.ProductPricings[0].basePrice
+    - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
+    - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
+
+    - costDiscount = Math.round(costDiscount)
+
+    
+    .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
+        .card
+            .card-img-top.product__relative
+                a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
+                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
+                    if lengthProductDiscount>0 && isActiveProductDiscount
+                        .lable-promotion
+                            .btn.btn-danger.btn--sale -#{discountUnit}
+            .card-body
+                a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
+                    h5.card-title.card--title #{nameProduct}
+                p.card-text
+                    - for(let i = 0 ; i<item.productStar; i++){
+                        i.fas.fa-star.star--color
+                    - }
+                    - for(let i = item.productStar ; i<5; i++){
+                        i.fas.fa-star.star--disable
+                    - }
+                p.card-text
+                    if lengthProductDiscount>0 && isActiveProductDiscount 
+                        span.productCostDiscount.mr-2.cost #{costDiscount} $
+                        span.productCostBase.productCostBase--line-through #{costBase} $
+                    else     
+                        span.productCostBase.cost #{costBase} $
+
 block head
     link(rel='stylesheet', href='../css/index.css')
 
 block nav
+  - const lengthProductsAdv = productsAdv.length ? 4 : productsAdv.length
   // Main layout
   main.mt-5.pt-4
     .container.dark-grey-text.mt-5
       // Grid row
       .row.wow.fadeIn
         // Grid column
-        .col-md-6.mb-4
-          img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg', alt='')
+        .col-md-5.mb-4.p-5
+          img.img-fluid(src=product[0].ProductImages[0].imageSrc, alt=product[0].ProductImages[0].imageName)
         // Grid column
         // Grid column
-        .col-md-6.mb-4
+        .col-md-7.mb-4
           // Content
           .p-4
             .mb-3
@@ -28,13 +71,11 @@ block nav
               span.mr-1
                 del $200
               span $100
-            p.lead.font-weight-bold Description
-            p
-              | Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa sint voluptatibus!
-              | Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.
+            p.lead.font-weight-bold #{product[0].productName}
+            p.mb-5 #{product[0].productDescription}
             form.d-flex.justify-content-left
               // Default input
-              input.form-control(type='number', value='1', aria-label='Search', style='width: 100px')
+              input.form-control(type='number', value='1', aria-label='Search', style='width: 100px', max=product[0].productQuantity)
               button.btn.btn-primary.btn-md.my-0.p(type='submit')
                 | Add to cart
                 i.fas.fa-shopping-cart.ml-1
@@ -47,25 +88,12 @@ block nav
         // Grid column
         .col-md-6.text-center
           h4.my-4.h4 Additional information
-          p
-            | Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates,
-            | quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.
+          
         // Grid column
       // Grid row
       // Grid row
-      .row.wow.fadeIn
-        // Grid column
-        .col-lg-4.col-md-12.mb-4
-          img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg', alt='')
-        // Grid column
-        // Grid column
-        .col-lg-4.col-md-6.mb-4
-          img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg', alt='')
-        // Grid column
-        // Grid column
-        .col-lg-4.col-md-6.mb-4
-          img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg', alt='')
-        // Grid column
-      // Grid row
-  // Main layout    
+      .row
+        - for (let i = 0; i<lengthProductsAdv; i++){
+          +product(productsAdv[i])
+        -}
 block footer
