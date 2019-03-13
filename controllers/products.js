@@ -33,7 +33,7 @@ exports.getAllProducts = async (req, res, next) => {
         // res.status(200).json(products[0].Categories[0].id);
 
         res.render('products', {
-            maxPage: Math.ceil(products.length/16),
+            maxPage:  Math.ceil(products.length/16) ,
             title: indexPage ? `All products | page ${indexPage}`: 'All products',
             products: products.slice((indexPage-1) * 16,indexPage*16),
             indexPage: indexPage

@@ -28,6 +28,14 @@ exports.getProductDescription = async (req, res, next) => {
                 }
             ]
         });
+        const comments = await db.Comment.findAll({
+            where: {
+                productId: parseInt(idProduct)
+            },
+            include: [{
+                model: db.User
+            }]
+        })
         let sameProducts;
         if (parseInt(idCategory) > 0) {
             sameProducts = await db.Category.findAll({
@@ -96,15 +104,17 @@ exports.getProductDescription = async (req, res, next) => {
                 }
             })
         }
-        console.log('sameProducts', sameProducts)
-        // res.status(200).json(product);
+        // console.log('sameProducts', sameProducts)
+        // res.status(200).json(comments);
 
         res.status(200).render('productDescription', {
             product: product,
             loggedIn: dataUser,
             title: product[0].productName,
             productsAdv: parseInt(idCategory) === 0 ? sameProducts : sameProducts[0].Products,
-            idCategory: parseInt(idCategory)         
+            idCategory: parseInt(idCategory),
+            commentsProduct: comments,
+            userLogin: req.session.userId
         })
     } catch (error) {
         res.send('404');

@@ -53,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'productId',
       onDelete: 'CASCADE'
     });
+
+    Product.hasMany(models.UserVoteProduct, {
+      foreignKey: 'productId',
+      onDelete: 'CASCADE'
+    });
   };
 
   

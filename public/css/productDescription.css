@@ -1,0 +1,30 @@
+
+
+.alignItemCenter {
+    align-items: center;
+}
+
+.userAddress span, .timePost {
+    font-size: 12px;
+}
+
+.address {
+    text-transform: uppercase;
+}
+.bgBtnMain {
+    background-color: #a4c078 !important;
+    color: white !important;
+}
+
+.bgBtnMain:hover {
+    background-color: #90a86a !important;
+    color: white;
+}
+
+.displayNone {
+    display: none !important;
+}
+
+.pagination .page-item .page-link.page-item--active {
+    background-color: #a4c078;
+}

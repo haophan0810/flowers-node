@@ -1,7 +1,5 @@
 extends includes/layout.pug
 
-    
-
 mixin product(item)    
     - const nameProductSlug = item.productNameSlug
     - const nameProduct = item.productName
@@ -63,10 +61,10 @@ block nav
             li.page-item(class= indexPage<2? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${indexPage-1}`) Previous
 
-            li.page-item
+            li.page-item(class= maxPage===1 ? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${currentPage-1}`, class= indexPage===1? 'page-item--active' : '') #{currentPage-1}
 
-            li.page-item
+            li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${currentPage}`, class= indexPage===1? '' : 'page-item--active') #{currentPage}
                 
             li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
