@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": 123456,
-    "database": "flowers",
+    "database": "flowers-shop",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "loggin": true
@@ -16,6 +16,5 @@
     "dialect": "postgres",
     "loggin": true,
     "port": 5432
-    
   }
 }

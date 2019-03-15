@@ -14,21 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'discount_value'
     },
-    discountUnit: {
-      type:  DataTypes.STRING,
-      field: 'discount_unit'
-    },
-    dateCreated: {
+    timeExpired: {
       type: DataTypes.DATE,
-      field: 'date_created'
+      field: 'time_expired'
     },
-    validUntil: {
-      type: DataTypes.DATE,
-      field: 'valid_until'
-    },
-    couponCode: {
-      type:  DataTypes.STRING,
-      field: 'coupon_code'
+    isActive: {
+      type:  DataTypes.BOOLEAN,
+      field: 'is_active'
     }
   }, {
     underscored: true,

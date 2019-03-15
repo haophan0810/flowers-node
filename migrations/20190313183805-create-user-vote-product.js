@@ -26,12 +26,9 @@ module.exports = {
         allowNull: false,
         onDelete: 'CASCADE'
       },
-      star: {
+      rate: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      active: {
-        type: Sequelize.BOOLEAN
       },
       created_at: {
         allowNull: false,

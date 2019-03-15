@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE'
     },
-    star: DataTypes.INTEGER,
-    active: DataTypes.BOOLEAN
+    rate: DataTypes.INTEGER
   }, {
     underscored: true,
     tableName: 'UserVoteProducts',

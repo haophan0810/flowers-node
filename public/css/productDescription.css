@@ -28,3 +28,7 @@
 .pagination .page-item .page-link.page-item--active {
     background-color: #a4c078;
 }
+
+.progress-bar {
+    background-color: #a4c078;
+}

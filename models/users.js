@@ -1,7 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    sid: DataTypes.UUID,
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     passwordHash:{
@@ -11,8 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     passwordSalt: {
       type:  DataTypes.STRING,
       field: 'password_salt'
-    },
-    
+    }    
   }, {
     underscored: true,
     tableName: 'Users',
@@ -30,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    User.hasMany(models.Comment, {
+    User.hasMany(models.ReviewsProduct, {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
     });

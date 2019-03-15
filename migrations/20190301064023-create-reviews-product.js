@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Comments', {
+    return queryInterface.createTable('Reviews_products', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,7 +16,6 @@ module.exports = {
         },
         allowNull: false,
         onDelete: 'CASCADE'
-
       },
       product_id: {
         type: Sequelize.INTEGER,
@@ -26,13 +25,12 @@ module.exports = {
         },
         allowNull: false,
         onDelete: 'CASCADE'
-
       },
-      comment_title: {
+      review_title: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      comment_content: {
+      review_content: {
         type: Sequelize.TEXT,
         allowNull: false
 
@@ -53,6 +51,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Comments');
+    return queryInterface.dropTable('Reviews_products');
   }
 };

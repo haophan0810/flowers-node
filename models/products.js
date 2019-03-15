@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    Product.hasMany(models.Comment, {
+    Product.hasMany(models.ReviewsProduct, {
       foreignKey: 'productId',
       onDelete: 'CASCADE'
     });

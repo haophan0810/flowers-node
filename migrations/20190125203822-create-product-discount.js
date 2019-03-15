@@ -19,18 +19,12 @@ module.exports = {
       discount_value: {
         type: Sequelize.INTEGER
       },
-      discount_unit: {
-        type: Sequelize.STRING
-      },
-      date_created: {
+      time_expired: {
         type: Sequelize.DATE
       },
-      valid_until: {
-        type: Sequelize.DATE
-      },
-      coupon_code: {
-        type: Sequelize.STRING
-      },
+      is_active: {
+        type: Sequelize.BOOLEAN
+      },    
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

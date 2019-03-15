@@ -8,9 +8,6 @@ module.exports = {
         autoIncrement: true,       
         type: Sequelize.INTEGER
       },
-      sid: {
-        type: Sequelize.UUID
-      },
       username: {
         type: Sequelize.STRING
       },

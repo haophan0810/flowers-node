@@ -1,6 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const UserProfile = sequelize.define('UserProfile', {
+    userId: {
+      type: DataTypes.INTEGER,
+      field: 'user_id',
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
+    },
     firstName: {
       type: DataTypes.STRING,
       field: 'first_name'
@@ -11,16 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     age: DataTypes.STRING,
     avatar: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    userId: {
-      type: DataTypes.UUID,
-      field: 'user_id',
-      references: {
-        model: 'Users',
-        key: 'id'
-      },
-      onDelete: 'CASCADE'
-    }
+    phone: DataTypes.STRING    
   }, {
     underscored: true,
     tableName: 'User_profiles',

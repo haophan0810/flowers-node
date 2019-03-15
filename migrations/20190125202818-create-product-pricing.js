@@ -19,12 +19,6 @@ module.exports = {
       base_price: {
         type: Sequelize.INTEGER
       },
-      date_start: {
-        type:Sequelize.DATE
-      },
-      date_expiry: {
-        type: Sequelize.DATE
-      },
       is_active: {
         type: Sequelize.BOOLEAN
       },

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Comment = sequelize.define('Comment', {
+  const ReviewsProduct = sequelize.define('ReviewsProduct', {
     userId: {
       type: DataTypes.INTEGER,
       field: 'user_id',
@@ -19,25 +19,34 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE'
     },
-    comment_title: DataTypes.STRING,
-    comment_content: DataTypes.TEXT,
-    active: DataTypes.BOOLEAN
+    reviewTitle: {
+      type: DataTypes.STRING,
+      field: 'review_title'
+    },
+    reviewContent: {
+      type: DataTypes.TEXT,
+      field: 'review_comment'
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      field: 'is_active'
+    }
   }, {
     underscored: true,
-    tableName: 'Comments',
+    tableName: 'Reviews_products',
     timestampt: true
   });
-  Comment.associate = function(models) {
+  ReviewsProduct.associate = function(models) {
     // associations can be defined here
-    Comment.belongsTo(models.Product, {      
+    ReviewsProduct.belongsTo(models.Product, {      
       foreignKey: 'productId',
       onDelete: 'CASCADE'
     });
 
-    Comment.belongsTo(models.User, {      
+    ReviewsProduct.belongsTo(models.User, {      
       foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
   };
-  return Comment;
+  return ReviewsProduct;
 };

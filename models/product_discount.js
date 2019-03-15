@@ -14,21 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'discount_value'
     },
-    discountUnit: {
-      type: DataTypes.STRING,
-      field: 'discount_unit'
-    },
-    dateCreated: {
+    timeExpired: {
       type: DataTypes.DATE,
-      field: 'date_created'
-    },
-    validUntil: {
-      type: DataTypes.DATE,
-      field: 'valid_until'
-    },
-    couponCode: {
-      type: DataTypes.STRING,
-      field: 'coupon_code'
+      field: 'time_expired'
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -44,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     ProductDiscount.belongsTo(models.Product, {      
       foreignKey: 'productId',
       onDelete: 'CASCADE'
-    })
+    });
   };
   return ProductDiscount;
 };
