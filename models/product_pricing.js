@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'base_price'
     },
-    dateExpiry: {
-      type: DataTypes.DATE,
-      field: 'date_expiry'
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      field: 'is_active'
     }
   }, {
     underscored: true,

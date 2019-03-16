@@ -27,15 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   UserVoteProduct.associate = function(models) {
     // associations can be defined here
-    UserVoteProduct.belongsTo(models.Product, {      
-      foreignKey: 'productId',
-      onDelete: 'CASCADE'
-    });
-
-    UserVoteProduct.belongsTo(models.User, {      
-      foreignKey: 'userId',
-      onDelete: 'CASCADE'
-    });
+    
   };
   return UserVoteProduct;
 };

@@ -9,27 +9,22 @@ block nav-admin
     .container-fluid.mt-5
 
       // Default form contact
-      form.text-center.border.border-light.p-5.wow.fadeIn(action='/admin/add-product', method='POST')
+      form.border.border-light.p-5.wow.fadeIn(action='/admin/add-product', method='POST')
         .row
           .col-6
-            h3 Product
+            h3.text-center Product
             // Name
-            input#productName.form-control.mb-4(type='text', placeholder='Product name', name='productName')
-            .row
-              .col-6
-                select.browser-default.custom-select.mb-4(name='productStar')
-                  option(value='', selected='') Product star
-                  option(value='1') 1
-                  option(value='2') 2
-                  option(value='3') 3
-                  option(value='4') 4
-                  option(value='5') 5
-              .col-6
-                input#productQuantity.form-control.mb-4(type='number'
-                  placeholder='Product quantity'
-                  name='productQuantity')
+            lable(for='productName') Product Name
+            input#productName.form-control.mb-4(type='text'
+            placeholder='Product name'
+            name='productName')
+            
+            lable(for='productQuantity') Product Quantity
+            input#productQuantity.form-control.mb-4(type='number'
+              placeholder='Product quantity'
+              name='productQuantity')
 
-
+            lable(for='productDescription') Product Description
             .form-group
               textarea#productDescription.form-control.rounded-0(rows='3'
               placeholder='Product description'
@@ -40,27 +35,44 @@ block nav-admin
             //- input#productIdImage.form-control.mb-4(type='number', placeholder='Product Id', name='productId')
             input#imageName.form-control.mb-4(type='text', placeholder='Image Name', name='imageName')
             input#imageSrc.form-control.mb-4(type='text', placeholder='Image src', name='imageSrc')
+
+            hr
+
+            h3 Product Discount
+                                      
+            .d-flex
+              label(for="timeExpired").w-50.pt-2 Date Expiry:
+              input#timeExpired.form-control.mb-4(type='datetime-local', placeholder='Date Expiry', name='timeExpired')
+            .row
+              .col-6
+                input#basePrice.form-control.mb-4(type='number', placeholder='Discount value', name='discountValue')
+              .col-6
+                select.browser-default.custom-select.mb-4(name='isActiveDiscount')
+                      option(value='', selected='') Active
+                      option(value='true') true
+                      option(value='false') false 
         .row
           .col-6
             h3 Product Pricing
             // Name
             //- input#productIdPricing.form-control.mb-4(type='number', placeholder='Product Id')
             // Email
-            div.d-flex
-              label(for="dateStart").w-50.pt-2 Date Start:
-              input#dateStart.form-control.mb-4(type='datetime-local', placeholder='Date start', name='dateStart', value= new Date().getTime())
-            .d-flex
-              label(for="dateExpiry").w-50.pt-2 Date Expiry:
-              input#dateExpiry.form-control.mb-4(type='datetime-local', placeholder='Date Expiry', name='dateExpiry')
-            select.browser-default.custom-select.mb-4(name='isActive')
-                  option(value='', selected='') Active
-                  option(value='true') true
-                  option(value='false') false                
-            input#basePrice.form-control.mb-4(type='number', placeholder='Base Price', name='basePrice')
-
-            // Subject
-          
-        button.btn.btn-success(type='submit') Add Product
+            //- div.d-flex
+            //-   label(for="dateStart").w-50.pt-2 Date Start:
+            //-   input#dateStart.form-control.mb-4(type='datetime-local', placeholder='Date start', name='dateStart', value= new Date().getTime())
+            //- .d-flex
+            //-   label(for="dateExpiry").w-50.pt-2 Date Expiry:
+            //-   input#dateExpiry.form-control.mb-4(type='datetime-local', placeholder='Date Expiry', name='dateExpiry')
+            .row
+              .col-6
+                input#basePrice.form-control.mb-4(type='number', placeholder='Base Price', name='basePrice')
+              .col-6
+                select.browser-default.custom-select.mb-4(name='isActive')
+                      option(value='', selected='') Active
+                      option(value='true') true
+                      option(value='false') false 
+        .d-flex.justify-content-center              
+          button.btn.btn-success(type='submit') Add Product
 
 
   footer.page-footer.text-center.font-small.primary-color-dark.darken-2.mt-4.wow.fadeIn

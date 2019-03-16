@@ -20,12 +20,15 @@ module.exports.getAllProductsAdmin = async (req, res, next) => {
                     },
                     {
                         model: db.ProductDiscount
+                    },
+                    {
+                        model: db.Category
                     }
                 ]
             });
-            // res.status(200).json(products);
+            res.status(200).json(products);
 
-            res.render('./admin/allProducts', {
+            res.render('./admin/productsManagement', {
                 maxPage: Math.ceil(products.length / 12),
                 title: indexPage ? `All products | page ${indexPage}` : 'All products',
                 products: products.slice((indexPage - 1) * 12, indexPage * 12),
@@ -35,4 +38,15 @@ module.exports.getAllProductsAdmin = async (req, res, next) => {
         } catch (error){
             throw new Error(error.message);
         }
+    }
+
+    module.exports.postDeleteProduct = async (req, res, next) => {
+        const productId = parseInt(req.body.productId);
+        const test = await db.Product.destroy({
+            where : {
+                id: productId
+            }
+        })
+        res.redirect('/admin/products-management');
+    
     }

@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     CategoryDiscount.belongsTo(models.Category, {
       foreignKey: 'categoryId',
       onDelete: 'CASCADE'
-    })
+    });
   };
   return CategoryDiscount;
 };

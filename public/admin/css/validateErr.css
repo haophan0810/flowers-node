@@ -25,3 +25,13 @@
     color: #e08484;
     line-height: 1rem;
 }
+
+.bgBtnMain {
+    background-color: #a4c078 !important;
+    color: white !important;
+}
+
+.bgBtnMain:hover {
+    background-color: #90a86a !important;
+    color: white;
+}

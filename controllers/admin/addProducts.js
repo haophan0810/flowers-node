@@ -1,6 +1,6 @@
 const db = require('../../models');
 
-module.exports.getAddProduct = async (req, res, next) => {
+module.exports.getAddProduct = (req, res, next) => {
     res.render('./admin/addProduct', {
         title: 'Add product'
     });
@@ -17,53 +17,68 @@ module.exports.postAddProduct = async (req, res, next) => {
 
     const {
         productName,
-        productStar,
         productQuantity,
         productDescription,
         imageName,
         imageSrc,
-        dateStart,
-        dateExpiry,
+        timeExpired,
         isActive,
-        basePrice
+        basePrice,
+        isActiveDiscount,
+        discountValue
     } = req.body;
+
     const productNameSlug = productName
         .trim()
         .toLowerCase()
         .split(' ')
-        .filter( item => item)
+        .filter(item => item)
         .join('-');
+
     const dataProduct = {
         productName,
         productNameSlug,
-        productStar,
+        productStar: 5,
         productQuantity,
         productDescription
-    }
+    };
+
+    console.log(req.body);
+
     try {
-    const dataProductResponce = await db.Product.create(dataProduct);
-    const productId = parseInt(dataProductResponce.id);
-    // const productId = 10
-    const dataImage = {
-        productId,
-        imageName,
-        imageSrc
-    }
-    const dataProductImageResponce = await db.ProductImage.create(dataImage);
+        const dataProductResponce = await db.Product.create(dataProduct);
+        const productId = parseInt(dataProductResponce.id);
+        // const productId = 10
+        const dataImage = {
+            productId,
+            imageName,
+            imageSrc
+        };
 
-    const dataProductPricing = {
-        productId,       
-        basePrice,
-        isActive
-    }
+        const dataProductImageResponce =  db.ProductImage.create(dataImage);
 
-    const dataProductPricingResponce = await db.ProductPricing.create(dataProductPricing);
+        const dataProductPricing = {
+            productId,
+            basePrice,
+            isActive: isActive === 'true'? true : false
+        };
 
-    console.log(dataProductPricingResponce);
-        
+        db.ProductPricing.create(dataProductPricing);
+
+        if(discountValue) {
+            const dataProductDiscount = {
+                productId,
+                discountValue,
+                timeExpired,
+                isActive: isActiveDiscount === 'true' ? true : false
+            };
+
+            db.ProductDiscount.create(dataProductDiscount);
+        }
+
     } catch (error) {
         throw Error(error);
-        
+
     }
-    
+
 }

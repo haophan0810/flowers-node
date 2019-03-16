@@ -20,8 +20,9 @@ const registerRoute = require('./routers/register');
 const adminRouteLogin = require('./routers/admin/login');
 const adminRouteAddProducts = require('./routers/admin/addProducts');
 const logoutRoute = require('./routers/logout');
-const adminRouteDeleteProducts = require('./routers/admin/deleteProducts');
-const adminRouterAllProducts = require('./routers/admin/allProducts');
+const adminRouterProductsManagement = require('./routers/admin/productsManagement');
+// const adminRouterAddCategory = require('./routers/admin/addCategory');
+const adminCategoryManagement = require('./routers/admin/categoryManagement');
 
 console.log('check validate', body);
 
@@ -59,16 +60,20 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 app.use('/', indexRoute);
+
 app.use('/products', productRoute);
 app.use('/category', categoryRoute);
 app.use('/product',productDescriptionRoute);
+
 app.use('/login', loginRoute);
+app.use('/logout', logoutRoute);
 app.use('/register', registerRoute);
+
 app.use('/admin', adminRouteLogin);
 app.use('/admin', adminRouteAddProducts);
-app.use('/admin', adminRouteDeleteProducts);
-app.use('/admin', adminRouterAllProducts);
+app.use('/admin', adminRouterProductsManagement);
+// app.use('/admin', adminRouterAddCategory);
+app.use('/admin', adminCategoryManagement);
 
-app.use('/logout', logoutRoute);
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));

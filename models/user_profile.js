@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     UserProfile.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
-    })
+    });
   };
   return UserProfile;
 };
