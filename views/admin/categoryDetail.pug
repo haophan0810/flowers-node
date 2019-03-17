@@ -1,0 +1,102 @@
+extends ../includes/admin.pug
+
+mixin product(item)
+
+  - const { productName, id} = item
+  
+  
+  .col-2.mb-4
+    button.btn.btnOutlineMain.text-dark.px-2.py-1.h-100.w-100.btnProduct(
+      type="button"
+      data-target="#modalAddProduct"
+      data-toggle="modal"
+      data-id-product = id
+      data-id-category = dataCategory[0].id
+      data-name-category = dataCategory[0].categoryName
+      data-slug-category = dataCategory[0].categoryNameSlug
+
+    ) #{productName}
+
+
+block head-admin
+  link(href='css/validateErr.css', rel='stylesheet')
+  
+block nav-admin
+  // Main Navigation
+  - const lengthProduct = dataProducts.length
+  main.pt-5.mx-lg-5
+    .container-fluid.mt-5
+      .h4.text-center.mb-5 #{dataCategory[0].categoryName}
+        .line-break.mt-2
+          img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+      
+      .h5 Add product to category
+      span (click each product)
+      
+      #allProduct.row.mt-3
+        - for (let i = 0; i<lengthProduct; i++){
+          +product(dataProducts[i])
+        -}
+      #modalAddProduct.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header.d-block
+              h5#modal-title.modal-title.text-center
+              | Do you want add product: 
+              span#nameProductModal.modalInnerTitle
+              |  to Category: 
+              span#nameCategoryModal.modalInnerTitle
+              |  ?
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+              form.wow.fadeIn(action='/admin/add-product-to-category', method='POST')
+                button.btn.btn-primary.bgBtnMain(type='submit') ADD
+                input#idProductModal(type="hidden", name='productId')
+                input#idCategoryModal(type="hidden", name='categoryId')
+                input#slugCategoryModal(type="hidden", name='categoryNameSlug')
+
+
+
+
+      
+  script(type='text/javascript', src='js/jquery-3.3.1.min.js')
+  // Bootstrap tooltips
+  script(type='text/javascript', src='js/popper.min.js')
+  // Bootstrap core JavaScript
+  script(type='text/javascript', src='js/bootstrap.min.js')
+  // MDB core JavaScript
+  script(type='text/javascript', src='js/mdb.min.js')
+  // Initializations
+  script(type='text/javascript').
+    // Animations initialization
+    new WOW().init();
+
+    const allProduct = document.getElementById('allProduct');
+    const modalTitle = document.getElementById('modal-title')
+    const elmNameProduct = document.getElementById('nameProductModal');
+    const elmNameCategory = document.getElementById('nameCategoryModal');
+    const inputModalProduct = document.getElementById('idProductModal');
+    const inputModalCategory = document.getElementById('idCategoryModal');
+    const inputModalSlugCategory = document.getElementById('slugCategoryModal');
+
+
+
+
+    allProduct.addEventListener('click', function (e) {
+      const currentButton = e.target
+      const productId = parseInt(currentButton.getAttribute('data-id-product'));
+      const nameProduct = currentButton.textContent;
+      const nameCategory = currentButton.getAttribute('data-name-category');
+      const categoryId = currentButton.getAttribute('data-id-category');
+      const slugCategory = currentButton.getAttribute('data-slug-category');
+      console.log(elmNameCategory)
+      console.log(elmNameProduct)
+      inputModalProduct.value = productId;
+      inputModalCategory.value = categoryId;
+      inputModalSlugCategory.value = slugCategory
+      //- modalTitle.innerHTML = `Do you want add product: ${nameProduct} to Category: ${nameCategory}?`
+      elmNameProduct.innerHTML = nameProduct;
+      elmNameCategory.innerHTML = `${nameCategory}`;
+    })
+
+  //- script(src='https://maps.google.com/maps/api/js')

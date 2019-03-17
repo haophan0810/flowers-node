@@ -11,4 +11,10 @@ router.get('/category-management', adminCategoryController.getAdminCategoryManag
 
 router.post('/category-management', adminCategoryController.postAdminCategoryManagement);
 
+router.get('/category-:categoryNameSlug.:id', adminCategoryController.getAdminCategoryDetail);
+
+router.post('/add-product-to-category', adminCategoryController.postAdminAddProductToCategory);
+
+
+
 module.exports = router;

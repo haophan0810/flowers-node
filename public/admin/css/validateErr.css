@@ -35,3 +35,17 @@
     background-color: #90a86a !important;
     color: white;
 }
+
+.btnOutlineMain {
+    border: 2px solid #a4c078!important;
+}
+
+.btnOutlineMain:hover {
+    border: 2px solid #90a86a!important;
+
+}
+
+.modalInnerTitle {
+    color: #90a86a;
+    font-weight: bold;
+}

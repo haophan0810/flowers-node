@@ -42,7 +42,7 @@ mixin product(item)
                 .row
                   .col-6
                     form(method = 'POST', action='./delete-product')
-                      input(type="hidden", value=idProduct, name='productId')
+                    input(type="hidden", value=idProduct, name='productId')
                       button.btn.btn-danger.w-100.p-1(type='submit') DELETE
                   .col-6  
                     .btn.btn-success.w-100.p-1 EDIT

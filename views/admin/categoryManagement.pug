@@ -1,42 +1,31 @@
 extends ../includes/admin.pug
+
+mixin category(item)
+
+  - const { categoryName, categoryNameSlug, id} = item
+  - const lengthProduct = item.Products.length
+  .col-3
+    a(href=`/admin/category-${categoryNameSlug}.${id}`).btn.btn-outline-dark.w-100.px-1.py-2.btnOutlineMain 
+      .h6 #{categoryName}
+      .text-lowercase (#{lengthProduct === 0? `0 product` : `${lengthProduct} products`})
+
 block head-admin
   link(href='css/validateErr.css', rel='stylesheet')
   
 block nav-admin
   // Main Navigation
+  - const lengthCategory = dataCategories.length
   
   main.pt-5.mx-lg-5
     .container-fluid.mt-5
-      form.border.border-light.p-5.wow.fadeIn(action='/admin/add-category', method='POST')
-        .row
-          .col-6
-            h3.text-center Category
-            // Name
-            lable(for='categoryName') Category Name
-            input#categoryName.form-control.mb-4(type='text'
-            placeholder='Category name'
-            name='categoryName')
-            
-            lable(for='categoryDescription') Category Description
-            .form-group
-              textarea#categoryDescription.form-control.rounded-0(rows='3'
-              placeholder='Category description'
-              name='categoryDescription')
-          .col-6
-            h3 Category Discount
-            .d-flex
-              label(for="dateExpiry").w-50.pt-2 Date Expiry:
-              input#dateExpiry.form-control.mb-4(type='datetime-local', placeholder='Date Expiry', name='dateExpiry')
-            .row
-              .col-6
-                input#basePrice.form-control.mb-4(type='number', placeholder='Discount value', name='discountValue')
-              .col-6
-                select.browser-default.custom-select.mb-4(name='isActiveDiscount')
-                      option(value='', selected='') Active
-                      option(value='true') true
-                      option(value='false') false 
-        .d-flex.justify-content-center              
-          button.btn.bgBtnMain(type='submit') Add Category
+      .h4.text-center.mb-5 All Categories
+        .line-break
+          img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+      .row
+        - for (let i = 0; i<lengthCategory; i++){
+          +category(dataCategories[i])
+        -}
+      
   script(type='text/javascript', src='js/jquery-3.3.1.min.js')
   // Bootstrap tooltips
   script(type='text/javascript', src='js/popper.min.js')
