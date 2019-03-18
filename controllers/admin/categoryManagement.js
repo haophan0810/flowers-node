@@ -113,14 +113,17 @@ module.exports.getAdminCategoryDetail = async (req, res, next) => {
       }]
     });
 
-    res.json(dataCategory);
+    // res.json(dataCategory);
 
     res.render('./admin/categoryDetail', {
       dataProducts: dataProducts,
       dataCategory: dataCategory,
       title: dataCategory[0].categoryName,
       patch: `/admin/category-${categoryNameSlug}.${id}`,
-      categoryId: dataCategory[0].id
+      categoryId: dataCategory[0].id,
+      productCategory: dataCategory[0].Products,
+      categoryName: dataCategory[0].categoryName,
+      categoryNameSlug: dataCategory[0].categoryNameSlug
     })
 
   } catch (error) {
@@ -147,5 +150,26 @@ module.exports.postAdminAddProductToCategory = async (req, res, next) => {
   } catch (error) {
     throw Error(error);
 
+  }
+}
+
+module.exports.postAdminDelProductFromCategory = async (req, res, next) => {
+
+  try {
+    const {
+      productId,
+      categoryId,
+      categoryNameSlug
+    } = req.body
+
+    const destroyProductCategory = await db.ProductCategory.destroy({
+      where: {
+        productId: parseInt(productId),
+        categoryId: parseInt(categoryId)
+      }
+    })
+    res.redirect(`/admin/category-${categoryNameSlug}.${categoryId}`);
+  } catch (error) {
+    throw Error(error);
   }
 }

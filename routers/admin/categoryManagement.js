@@ -15,6 +15,9 @@ router.get('/category-:categoryNameSlug.:id', adminCategoryController.getAdminCa
 
 router.post('/add-product-to-category', adminCategoryController.postAdminAddProductToCategory);
 
+router.post('/delete-product-from-category', adminCategoryController.postAdminDelProductFromCategory);
+
+
 
 
 module.exports = router;
