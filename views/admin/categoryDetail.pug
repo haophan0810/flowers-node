@@ -4,14 +4,29 @@ mixin product(item)
 
   - const { productName, id} = item
   
-  
   .col-2.mb-4
     button.btn.btnOutlineMain.text-dark.px-2.py-1.h-100.w-100.btnProduct(
       type="button"
       data-target="#modalAddProduct"
       data-toggle="modal"
       data-id-product = id
-      data-id-category = dataCategory[0].id
+      data-id-category = categoryId
+      data-name-category = dataCategory[0].categoryName
+      data-slug-category = dataCategory[0].categoryNameSlug
+
+    ) #{productName}
+
+mixin productCategory(item)
+
+  - const { productName, id} = item
+  
+  .col-2.mb-4
+    button.btn.btnOutlineMain.text-dark.px-2.py-1.h-100.w-100.btnProduct(
+      type="button"
+      data-target="#modalDeleteProduct"
+      data-toggle="modal"
+      data-id-product = id
+      data-id-category = categoryId
       data-name-category = dataCategory[0].categoryName
       data-slug-category = dataCategory[0].categoryNameSlug
 
@@ -24,18 +39,22 @@ block head-admin
 block nav-admin
   // Main Navigation
   - const lengthProduct = dataProducts.length
+  
   main.pt-5.mx-lg-5
     .container-fluid.mt-5
       .h4.text-center.mb-5 #{dataCategory[0].categoryName}
         .line-break.mt-2
           img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
       
+      .h5 
       .h5 Add product to category
       span (click each product)
       
       #allProduct.row.mt-3
         - for (let i = 0; i<lengthProduct; i++){
-          +product(dataProducts[i])
+          if (!dataProducts[i].Categories.find( obj => obj.id === categoryId))
+            +product(dataProducts[i])
+          
         -}
       #modalAddProduct.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
         .modal-dialog(role='document')
@@ -51,6 +70,24 @@ block nav-admin
               button.btn.btn-secondary(type='button', data-dismiss='modal') Close
               form.wow.fadeIn(action='/admin/add-product-to-category', method='POST')
                 button.btn.btn-primary.bgBtnMain(type='submit') ADD
+                input#idProductModal(type="hidden", name='productId')
+                input#idCategoryModal(type="hidden", name='categoryId')
+                input#slugCategoryModal(type="hidden", name='categoryNameSlug')
+      
+      #modalDeleteProduct.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header.d-block
+              h5#modal-title.modal-title.text-center
+              | Do you want to remove: 
+              span#nameProductModal.modalInnerTitle
+              |   from the category:  
+              span#nameCategoryModal.modalInnerTitle
+              |  ?
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+              form.wow.fadeIn(action='/admin/add-product-to-category', method='POST')
+                button.btn.btn-danger(type='submit') Delete
                 input#idProductModal(type="hidden", name='productId')
                 input#idCategoryModal(type="hidden", name='categoryId')
                 input#slugCategoryModal(type="hidden", name='categoryNameSlug')

@@ -98,22 +98,29 @@ module.exports.getAdminCategoryDetail = async (req, res, next) => {
       }]
     });
 
+    // const dataProducts = await db.Product.findAll({
+    //   include: [{
+    //     model: db.Category,
+    //       where: {
+    //       id: parseInt(id)
+    //       }
+    //   }]
+    // });
+
     const dataProducts = await db.Product.findAll({
       include: [{
-        model: db.Category,
-          where: {
-            id: null
-          }
+        model: db.Category
       }]
     });
 
-    // res.json(dataProducts);
+    res.json(dataCategory);
 
     res.render('./admin/categoryDetail', {
       dataProducts: dataProducts,
       dataCategory: dataCategory,
       title: dataCategory[0].categoryName,
-      patch: `/admin/category-${categoryNameSlug}.${id}`
+      patch: `/admin/category-${categoryNameSlug}.${id}`,
+      categoryId: dataCategory[0].id
     })
 
   } catch (error) {
