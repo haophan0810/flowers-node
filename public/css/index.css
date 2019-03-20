@@ -238,3 +238,8 @@ hr {
 .img-adv {
     width: 100%;
 }
+
+
+.transitionElm {
+    transition: 0.4s;
+}

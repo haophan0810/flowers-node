@@ -108,6 +108,9 @@ module.exports.getAdminCategoryDetail = async (req, res, next) => {
     // });
 
     const dataProducts = await db.Product.findAll({
+      order: [
+        ['updated_at', 'DESC']
+      ],
       include: [{
         model: db.Category
       }]

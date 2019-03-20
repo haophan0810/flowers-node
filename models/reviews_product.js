@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     reviewContent: {
       type: DataTypes.TEXT,
-      field: 'review_comment'
+      field: 'review_content'
     },
     isActive: {
       type: DataTypes.BOOLEAN,

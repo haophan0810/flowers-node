@@ -1,17 +1,16 @@
 extends includes/layout.pug
     
 
-mixin product(item)
-    - let nameProductSlug = item.productNameSlug
-    - let nameProduct = item.productName
-    - let idProduct = item.id
-    - let imageSrc = item.ProductImages[0].imageSrc
-    - let nameImageProduct = item.ProductImages[0].imageName
-    - let lengthProductDiscount = item.ProductDiscounts.length
-    - let isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
-    - let discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
-    - let costBase = item.ProductPricings[0].basePrice
-    - let discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
+mixin product(item, idCategory)
+    - const nameProductSlug = item.productNameSlug
+    - const nameProduct = item.productName
+    - const idProduct = item.id
+    - const imageSrc = item.ProductImages[0].imageSrc
+    - const nameImageProduct = item.ProductImages[0].imageName
+    - const lengthProductDiscount = item.ProductDiscounts.length
+    - const isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
+    - const costBase = item.ProductPricings[0].basePrice
+    - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
     - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
     - costDiscount = Math.round(costDiscount)
 
@@ -19,13 +18,13 @@ mixin product(item)
     .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
-                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
+                a.card-link(href=`product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
+                    img.productImg(src= imageSrc, alt=item.ProductImages.imageName)
                     if lengthProductDiscount>0 && isActiveProductDiscount
                         .lable-promotion
-                            .btn.btn-danger.btn--sale -#{discountUnit}
+                            .btn.btn-danger.btn--sale -#{discountValue} %
             .card-body
-                a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
+                a.card-link(href=`product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
                     h5.card-title.card--title #{nameProduct}
                 p.card-text
                     - for(let i = 0 ; i<item.productStar; i++){
@@ -191,7 +190,7 @@ block nav
 
             .row
                 - for (let i = 0; i<8; i++){
-                    +product(productsHot.Products[i])
+                    +product(productsHot.Products[i], 1)
                 -}
                 
     section#adv-1
@@ -205,7 +204,7 @@ block nav
 
             .row
                 - for (let i = 0; i<8; i++){
-                    +product(productsNew.Products[i])
+                    +product(productsNew.Products[i], 2)
                 -}
 
     section#adv-2
@@ -219,7 +218,7 @@ block nav
 
             .row
                 - for (let i = 0; i<8; i++){
-                    +product(productsSale.Products[i])
+                    +product(productsSale.Products[i], 3)
                 -}
     
     //- main.mt-5.pt-4

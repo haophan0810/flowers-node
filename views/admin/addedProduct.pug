@@ -1,0 +1,112 @@
+extends ../includes/admin.pug
+
+
+
+block head-admin
+  link(href='css/validateErr.css', rel='stylesheet')
+  
+block nav-admin
+
+  
+  main.pt-5.mx-lg-5
+    .container-fluid.mt-5
+      .h5 Added
+      // Accordion wrapper
+      #accordionEx194.accordion.md-accordion.accordion-3.z-depth-1-half(role='tablist', aria-multiselectable='true')
+        ul.list-unstyled.d-flex.justify-content-center.pt-5.red-text
+          li
+            i.fas.fa-anchor.mr-3.fa-2x(aria-hidden='true')
+          li
+            i.far.fa-life-ring.mr-3.fa-2x(aria-hidden='true')
+          li
+            i.far.fa-star.fa-2x(aria-hidden='true')
+        h2.text-center.text-uppercase.red-text.py-4.px-3 Hello my friends, I am the nicest accordion!
+        hr.mb-0
+        // Accordion card
+        .card
+          // Card header
+          #heading4.card-header(role='tab')
+            a(data-toggle='collapse', data-parent='#accordionEx194', href='#collapse4', aria-expanded='true', aria-controls='collapse4')
+              h3.mb-0.red-text
+                | How awesome accordion I am? 
+                .animated-icon1.float-right.mt-1
+                  i.fas.fa-angle-down
+
+          // Card body
+          #collapse4.collapse.show(role='tabpanel', aria-labelledby='heading4', data-parent='#accordionEx194')
+            .card-body.pt-0
+              p
+                | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                | wolf moon officia aute,
+                | non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                | 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                | shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                | sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                | farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them
+                | accusamus labore sustainable VHS.
+        // Accordion card
+        // Accordion card
+        .card
+          // Card header
+          #heading5.card-header(role='tab')
+            a.collapsed(data-toggle='collapse', data-parent='#accordionEx194', href='#collapse5', aria-expanded='false', aria-controls='collapse5')
+              h3.mb-0.red-text
+                | You&apos;re the greatest accordion! 
+                .animated-icon1.float-right.mt-1
+                  span
+                  span
+                  span
+          // Card body
+          #collapse5.collapse(role='tabpanel', aria-labelledby='heading5', data-parent='#accordionEx194')
+            .card-body.pt-0
+              p
+                | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                | wolf moon officia aute,
+                | non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                | 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                | shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                | sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                | farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them
+                | accusamus labore sustainable VHS.
+        // Accordion card
+        // Accordion card
+        .card
+          // Card header
+          #heading6.card-header(role='tab')
+            a.collapsed(data-toggle='collapse', data-parent='#accordionEx194', href='#collapse6', aria-expanded='false', aria-controls='collapse6')
+              h3.mb-0.red-text
+                | Thank you my dear! 
+                .animated-icon1.float-right.mt-1
+                  span
+                  span
+                  span
+          // Card body
+          #collapse6.collapse(role='tabpanel', aria-labelledby='heading6', data-parent='#accordionEx194')
+            .card-body.pt-0
+              p
+                | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                | wolf moon officia aute,
+                | non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                | 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                | shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                | sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                | farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them
+                | accusamus labore sustainable VHS.
+        // Accordion card
+      // /.Accordion wrapper
+
+      
+  // JQuery
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  // Bootstrap tooltips
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js')
+  // Bootstrap core JavaScript
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js')
+  // MDB core JavaScript
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js')
+  script(type='text/javascript').
+    // Animations initialization
+    new WOW().init();
+
+
+  //- script(src='https://maps.google.com/maps/api/js')

@@ -40,18 +40,21 @@ module.exports.getIndex = async (req, res, next) => {
       dataUser = await db.User.findAll({
         where: {
           id: parseInt(userId)
-        }
-      })
+        },
+        include: [{
+          model: db.UserProfile
+        }]
+      });
     }
     // console.log('product hot',productsHot.Products);
-    // res.status(200).json(dataProducts);
+    // res.status(200).json(dataUser);
     res.render('index', {
         productsHot: productsHot,
         productsNew: productsNew,
         productsSale: productsSale,
         title: 'Flowers-shop | Home',
         loggedIn : dataUser
-    })
+    });
   } catch (error) {
     throw Error(error.message);
   }

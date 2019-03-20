@@ -9,11 +9,9 @@ mixin product(item)
     - const nameImageProduct = item.ProductImages[0].imageName
     - const lengthProductDiscount = item.ProductDiscounts.length
     - const isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
-    - const discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
     - const costBase = item.ProductPricings[0].basePrice
     - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
     - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
-
     - costDiscount = Math.round(costDiscount)
 
     
@@ -21,10 +19,10 @@ mixin product(item)
         .card
             .card-img-top.product__relative
                 a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
-                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
+                    img.productImg(src=imageSrc, alt=item.ProductImages.imageName)
                     if lengthProductDiscount>0 && isActiveProductDiscount
                         .lable-promotion
-                            .btn.btn-danger.btn--sale -#{discountUnit}
+                            .btn.btn-danger.btn--sale -#{discountValue} %
             .card-body
                 a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
                     h5.card-title.card--title #{nameProduct}
@@ -37,10 +35,10 @@ mixin product(item)
                     - }
                 p.card-text
                     if lengthProductDiscount>0 && isActiveProductDiscount 
-                        span.productCostDiscount.mr-2.cost #{costDiscount} $
-                        span.productCostBase.productCostBase--line-through #{costBase} $
+                      span.productCostDiscount.mr-2.cost #{costDiscount} $
+                      span.productCostBase.productCostBase--line-through #{costBase} $
                     else     
-                        span.productCostBase.cost #{costBase} $
+                      span.productCostBase.cost #{costBase} $
 
 mixin comment(user)
   .col-lg-3.p-4
@@ -65,6 +63,15 @@ block head
 
 block nav
   - const lengthProductsAdv = productsAdv.length ? 4 : productsAdv.length
+  - const productQuantity = product[0].productQuantity
+  - const lengthProductDiscount = product[0].ProductDiscounts.length
+  - const isActiveProductDiscount = lengthProductDiscount ? product[0].ProductDiscounts[0].isActive : false
+  - const costBase = product[0].ProductPricings[0].basePrice
+  - const discountValue = lengthProductDiscount ? product[0].ProductDiscounts[0].discountValue : 0
+  - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
+  - costDiscount = Math.round(costDiscount)
+
+  
   // Main layout
   main.mt-5.pt-4
     .container.dark-grey-text.mt-5
@@ -79,21 +86,38 @@ block nav
           // Content
           .p-4
             .mb-3
-              a(href='')
-                span.badge.purple.mr-1 Category 2
-              a(href='')
-                span.badge.blue.mr-1 New
-              a(href='')
-                span.badge.red.mr-1 Bestseller
+              div(class= isActiveProductDiscount ? 'd-block' : 'd-none')
+                span.badge.red.mr-1 Sale -#{discountValue}%
             p.lead
-              span.mr-1
-                del $200
-              span $100
+              if isActiveProductDiscount
+                span#costDiscount.productCostDiscount.mr-2.cost.h5.transitionElm(data-unit= costDiscount) #{costDiscount} $
+                span#costBaseDiscount.productCostBase.productCostBase--line-through.h6.transitionElm(data-unit=costBase) #{costBase} $
+                span.text-danger.ml-2.h6
+                  |(tiết kiệm được 
+                  span#savingMoney.transitionElm  #{costBase - costDiscount}
+                  |$)
+              else     
+                span#costBase.productCostBase.cost.h6.transitionElm #{costBase} $
             p.lead.font-weight-bold #{product[0].productName}
             p.mb-5 #{product[0].productDescription}
             form.d-flex.justify-content-left
               // Default input
-              input.form-control(type='number', value='1', aria-label='Search', style='width: 100px', max=product[0].productQuantity)
+              input#productQuantity.form-control(
+                type='number'
+                value='1'
+                aria-label='Search'
+                style='width: 100px'
+                is-discount=isActiveProductDiscount.toString()
+                min='1'
+                max=productQuantity
+                name='productQuantity')
+              input(type="hidden", value=idProduct, name='productId')
+              input(type="hidden", value=totalCost, name='price')
+              input(type="hidden"
+                value= loggedIn ?  userId : 'guest'
+                name=loggedIn?  'userId' : 'guest' )
+
+
               button.btn.bgBtnMain.btn-md.my-0.p(type='submit')
                 | Add to cart
                 i.fas.fa-shopping-cart.ml-1
@@ -105,27 +129,21 @@ block nav
       .row.d-flex.justify-content-center.wow.fadeIn
         // Grid column
         .col-md-6.text-center
-          h2.my-4.h4 Additional information
+          h2.my-4.h4 More Products
             .line-break.text-center
               img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
-          
-        // Grid column
-      // Grid row
-      // Grid row
+
       .row
         - for (let i = 0; i<lengthProductsAdv; i++){
           +product(productsAdv[i])
         -}
-    
-      
-
     section.container.dark-grey-text.mt-5
       h2.m-3.h4 Customers reviews
       .row.mt-5
         .col-lg-7
           .row
             .col-lg-5
-              .tex-center
+              .text-center
                 .h5 Average Review
                 p.total-review 4.5/5
                 div
@@ -175,9 +193,6 @@ block nav
                 .progress.md-progress.w-75.mr-3
                   .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
                 .percentVote 50%
-
-
-
 
         .col-lg-5
           .reviewsNoLogin(class= userLogin ? 'displayNone' : '')
@@ -230,3 +245,42 @@ block nav
 
       
 block footer
+  script(type='text/javascript').
+    const inputProductQuantity = document.getElementById('productQuantity');
+    const isDiscount = inputProductQuantity.getAttribute('is-discount');
+    let costBaseDOM, costDiscountDOM, savingMoneyDOM;
+    let unitBase, unitDiscount
+    if(isDiscount === 'true') {
+      costBaseDOM = document.getElementById('costBaseDiscount');
+      costDiscountDOM = document.getElementById('costDiscount');
+      savingMoneyDOM = document.getElementById('savingMoney');
+
+      unitBase = parseInt(costBaseDOM.getAttribute('data-unit'));
+      unitDiscount = parseInt(costDiscountDOM.getAttribute('data-unit'));
+
+    }else {
+      costBaseDOM = document.getElementById('costBase');
+      unitBase = parseInt(costBaseDOM.getAttribute('data-unit'));
+
+
+    }
+    console.log(inputProductQuantity);
+    inputProductQuantity.addEventListener('input', (e) => {
+      const value = parseInt(e.target.value);
+      console.log(unitBase);
+      if (isDiscount === 'true') {
+        const totalCost = value * unitBase;
+        const totalDiscount = value * unitDiscount;
+        const savingMoney = totalCost - totalDiscount;
+
+        costBaseDOM.innerHTML = `${totalCost}$`;
+        costDiscountDOM.innerHTML = `${totalDiscount}$`;
+        savingMoneyDOM.innerHTML = savingMoney
+      }else {
+        const totalCost = value * unitBase;
+        costBaseDOM.innerHTML = `${totalCost}$`;
+      }
+      
+      
+    })
+    

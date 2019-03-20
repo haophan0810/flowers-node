@@ -1,4 +1,4 @@
-/* .validate {
+.validate {
     border: 1px solid #e08484;
 }
 
@@ -48,4 +48,15 @@
 .modalInnerTitle {
     color: #90a86a;
     font-weight: bold;
-} */
+}
+
+@media (min-width: 1200px) {
+    .fixNavMedia {
+        padding-left: 0px;
+    }
+}
+@media (max-width: 1199.98px){
+    .sidebar-fixed {
+        display: block;
+    }
+}

@@ -6,16 +6,20 @@ const Op = Sequelize.Op
 
 exports.getProductDescription = async (req, res, next) => {
     //thieu truong hop tim ten
-    const {
-        productNameSlug,
-        idProduct,
-        idCategory
-    } = req.params;
+    
     try {
+
+        const {
+            productNameSlug,
+            idProduct,
+            idCategory
+        } = req.params;
+
+        console.log(req.params)
         const product = await db.Product.findAll({
             where: {
                 id: parseInt(idProduct),
-                productNameSlug: productNameSlug.toLowerCase()
+                productNameSlug: productNameSlug
             },
             include: [{
                     model: db.ProductDiscount
@@ -28,7 +32,7 @@ exports.getProductDescription = async (req, res, next) => {
                 }
             ]
         });
-        const comments = await db.Comment.findAll({
+        const reviews = await db.ReviewsProduct.findAll({
             where: {
                 productId: parseInt(idProduct)
             },
@@ -102,22 +106,24 @@ exports.getProductDescription = async (req, res, next) => {
                 where: {
                     id: parseInt(userId)
                 }
-            })
+            });
         }
+        console.log(userId, 'usderusudsu')
         // console.log('sameProducts', sameProducts)
-        // res.status(200).json(comments);
+        // res.status(200).json(product);
 
         res.status(200).render('productDescription', {
             product: product,
-            loggedIn: dataUser,
+            loggedIn: dataUser===undefined ? false : true,
             title: product[0].productName,
             productsAdv: parseInt(idCategory) === 0 ? sameProducts : sameProducts[0].Products,
             idCategory: parseInt(idCategory),
-            commentsProduct: comments,
-            userLogin: req.session.userId
+            reviewsProduct: reviews,
+            userId: userId===undefined ? 'guest' : userId,
+            idProduct: idProduct
         })
     } catch (error) {
-        res.send('404');
+        // res.send('404');
         throw Error(error.message);
     }
 

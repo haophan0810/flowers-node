@@ -6,12 +6,16 @@ head
   title #{title}
   // Font Awesome
   link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.6.3/css/all.css')
+  link(rel='shortcut icon', href='https://res.cloudinary.com/haophan/image/upload/v1547869659/icon-flower.ico')
+
   // Bootstrap core CSS
   link(href='css/bootstrap.min.css', rel='stylesheet')
   // Material Design Bootstrap
   link(href='css/mdb.min.css', rel='stylesheet')
   // Your custom styles (optional)
   link(href='css/style.min.css', rel='stylesheet')
+  link(href='css/admin.css', rel='stylesheet')
+
   style.
     .map-container {
     overflow: hidden;
@@ -69,26 +73,51 @@ body
     // Sidebar
     .sidebar-fixed.position-fixed
       a.logo-wrapper.waves-effect
-        img.img-fluid(src='', alt='')
+        img.img-fluid(src='https://res.cloudinary.com/haophan/image/upload/v1547865735/logo-2.png', alt='flowers-shop')
+      
       .list-group.list-group-flush
-        a.list-group-item.active.waves-effect(href='#')
+        a.list-group-item.waves-effect.bgBtnMain.card(href='#')
           i.fas.fa-chart-pie.mr-3
           | Dashboard
-        a.list-group-item.list-group-item-action.waves-effect(href='#')
-          i.fas.fa-user.mr-3
-          | Profile
-        a.list-group-item.list-group-item-action.waves-effect(href='#')
-          i.fas.fa-table.mr-3
-          | Tables
-        a.list-group-item.list-group-item-action.waves-effect(href='#')
-          i.fas.fa-map.mr-3
-          | Maps
-        a.list-group-item.list-group-item-action.waves-effect(href='#')
-          i.fas.fa-money-bill-alt.mr-3
-          | Orders
-    // Sidebar
-  // Main Navigation
-  // Main layout
+        
+        
+        #accordionEx194.accordion.md-accordion.accordion-3(role='tablist', aria-multiselectable='true')          
+          .card
+            // Card header
+            #heading1.card-header(role='tab')
+              a(data-toggle='collapse', data-parent='#accordionEx194', href='#collapse1', aria-expanded='true', aria-controls='collapse4')
+                h6.mb-0.red-text                  
+                  i.fas.fa-archive.mr-1
+                  | Categories
+                  .animated-icon1.float-right.mt-1
+                    i.fas.fa-angle-down
+            // Card body
+            #collapse1.collapse(role='tabpanel', aria-labelledby='heading1', data-parent='#accordionEx194')
+              a(href="/admin/category-management").card-body.d-block.py-1
+                span All Categories
+              a(href="/admin/add-category").card-body.d-block.py-1
+                span Add Category
+              a(href="/admin/category-management").card-body.d-block.py-1
+                span Category Detail
+              
+          .card
+            // Card header
+            #heading5.card-header(role='tab')
+              a(data-toggle='collapse', data-parent='#accordionEx194', href='#collapse5', aria-expanded='true', aria-controls='collapse4')
+                h6.mb-0.red-text
+                  i.fab.fa-product-hunt.mr-1
+                  | Products
+                  .animated-icon1.float-right.mt-1
+                    i.fas.fa-angle-down
+            // Card body
+            #collapse5.collapse.show(role='tabpanel', aria-labelledby='heading4', data-parent='#accordionEx194')
+              a(href="/admin/products-management").card-body.d-block.py-1
+                span All Products
+              a(href="/admin/add-product").card-body.d-block.py-1
+                span Add Product
+              a(href="/admin/category-management").card-body.d-block.py-1
+                span Category Detail
+
 block nav-admin
   
   footer.page-footer.text-center.font-small.primary-color-dark.darken-2.mt-4.wow.fadeIn

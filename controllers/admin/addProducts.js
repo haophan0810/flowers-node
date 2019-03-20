@@ -1,57 +1,64 @@
 const db = require('../../models');
 
 module.exports.getAddProduct = (req, res, next) => {
+    // const auth = (req, res, next) => {
+//   if (req.headers && req.headers.auth && req.headers.auth.split(' ')[0] === 'JWT') {
+//     jwt.verify(req.headers.auth.split(' ')[1], SECRET, (error, decoded) => {
+//       if (error) return res.status(401).send()
+//       req.user = decoded
+//       console.log('authenticated as ', decoded.username)
+//       next()
+//     })
+//   } else return res.status(401).send()
+// }
+    console.log('1', req.headers);
+    console.log('2', req.headers.Authorization);
+    console.log('3', req.headers['Authorization']);
+
     res.render('./admin/addProduct', {
         title: 'Add product'
     });
 }
 
 module.exports.postAddProduct = async (req, res, next) => {
-    const currentdate = new Date();
-    Date.prototype.today = function () {
-        return ((this.getDate() < 10) ? "0" : "") + this.getDate() + "-" + (((this.getMonth() + 1) < 10) ? "0" : "") + (this.getMonth() + 1) + "-" + this.getFullYear();
-    }
-    Date.prototype.timeNow = function () {
-        return ((this.getHours() < 10) ? "0" : "") + this.getHours() + ":" + ((this.getMinutes() < 10) ? "0" : "") + this.getMinutes() + ":" + ((this.getSeconds() < 10) ? "0" : "") + this.getSeconds();
-    }
-
-    const {
-        productName,
-        productQuantity,
-        productDescription,
-        imageName,
-        imageSrc,
-        timeExpired,
-        isActive,
-        basePrice,
-        isActiveDiscount,
-        discountValue
-    } = req.body;
-
-    const productNameSlug = productName
-        .trim()
-        .toLowerCase()
-        .split(' ')
-        .filter(item => item)
-        .join('-');
-
-    const dataProduct = {
-        productName,
-        productNameSlug,
-        productStar: 5,
-        productQuantity,
-        productDescription
-    };
-
-    console.log(req.body);
+    
 
     try {
+        const {
+            productName,
+            productQuantity,
+            productDescription,
+            imageName,
+            imageSrc,
+            timeExpired,
+            isActive,
+            basePrice,
+            isActiveDiscount,
+            discountValue
+        } = req.body;
+    
+        const productNameSlug = productName
+            .trim()
+            .toLowerCase()
+            .split(' ')
+            .filter(item => item)
+            .join('-');
+    
+        const dataProduct = {
+            productName,
+            productNameSlug,
+            productStar: 5,
+            productQuantity,
+            productDescription
+        };
+    
+        console.log(req.body);
         const dataProductResponce = await db.Product.create(dataProduct);
         const productId = parseInt(dataProductResponce.id);
         // const productId = 10
         const dataImage = {
             productId,
-            imageName,
+            imageName:  imageName === ''? 'Main': imageName,
             imageSrc
         };
 
@@ -63,7 +70,7 @@ module.exports.postAddProduct = async (req, res, next) => {
             isActive: isActive === 'true'? true : false
         };
 
-        db.ProductPricing.create(dataProductPricing);
+        await db.ProductPricing.create(dataProductPricing);
 
         if(discountValue) {
             const dataProductDiscount = {
@@ -73,8 +80,12 @@ module.exports.postAddProduct = async (req, res, next) => {
                 isActive: isActiveDiscount === 'true' ? true : false
             };
 
-            db.ProductDiscount.create(dataProductDiscount);
+            await db.ProductDiscount.create(dataProductDiscount);
         }
+
+        res.render('./admin/addedProduct', {
+            title: 'Added Product'
+        });
 
     } catch (error) {
         throw Error(error);

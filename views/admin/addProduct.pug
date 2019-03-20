@@ -72,57 +72,16 @@ block nav-admin
                       option(value='true') true
                       option(value='false') false 
         .d-flex.justify-content-center              
-          button.btn.btn-success(type='submit') Add Product
+          button.btn.bgBtnMain(type='submit') Add Product
 
-
-  footer.page-footer.text-center.font-small.primary-color-dark.darken-2.mt-4.wow.fadeIn
-    // Call to action
-    .pt-4
-      a.btn.btn-outline-white(href='https://mdbootstrap.com/docs/jquery/getting-started/download/', target='_blank', role='button')
-        | Download MDB
-        i.fas.fa-download.ml-2
-      a.btn.btn-outline-white(href='https://mdbootstrap.com/education/bootstrap/', target='_blank', role='button')
-        | Start free tutorial
-        i.fas.fa-graduation-cap.ml-2
-    // /.Call to action
-    hr.my-4
-    // Social icons
-    .pb-4
-      a(href='https://www.facebook.com/mdbootstrap', target='_blank')
-        i.fab.fa-facebook-f.mr-3
-      a(href='https://twitter.com/MDBootstrap', target='_blank')
-        i.fab.fa-twitter.mr-3
-      a(href='https://www.youtube.com/watch?v=7MUISDJ5ZZ4', target='_blank')
-        i.fab.fa-youtube.mr-3
-      a(href='https://plus.google.com/u/0/b/107863090883699620484', target='_blank')
-        i.fab.fa-google-plus.mr-3
-      a(href='https://dribbble.com/mdbootstrap', target='_blank')
-        i.fab.fa-dribbble.mr-3
-      a(href='https://pinterest.com/mdbootstrap', target='_blank')
-        i.fab.fa-pinterest.mr-3
-      a(href='https://github.com/mdbootstrap/bootstrap-material-design', target='_blank')
-        i.fab.fa-github.mr-3
-      a(href='http://codepen.io/mdbootstrap/', target='_blank')
-        i.fab.fa-codepen.mr-3
-    // Social icons
-    // Copyright
-    .footer-copyright.py-3
-      | &copy; 2018 Copyright:
-      a(href='https://mdbootstrap.com/education/bootstrap/', target='_blank')
-        | MDBootstrap.com
-    // /.Copyright
-  // /.Footer
-  // SCRIPTS
-  // JQuery
-  script(type='text/javascript', src='js/jquery-3.3.1.min.js')
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
   // Bootstrap tooltips
-  script(type='text/javascript', src='js/popper.min.js')
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js')
   // Bootstrap core JavaScript
-  script(type='text/javascript', src='js/bootstrap.min.js')
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js')
   // MDB core JavaScript
-  script(type='text/javascript', src='js/mdb.min.js')
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js')
   // Initializations
   script(type='text/javascript').
     // Animations initialization
     new WOW().init();
-  script(src='https://maps.google.com/maps/api/js')

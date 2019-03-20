@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs');
-const uuidv4 = require('uuid/v4');
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op
+// const uuidv4 = require('uuid/v4');
 const {
     validationResult
 } = require('express-validator/check');
@@ -39,15 +42,34 @@ exports.postRegister = async (req, res, next) => {
                 password: password,
                 confirmPassword: confirmPassword
             },
-            validRegister: 'username or email does exits'
+            validRegister: false
         })
     }
     try {
+        const checkUserExist = await db.User.findAll({
+            where: {
+                [Op.or]: [{username: username}, {email: email}]
+            }
+        })
+        console.log(checkUserExist);
+        if(checkUserExist.length !== 0) {
+            return res.status(422).render('register', {
+                title: 'register fail',
+                validationErrors: errors.array(),
+                oldData: {
+                    username: username,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword
+                },
+                validRegister: 'The username or password already exists'
+            })
+        }
         const passwordSalt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, passwordSalt);
 
         const response = await db.User.create({
-            sid: uuidv4(),
+            // sid: uuidv4(),
             username,
             email,
             passwordHash,

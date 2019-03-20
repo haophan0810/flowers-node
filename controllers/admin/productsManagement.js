@@ -26,7 +26,7 @@ module.exports.getAllProductsAdmin = async (req, res, next) => {
                     }
                 ]
             });
-            res.status(200).json(products);
+            // res.status(200).json(products);
 
             res.render('./admin/productsManagement', {
                 maxPage: Math.ceil(products.length / 12),
