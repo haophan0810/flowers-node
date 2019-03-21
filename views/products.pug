@@ -8,7 +8,7 @@ mixin product(item)
     - const nameImageProduct = item.ProductImages[0].imageName
     - const lengthProductDiscount = item.ProductDiscounts.length
     - const isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
-    - const discountUnit = lengthProductDiscount ? item.ProductDiscounts[0].discountUnit : 0
+    
     - const costBase = item.ProductPricings[0].basePrice
     - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
     - const idCategory = item.Categories.length ? item.Categories[0].id : 0
@@ -20,10 +20,10 @@ mixin product(item)
         .card
             .card-img-top.product__relative
                 a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
-                    img.productImg(src='https://res.cloudinary.com/haophan/image/upload/v1547547257/LL19.jpg', alt=item.ProductImages.imageName)
-                    if lengthProductDiscount>0 && isActiveProductDiscount
+                    img.productImg(src=imageSrc, alt=nameImageProduct)
+                    if isActiveProductDiscount
                         .lable-promotion
-                            .btn.btn-danger.btn--sale -#{discountUnit}
+                            .btn.btn-danger.btn--sale -#{discountValue}%
             .card-body
                 a.card-link(href=`product/${nameProductSlug}.${idProduct}.html`)
                     h5.card-title.card--title #{nameProduct}
@@ -35,7 +35,7 @@ mixin product(item)
                         i.fas.fa-star.star--disable
                     - }
                 p.card-text
-                    if lengthProductDiscount>0 && isActiveProductDiscount 
+                    if isActiveProductDiscount
                         span.productCostDiscount.mr-2.cost #{costDiscount} $
                         span.productCostBase.productCostBase--line-through #{costBase} $
                     else     
@@ -49,7 +49,7 @@ block head
 block nav  
     - let currentPage = (indexPage === 1)? 2:indexPage
     main.container.products#products
-        h2.product-title.mb-5.text-center All Products
+        h2.product-title.mb-5.text-center #{titleCategory}
             .line-break.text-center
                 img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
         .row
@@ -64,7 +64,7 @@ block nav
             li.page-item(class= maxPage===1 ? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${currentPage-1}`, class= indexPage===1? 'page-item--active' : '') #{currentPage-1}
 
-            li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
+            li.page-item(class= indexPage>maxPage ? 'page-item--hidden': '')
                 a.page-link(href=`/products?page=${currentPage}`, class= indexPage===1? '' : 'page-item--active') #{currentPage}
                 
             li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')

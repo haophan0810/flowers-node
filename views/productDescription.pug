@@ -93,7 +93,7 @@ block nav
                 span#costDiscount.productCostDiscount.mr-2.cost.h5.transitionElm(data-unit= costDiscount) #{costDiscount} $
                 span#costBaseDiscount.productCostBase.productCostBase--line-through.h6.transitionElm(data-unit=costBase) #{costBase} $
                 span.text-danger.ml-2.h6
-                  |(tiết kiệm được 
+                  |(Save 
                   span#savingMoney.transitionElm  #{costBase - costDiscount}
                   |$)
               else     
@@ -112,12 +112,11 @@ block nav
                 max=productQuantity
                 name='productQuantity')
               input(type="hidden", value=idProduct, name='productId')
-              input(type="hidden", value=totalCost, name='price')
+              input#inputTotalCost(type="hidden"
+                value=isActiveProductDiscount? costDiscount : costBase, name='price')
               input(type="hidden"
                 value= loggedIn ?  userId : 'guest'
                 name=loggedIn?  'userId' : 'guest' )
-
-
               button.btn.bgBtnMain.btn-md.my-0.p(type='submit')
                 | Add to cart
                 i.fas.fa-shopping-cart.ml-1
@@ -140,86 +139,88 @@ block nav
     section.container.dark-grey-text.mt-5
       h2.m-3.h4 Customers reviews
       .row.mt-5
-        .col-lg-7
-          .row
-            .col-lg-5
-              .text-center
-                .h5 Average Review
-                p.total-review 4.5/5
-                div
-                  i.fas.fa-star
-                  i.fas.fa-star
-                  i.fas.fa-star
-                  i.fas.fa-star
-                  i.fas.fa-star
-                p 10 nguoi danh gia
-            .col-lg-7
-              .itemRate.d-flex.alignItemCenter
-                .ratingNum.mr-3
-                  span.numberVote.mr-2 5
-                  i.fas.fa-star
-                .progress.md-progress.w-75.mr-3
-                  .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-                .percentVote 50%
+        .col-lg-4
+          
+          .text-center
+            .h5 Average Review
+            p.total-review 4.5/5
+            div
+              i.fas.fa-star
+              i.fas.fa-star
+              i.fas.fa-star
+              i.fas.fa-star
+              i.fas.fa-star
+            p 10 nguoi danh gia
+        .col-lg-4
+          .itemRate.d-flex.alignItemCenter
+            .ratingNum.mr-3
+              span.numberVote.mr-2 5
+              i.fas.fa-star
+            .progress.md-progress.w-75.mr-3
+              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
+            .percentVote 50%
 
-              .itemRate.d-flex.alignItemCenter
-                .ratingNum.mr-3
-                  span.numberVote.mr-2 5
-                  i.fas.fa-star
-                .progress.md-progress.w-75.mr-3
-                  .progress-bar(role='progressbar', style='width: 75%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-                .percentVote 50%
+          .itemRate.d-flex.alignItemCenter
+            .ratingNum.mr-3
+              span.numberVote.mr-2 5
+              i.fas.fa-star
+            .progress.md-progress.w-75.mr-3
+              .progress-bar(role='progressbar', style='width: 75%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
+            .percentVote 50%
 
-              .itemRate.d-flex.alignItemCenter
-                .ratingNum.mr-3
-                  span.numberVote.mr-2 5
-                  i.fas.fa-star
-                .progress.md-progress.w-75.mr-3
-                  .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-                .percentVote 50%
+          .itemRate.d-flex.alignItemCenter
+            .ratingNum.mr-3
+              span.numberVote.mr-2 5
+              i.fas.fa-star
+            .progress.md-progress.w-75.mr-3
+              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
+            .percentVote 50%
 
-              .itemRate.d-flex.alignItemCenter
-                .ratingNum.mr-3
-                  span.numberVote.mr-2 5
-                  i.fas.fa-star
-                .progress.md-progress.w-75.mr-3
-                  .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-                .percentVote 50%
+          .itemRate.d-flex.alignItemCenter
+            .ratingNum.mr-3
+              span.numberVote.mr-2 5
+              i.fas.fa-star
+            .progress.md-progress.w-75.mr-3
+              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
+            .percentVote 50%
 
-              .itemRate.d-flex.alignItemCenter
-                .ratingNum.mr-3
-                  span.numberVote.mr-2 5
-                  i.fas.fa-star
-                .progress.md-progress.w-75.mr-3
-                  .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-                .percentVote 50%
+          .itemRate.d-flex.alignItemCenter
+            .ratingNum.mr-3
+              span.numberVote.mr-2 5
+              i.fas.fa-star
+            .progress.md-progress.w-75.mr-3
+              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
+            .percentVote 50%
 
-        .col-lg-5
-          .reviewsNoLogin(class= userLogin ? 'displayNone' : '')
-            span.pl-5 Login to review product
-            a(href='/login').ml-2.btn.bgBtnMain login
-          .reviewLogged.d-flex.justify-content-end(class= userLogin ? '' : 'displayNone')
-            form.text-center.w-75
-              .h4.text-center Send Review
-              .voteReview.d-flex
-                span.mr-3 vote
-                p
-                  i.fas.fa-star.popovers
-                  i.fas.fa-star.popovers
-                  i.fas.fa-star.popovers
-                  i.fas.fa-star.popovers
-                  i.fas.fa-star.popovers
-              lable.d-flex(for='commentTitle') Title
-              input#commentTitle.form-control.mb-4(type='text'
-                placeholder='Title review'
-                name='commentTitle')
-              
-              .form-group
-                lable.d-flex(for='commentContent') Review
-                textarea#commentContent.form-control.rounded-0(rows='3'
-                placeholder='Review content'
-                name='commentContent')
-              button.btn.btn-info.btn-block.my-4.bgBtnMain(type='submit') Send Review
+        .col-lg-4
+          if loggedIn          
+            .reviewLogged.d-flex.justify-content-end
+              form.text-center.w-100.px-3
+                .h4.text-center.mb-3 Send Review
+                .voteReview.d-flex
+                  span.mr-3 vote
+                  p#starVote
+                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='1')
+                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='2')
+                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='3')
+                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='4')
+                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='5')
+                lable.d-flex(for='commentTitle') Title
+                input#commentTitle.form-control.mb-4(type='text'
+                  placeholder='Title review'
+                  name='commentTitle')
+                
+                .form-group
+                  lable.d-flex(for='commentContent') Review
+                  textarea#commentContent.form-control.rounded-0(rows='3'
+                  placeholder='Review content'
+                  name='commentContent')
+                button.btn.btn-info.btn-block.my-4.bgBtnMain(type='submit') Send Review
+          else
+            .reviewsNoLogin.text-center
+              span Login to review product:
+              a.btn.bgBtnMain(href=`/login?patch=${product[0].productNameSlug}.${idProduct}.${idCategory}`)
+                | Login
       hr
       .row
         - for (let i = 0; i<5; i++){
@@ -246,6 +247,7 @@ block nav
       
 block footer
   script(type='text/javascript').
+    const inputTotalCostDOM = document.getElementById('inputTotalCost');
     const inputProductQuantity = document.getElementById('productQuantity');
     const isDiscount = inputProductQuantity.getAttribute('is-discount');
     let costBaseDOM, costDiscountDOM, savingMoneyDOM;
@@ -276,10 +278,17 @@ block footer
         costBaseDOM.innerHTML = `${totalCost}$`;
         costDiscountDOM.innerHTML = `${totalDiscount}$`;
         savingMoneyDOM.innerHTML = savingMoney
+        inputTotalCostDOM.value = totalDiscount
       }else {
         const totalCost = value * unitBase;
         costBaseDOM.innerHTML = `${totalCost}$`;
+        inputTotalCostDOM.value = totalCost        
       }
+
+
+      const divStarVote = document.getElementById('starVote');
+      const elmsStarVote = document.querySelectorAll('.starVote');
+
       
       
     })

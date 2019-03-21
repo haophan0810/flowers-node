@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use(session({
     secret: 'keyboard cat',
     cookie: { 
-        maxAge: 300000,
+        maxAge: 600000,
         secure: false 
     },
     store: new SequelizeStore({

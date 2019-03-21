@@ -23,6 +23,8 @@ body
                         h5.card-title.text-center Sign In
                         
                         form#formLogin.form-signin(method='POST' action='/login' novalidate)
+                            input(type="hidden", value=stringQuery, name='pathQuery')
+
                             .form-label-group
                                 input#inputEmail.form-control(
                                     type='text'

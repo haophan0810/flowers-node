@@ -4,6 +4,7 @@ const db = require("../models");
 
 module.exports.getIndex = async (req, res, next) => {
   try {
+    console.log(req.originalUrl);
     const dataProducts = await db.Category.findAll({
       where: {
         id: {

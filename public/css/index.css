@@ -243,3 +243,11 @@ hr {
 .transitionElm {
     transition: 0.4s;
 }
+
+
+.colorStarDisable {
+    color: #dedddc;
+}
+.colorStarActive {
+    color: #ffc120;
+}

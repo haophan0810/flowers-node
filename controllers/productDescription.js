@@ -108,9 +108,10 @@ exports.getProductDescription = async (req, res, next) => {
                 }
             });
         }
-        console.log(userId, 'usderusudsu')
+        // console.log(userId, 'usderusudsu')
         // console.log('sameProducts', sameProducts)
         // res.status(200).json(product);
+        console.log(req.originalUrl)
 
         res.status(200).render('productDescription', {
             product: product,
@@ -120,7 +121,8 @@ exports.getProductDescription = async (req, res, next) => {
             idCategory: parseInt(idCategory),
             reviewsProduct: reviews,
             userId: userId===undefined ? 'guest' : userId,
-            idProduct: idProduct
+            idProduct: idProduct,
+            patch: req.originalUrl
         })
     } catch (error) {
         // res.send('404');

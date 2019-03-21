@@ -12,7 +12,7 @@ router.get('/', loginController.getLogin);
 
 router.post('/',
     [
-        check('email')
+        body('email')
         .isEmail()
         .withMessage('Please enter a valid email.'),
         body('password')
@@ -24,5 +24,7 @@ router.post('/',
         .isAlphanumeric()
         .withMessage('not ')
     ], loginController.postLogin);
+
+
 
 module.exports = router;
