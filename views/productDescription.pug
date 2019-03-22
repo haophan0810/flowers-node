@@ -97,7 +97,7 @@ block nav
                   span#savingMoney.transitionElm  #{costBase - costDiscount}
                   |$)
               else     
-                span#costBase.productCostBase.cost.h6.transitionElm #{costBase} $
+                span#costBase.productCostBase.cost.h6.transitionElm(data-unit=costBase) #{costBase} $
             p.lead.font-weight-bold #{product[0].productName}
             p.mb-5 #{product[0].productDescription}
             form.d-flex.justify-content-left
@@ -282,7 +282,8 @@ block footer
       }else {
         const totalCost = value * unitBase;
         costBaseDOM.innerHTML = `${totalCost}$`;
-        inputTotalCostDOM.value = totalCost        
+        inputTotalCostDOM.value = totalCost;
+        console.log(unitBase);
       }
 
 
