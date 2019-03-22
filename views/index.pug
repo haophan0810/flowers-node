@@ -42,7 +42,10 @@ mixin product(item, idCategory)
 
 block nav
     
-    //- slide
+    //
+        **************************************************
+        Main Slide
+        **************************************************
     // Carousel Wrapper
     section#carousel-example-2.carousel.slide.carousel-fade(data-ride='carousel')
         // Indicators
@@ -98,65 +101,77 @@ block nav
         // /.Controls
         // /.Carousel Wrapper
 
+
+    //
+        **************************************************
+        ADV for big sale
+        **************************************************
     section#advertisement-1.container-fluid.adv.p-4.pgAdv.d-flex.justify-content-center.alignCenterCol.bgNav
-        h4.text-center.mr-3.white-text Big sale for TET
-        .btn.btn-primary.bgBtnMain.p-3 Shop now!
-        
+        h4.text-center.mr-3.white-text Summer? Big sale
+        a(href="/category/best-sale.3.html").btn.btn-primary.bgBtnMain.p-3 Shop now!
+    
+    //
+        **************************************************
+        Shops Represent
+        **************************************************
     section#introShop.my-4
         .container
             .row
-                .col.d-flex.align-items-stretch.p-3                              
+                .col.d-flex.align-items-stretch.p-4                             
                     .card
                         // Card image
                         .view.overlay
-                            img.card-img-top(src='https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg', alt='Card image cap')
-                            a(href='#!')
+                            img.card-img-top(src='https://res.cloudinary.com/haophan/image/upload/v1553165341/wedding-index.jpg', alt='Card image cap')
+                            a(href='/category/wedding.11.html')
                                 .mask.rgba-white-slight
                         // Card content
                         .card-body
                             // Title
-                            a.intro__link(href="")
-                                h4.card-title Card title
+                            a.intro__link(href="/category/wedding.11.html")
+                                h4.card-title Wedding
                             // Text
                             // Button
-                            a.btn.btn-primary.bgBtnMain(href='#') Button
+                            a.btn.btn-primary.bgBtnMain(href='/category/wedding.11.html') Shop Now
                         // Card
                 
-                .col.d-flex.align-items-stretch.p-3                          
+                .col.d-flex.align-items-stretch.p-4                         
                     .card
                         // Card image
                         .view.overlay
-                            img.card-img-top(src='https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg', alt='Card image cap')
-                            a(href='#!')
+                            img.card-img-top(src='https://res.cloudinary.com/haophan/image/upload/v1553165340/birthday-index.jpg', alt='Card image cap')
+                            a(href='/category/birthday.4.html')
                                 .mask.rgba-white-slight
                         // Card content
                         .card-body
                             // Title
                             a.intro__link(href="")
-                                h4.card-title Card title
+                                h4.card-title Birthday
                             // Text
                             // Button
-                            a.btn.btn-primary.bgBtnMain(href='#') Button
+                            a.btn.btn-primary.bgBtnMain(href='/category/birthday.4.html') View Shop
                         // Card
 
-                .col.d-flex.align-items-stretch.p-3                            
+                .col.d-flex.align-items-stretch.p-4                           
                     .card
                         // Card image
                         .view.overlay
-                            img.card-img-top(src='https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg', alt='Card image cap')
-                            a(href='#!')
+                            img.card-img-top(src='https://res.cloudinary.com/haophan/image/upload/v1553165340/chrismas-index.jpg', alt='Card image cap')
+                            a(href='/category/everyday.10.html')
                                 .mask.rgba-white-slight
                         // Card content
                         .card-body
                             // Title
                             a.intro__link(href="")
-                                h4.card-title Card title
+                                h4.card-title Everyday
                             // Text
                             // Button
-                            a.btn.btn-primary.bgBtnMain(href='#') Button
+                            a.btn.btn-primary.bgBtnMain(href='/category/everyday.10.html') View Shop
                         // Card
     
-
+    //
+        **************************************************
+        About me
+        **************************************************
     section.aboutMe.my-5
         h2.about-me__title.mb-5.text-center About Me
             .line-break.text-center
@@ -166,7 +181,7 @@ block nav
                 .col-8.pr-5
                     h2.about-me__title Hello
                     p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, alias sed! Rerum veniam facere tempora corporis voluptatum autem est et voluptate rem alias? Magni ut quos autem blanditiis nesciunt quaerat.
-                    a.btn.bgBtnMain(href="") Shop Now
+                    a.btn.bgBtnMain(href="/products") View Shop
                 .col-4
                     #carouselExampleSlidesOnly.carousel.slide(data-ride='carousel')
                         .carousel-inner
@@ -181,7 +196,10 @@ block nav
                             .carousel-item
                                 img.d-block.w-100(src='https://res.cloudinary.com/haophan/image/upload/v1547960453/mini-slide/2.jpg')
 
-
+    //
+        **************************************************
+        Products Hot
+        **************************************************
     section#products-hot.products-hot.my-5
         .container
             h2.product-title.mb-5.text-center Products Hot
@@ -192,10 +210,21 @@ block nav
                 - for (let i = 0; i<8; i++){
                     +product(productsHot.Products[i], 1)
                 -}
-                
+    //
+        **************************************************
+        ADV forshop wedding
+        **************************************************
     section#adv-1
-        img.img-adv(src='https://res.cloudinary.com/haophan/image/upload/v1548948245/slide/ADV/bg3.jpg', alt='')
-
+        .position-relative
+            img.img-adv(src='https://res.cloudinary.com/haophan/image/upload/v1548948245/slide/ADV/bg3.jpg', alt='')
+            .row.position-absolute.d-flex.justify-content-end.advContent.mr-3
+                .col-6.p-5
+                    .h4.advTitle.pr-5.text-center Wedding Flowers
+                        .line-break.text-center
+                            img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+                    .h6.advDescription.mt-4.pr-5
+                        |Your wedding flowers may be a large part of your wedding budget, so it's important to find wedding centerpieces and wedding bouquets that you love. See photos of wedding flower arrangements for ideas and then find a local wedding florist to pull it off for your wedding day.
+                    a.btn.bgBtnMain.mt-3(href="/category/wedding.11.html") View Shop
     section#products-new.products.products-new.my-5
         .container
             h2.product-title.mb-5.text-center Products New
@@ -206,10 +235,24 @@ block nav
                 - for (let i = 0; i<8; i++){
                     +product(productsNew.Products[i], 2)
                 -}
-
+    //
+        **************************************************
+        ADV forshop Handmade Flowers
+        **************************************************
     section#adv-2
-        img.img-adv(src='https://res.cloudinary.com/haophan/image/upload/v1548948244/slide/ADV/bg2.jpg', alt='') 
-
+        .position-relative
+            img.img-adv(src='https://res.cloudinary.com/haophan/image/upload/v1548948244/slide/ADV/bg2.jpg', alt='') 
+            .row.position-absolute.d-flex.justify-content-start.advContent.ml-3
+                .col-6.p-5
+                    .h4.advTitle.pl-5.text-center Handmade Flowers
+                        .line-break.text-center
+                            img(src="https://res.cloudinary.com/haophan/image/upload/v1547963844/line.png", width='150' alt="")
+                    .h6.advDescription.mt-4.pl-5
+                        |Handmade flowers are a great gift for Valentine's day, Mother's day, or any occasion when you want to
+                        | make something special for a friend or loved one. Unlike real flowers, make something that lasts
+                        | (or is tasty)! This collection features flowers made from ribbon, paper, metal and more, as well as
+                        | delicious edible flowers in the form of cookies, cupcakes, and of course bacon roses!
+                    a.btn.bgBtnMain.mt-3.ml-5(href="/category/rose.7.html") View Shop
     section#products-sale.products.products-sale.my-5
         .container
             h2.product-title.mb-5.text-center Products Sale

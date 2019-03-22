@@ -251,3 +251,25 @@ hr {
 .colorStarActive {
     color: #ffc120;
 }
+
+.advContent {
+    top:0;
+    left: 0;
+}
+
+.advTitle {
+    color: white;
+    
+}
+
+.advDescription {
+    color: white;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+}
+
+body{ 
+    overflow-x: hidden;
+}
