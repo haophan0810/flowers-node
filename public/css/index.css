@@ -273,3 +273,7 @@ hr {
 body{ 
     overflow-x: hidden;
 }
+
+.starVote {
+    cursor: pointer;
+}

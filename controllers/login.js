@@ -9,8 +9,8 @@ const Op = Sequelize.Op;
 const db = require('../models');
 
 module.exports.getLogin = (req, res, next) => {   
-    console.log(req.query.patch);
-    const pathQuery = req.query.patch;
+    console.log(req.query.path);
+    const pathQuery = req.query.path;
     res.render('login', {
         title: 'login',
         validationErrors: [],

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     rate: DataTypes.INTEGER
   }, {
     underscored: true,
-    tableName: 'UserVoteProducts',
+    tableName: 'User_vote_products',
     timestampt: true
   });
   UserVoteProduct.associate = function(models) {

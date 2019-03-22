@@ -73,6 +73,10 @@ block nav
 
   
   // Main layout
+  //
+        **************************************************
+        Product description
+        **************************************************
   main.mt-5.pt-4
     .container.dark-grey-text.mt-5
       // Grid row
@@ -125,6 +129,10 @@ block nav
       // Grid row
       hr
       // Grid row
+      //
+        **************************************************
+        Same Products
+        **************************************************
       .row.d-flex.justify-content-center.wow.fadeIn
         // Grid column
         .col-md-6.text-center
@@ -136,6 +144,10 @@ block nav
         - for (let i = 0; i<lengthProductsAdv; i++){
           +product(productsAdv[i])
         -}
+    //
+        **************************************************
+        Reviews
+        **************************************************
     section.container.dark-grey-text.mt-5
       h2.m-3.h4 Customers reviews
       .row.mt-5
@@ -191,11 +203,21 @@ block nav
             .progress.md-progress.w-75.mr-3
               .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
             .percentVote 50%
-
+        //
+          **************************************************
+          Send Reviews
+          **************************************************
         .col-lg-4
           if loggedIn          
             .reviewLogged.d-flex.justify-content-end
-              form.text-center.w-100.px-3
+              form.text-center.w-100.px-3(
+                action='/product/product-description-review'
+                method='POST'
+
+              )
+                input#inputSendReviewPath(type="hidden" name='pathProduct' value=path)
+                input#inputSendReviewProductId(type="hidden" name='productId' value=idProduct)
+
                 .h4.text-center.mb-3 Send Review
                 .voteReview.d-flex
                   span.mr-3 vote
@@ -205,21 +227,22 @@ block nav
                     i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='3')
                     i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='4')
                     i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='5')
-                lable.d-flex(for='commentTitle') Title
+                    input#inputRate(type="hidden" name='rate' value='')
+                lable.d-flex(for='reviewTitle') Title
                 input#commentTitle.form-control.mb-4(type='text'
                   placeholder='Title review'
-                  name='commentTitle')
+                  name='reviewTitle')
                 
                 .form-group
-                  lable.d-flex(for='commentContent') Review
-                  textarea#commentContent.form-control.rounded-0(rows='3'
+                  lable.d-flex(for='reviewContent') Review
+                  textarea#reviewContent.form-control.rounded-0(rows='3'
                   placeholder='Review content'
-                  name='commentContent')
+                  name='reviewContent')
                 button.btn.btn-info.btn-block.my-4.bgBtnMain(type='submit') Send Review
           else
             .reviewsNoLogin.text-center
               span Login to review product:
-              a.btn.bgBtnMain(href=`/login?patch=${product[0].productNameSlug}.${idProduct}.${idCategory}`)
+              a.btn.bgBtnMain(href=`/login?path=${product[0].productNameSlug}.${idProduct}.${idCategory}`)
                 | Login
       hr
       .row
@@ -266,10 +289,8 @@ block footer
 
 
     }
-    console.log(inputProductQuantity);
     inputProductQuantity.addEventListener('input', (e) => {
       const value = parseInt(e.target.value);
-      console.log(unitBase);
       if (isDiscount === 'true') {
         const totalCost = value * unitBase;
         const totalDiscount = value * unitDiscount;
@@ -283,14 +304,53 @@ block footer
         const totalCost = value * unitBase;
         costBaseDOM.innerHTML = `${totalCost}$`;
         inputTotalCostDOM.value = totalCost;
-        console.log(unitBase);
       }
-
-
-      const divStarVote = document.getElementById('starVote');
-      const elmsStarVote = document.querySelectorAll('.starVote');
-
+      
       
       
     })
-    
+    /*
+      **************************************************
+      handle star vote
+      **************************************************
+      */
+      
+
+    const divStarVote = document.getElementById('starVote');
+    const elmsStarVote = document.querySelectorAll('.starVote');
+    const inputRate = document.getElementById('inputRate');
+
+    console.log(divStarVote);
+    console.log(elmsStarVote)
+    /* 
+
+    Handle hover star
+
+    */
+
+    const handleRate = (e) => {
+      const starTarget = e.target;
+
+      if (starTarget.classList.contains('starVote')) {
+        const dataStar = parseInt(starTarget.getAttribute('data-value'));
+        console.log(dataStar)
+        inputRate.value = dataStar;
+        for(let i = 0; i< dataStar; i++){
+          elmsStarVote[i].classList.remove('colorStarDisable');
+          elmsStarVote[i].classList.add('colorStarActive');
+        }
+        for(let i = dataStar; i< 5; i++){
+          elmsStarVote[i].classList.remove('colorStarActive');
+          elmsStarVote[i].classList.add('colorStarDisable');
+        }
+      }
+    }
+    divStarVote.addEventListener('mouseover', handleRate)
+
+    /* 
+
+    click star
+
+    */
+
+    divStarVote.addEventListener('click', handleRate)
