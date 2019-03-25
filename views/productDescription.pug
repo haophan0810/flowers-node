@@ -39,23 +39,37 @@ mixin product(item)
                       span.productCostBase.productCostBase--line-through #{costBase} $
                     else     
                       span.productCostBase.cost #{costBase} $
+mixin progressBarRate(level, percentLevel)
+  .itemRate.d-flex.alignItemCenter
+    .ratingNum.mr-3
+      span.numberVote.mr-2 #{level}
+      i.fas.fa-star
+    .progress.md-progress.widthProgress.mr-3
+      .progress-bar(role='progressbar', style=`width: ${percentLevel}%`, aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
+    .percentVote #{percentLevel}%
 
-mixin comment(user)
+mixin review(item)
+  - const username = item.User.username;
+  - const userAvatar = item.User.UserProfile.avatar
+  - const {reviewTitle, reviewContent} = item
+  - const dateCreated = new Date(item.created_at).getTime()
+  //- - const hours = dateCreated.getHours();
   .col-lg-3.p-4
     // Card
     .d-flex.flex-column.text-center.align-items-center
       // Card image
-      img.rounded-circle.mb-2(src='https://mdbootstrap.com/img/Photos/Others/images/43.jpg', width='65', height='65' alt='Card image cap')
+      img.rounded-circle.mb-2(src=userAvatar, width='65', height='65' alt='Card image cap')
       // Card content
       .userInfo
-        h5.userName hello
-        .userAddress
-          span đến từ 
-          span.address Ho Chi Minh
-        .timePost tháng trước
+        h5.userName #{username}
+        //- .userAddress
+        //-   span đến từ 
+        //-   span.address Ho Chi Minh
+        //- .timePost tháng trước
   .col-lg-9.p-4
-    .h5.commentTitle Rất tốt
-    span.commentContent Lorem ipsum dolor sit amet.
+    .h5.commentTitle #{reviewTitle}
+    span.commentContent #{reviewContent}
+    .h6 #{dateCreated}
 
 block head
     link(rel='stylesheet', href='../../css/index.css')
@@ -148,6 +162,7 @@ block nav
         **************************************************
         Reviews
         **************************************************
+    //- - const totalUserVote = all
     section.container.dark-grey-text.mt-5
       h2.m-3.h4 Customers reviews
       .row.mt-5
@@ -155,54 +170,19 @@ block nav
           
           .text-center
             .h5 Average Review
-            p.total-review 4.5/5
+            div.total-review #{finalAverageRate}/5
             div
               i.fas.fa-star
               i.fas.fa-star
               i.fas.fa-star
               i.fas.fa-star
-              i.fas.fa-star
-            p 10 nguoi danh gia
+              i.fas.fa-star            
+            p (#{totalUserRate >1 ? `${totalUserRate} votes` : `${totalUserRate} vote`})
         .col-lg-4
-          .itemRate.d-flex.alignItemCenter
-            .ratingNum.mr-3
-              span.numberVote.mr-2 5
-              i.fas.fa-star
-            .progress.md-progress.w-75.mr-3
-              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-            .percentVote 50%
-
-          .itemRate.d-flex.alignItemCenter
-            .ratingNum.mr-3
-              span.numberVote.mr-2 5
-              i.fas.fa-star
-            .progress.md-progress.w-75.mr-3
-              .progress-bar(role='progressbar', style='width: 75%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-            .percentVote 50%
-
-          .itemRate.d-flex.alignItemCenter
-            .ratingNum.mr-3
-              span.numberVote.mr-2 5
-              i.fas.fa-star
-            .progress.md-progress.w-75.mr-3
-              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-            .percentVote 50%
-
-          .itemRate.d-flex.alignItemCenter
-            .ratingNum.mr-3
-              span.numberVote.mr-2 5
-              i.fas.fa-star
-            .progress.md-progress.w-75.mr-3
-              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-            .percentVote 50%
-
-          .itemRate.d-flex.alignItemCenter
-            .ratingNum.mr-3
-              span.numberVote.mr-2 5
-              i.fas.fa-star
-            .progress.md-progress.w-75.mr-3
-              .progress-bar(role='progressbar', style='width: 100%', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100')
-            .percentVote 50%
+          - for (let i = 4; i>=0; i--){
+            +progressBarRate(i+1, percentRate[i])
+          -}
+          
         //
           **************************************************
           Send Reviews
@@ -242,29 +222,44 @@ block nav
           else
             .reviewsNoLogin.text-center
               span Login to review product:
-              a.btn.bgBtnMain(href=`/login?path=${product[0].productNameSlug}.${idProduct}.${idCategory}`)
+              a.btn.bgBtnMain(href=`/login?path=${path}`)
                 | Login
       hr
-      .row
-        - for (let i = 0; i<5; i++){
-          +comment(i)
-        -}
+      //
+        ****************************************************
+        Users reviews
+        ****************************************************
+      .row        
+        each value in reviews
+          +review(value)
+
       nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
         ul.pagination
-            li.page-item(class= indexPage<2? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${indexPage-1}`) Previous
+            li.page-item(class= indexReview<2? 'page-item--hidden': '')
+                a.page-link(href=`${path}?reviewPage=${indexReview-1}`) Previous
+            
+            li.page-item(class= indexReview>maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${path}?reviewPage=${indexReview}`) #{indexReview}
 
-            li.page-item
-                a.page-link(href=`/products?page=${currentPage-1}`, class= indexPage===1? 'page-item--active' : '') #{currentPage-1}
+            li.page-item(class= indexReview+1>maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${path}?reviewPage=${indexReview+1}`) #{indexReview + 1}
+            
+            li.page-item(class= indexReview+2>maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${path}?reviewPage=${indexReview+2}`) #{indexReview + 2}
+                
+            li.page-item(class= indexReview+3>maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${path}?reviewPage=${indexReview+1}`) Next  
 
-            li.page-item
-                a.page-link(href=`/products?page=${currentPage}`, class= indexPage===1? '' : 'page-item--active') #{currentPage}
+            //- li.page-item
+            //-     a.page-link(href=`${path}?reviewPage=${indexPage}`, class= indexreviewPage===1? 'page-item--active' : '') #{indexPage}
+
+            //- li.page-item
+            //-     a.page-link(href=`${path}?reviewPage=${indexPage+1}`, class= indexreviewPage===1? '' : 'page-item--active') #{indexPage+1}
                 
-            li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${currentPage+1}`) #{currentPage+1}
+            //- li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
+            //-     a.page-link(href=`${path}?reviewPage=${indexPage+2}`) #{indexPage+2}
                 
-            li.page-item(class= indexPage>maxPage-2 ? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${indexPage+1}`) Next  
+            
 
 
       

@@ -70,9 +70,9 @@ module.exports.postLogin = async (req, res, next) => {
                 // console.log(req.headers);
                 // res.status(200).send({ auth: true, token: token });
                 req.session.userId = response.id;      
-                const pathRedirect = pathQuery ?  `product/${pathQuery}.html` : '';      
+                const pathRedirect = pathQuery ?  pathQuery : '/';      
                 // res.status(200).json({ resutl: response.id, httpCode: 200, token: token })
-                res.redirect(`/${pathRedirect}`);
+                res.redirect(pathRedirect);
                 // res.redirect('./admin/add-product');
                 return;
             }

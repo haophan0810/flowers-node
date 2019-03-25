@@ -48,7 +48,7 @@ exports.postRegister = async (req, res, next) => {
     try {
         const checkUserExist = await db.User.findAll({
             where: {
-                [Op.or]: [{username: username}, {email: email}]
+                [Op.or]: [{username: username.toLowerCase()}, {email: email.toLowerCase()}]
             }
         })
         console.log(checkUserExist);
@@ -68,15 +68,25 @@ exports.postRegister = async (req, res, next) => {
         const passwordSalt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, passwordSalt);
 
-        const response = await db.User.create({
-            // sid: uuidv4(),
-            username,
-            email,
+        const dataCreateUser = {
+            username: username.toLowerCase(),
+            email: email.toLowerCase(),
             passwordHash,
             passwordSalt
-        });
+        }
+        const responseCreateUser = await db.User.create(dataCreateUser);
 
-        if (response) {
+        
+
+        if (responseCreateUser) {
+
+            // create data UserProfile
+            const dataProfile = {
+                userId: responseCreateUser.id,
+                avatar: 'https://res.cloudinary.com/haophan/image/upload/v1549145699/avatar-user.png'
+            }
+
+            const responseCreateUserProfile = await db.UserProfile.create(dataProfile);
             // res.status(200).json({
             //     resutl: response,
             //     httpCode: 200

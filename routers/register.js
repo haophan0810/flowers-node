@@ -11,7 +11,7 @@ router.get('/', registerController.getRegister);
 
 router.post('/', [
     body('username')
-    .isAlphanumeric()
+    .isAlphanumeric()    
     .withMessage('Username contains only numbers and letters')
     .isLength({
         min: 6,
