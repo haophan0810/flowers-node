@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const db = require('../models');
 
-const Op = Sequelize.Op
+const Op = Sequelize.Op;
 
 exports.getProductDescription = async (req, res, next) => {
     //thieu truong hop tim ten
@@ -99,28 +99,28 @@ exports.getProductDescription = async (req, res, next) => {
         });
 
         const allRate = await Promise.all([rateLevelOne, rateLevelTwo, rateLevelThree, rateLevelFour, rateLevelFive])
-        
+
         // calc totalUserRate
         let totalUser = 0;
-        for (let i = 0; i<5; i++) {
+        for (let i = 0; i < 5; i++) {
             const lengthEachRateLevel = allRate[i].length;
-            if(lengthEachRateLevel>0){
-                totalUser +=lengthEachRateLevel;
+            if (lengthEachRateLevel > 0) {
+                totalUser += lengthEachRateLevel;
             }
         }
 
         // calc % each rate level
         const percentRate = [];
         let totalMark = 0;
-        for (let i = 0; i<5; i++) {
+        for (let i = 0; i < 5; i++) {
             const lengthEachRateLevel = allRate[i].length;
-            const percentRateLevel = totalUser === 0? 0 : Math.ceil((lengthEachRateLevel/totalUser) * 100);
-            const pointLevel = (i+1)*lengthEachRateLevel;
+            const percentRateLevel = totalUser === 0 ? 0 : Math.ceil((lengthEachRateLevel / totalUser) * 100);
+            const pointLevel = (i + 1) * lengthEachRateLevel;
             totalMark += pointLevel;
             percentRate.push(percentRateLevel);
         }
-        const averageMarkRate = totalUser === 0? 0: (totalMark/totalUser);
-        const finalAverageRate = totalUser === 0? 5 : parseFloat(((averageMarkRate+5)/2).toFixed(1));
+        const averageMarkRate = totalUser === 0 ? 0 : (totalMark / totalUser);
+        const finalAverageRate = totalUser === 0 ? 5 : parseFloat(((averageMarkRate + 5) / 2).toFixed(1));
 
         // Update rate
 
@@ -205,7 +205,6 @@ exports.getProductDescription = async (req, res, next) => {
 
         res.status(200).render('productDescription', {
             product: product,
-            loggedIn: dataUser === undefined ? false : true,
             title: product[0].productName,
             productsAdv: parseInt(idCategory) === 0 ? sameProducts : sameProducts[0].Products,
             idCategory: parseInt(idCategory),
@@ -216,9 +215,12 @@ exports.getProductDescription = async (req, res, next) => {
             percentRate: percentRate,
             totalUserRate: totalUser,
             finalAverageRate: finalAverageRate,
-            maxPage: Math.ceil(lengthReviews / numberReviewPerPage),            
+            maxPage: Math.ceil(lengthReviews / numberReviewPerPage),
             reviews: reviews.slice((indexReview - 1) * numberReviewPerPage, indexReview * numberReviewPerPage),
-            indexReview: indexReview
+            indexReview: indexReview,
+            loggedIn: res.locals.loggedIn,
+            dataUser: res.locals.dataUser,
+            cartItems: res.locals.cartItems
         });
     } catch (error) {
         // res.send('404');
@@ -237,7 +239,7 @@ module.exports.postProductDescriptionReview = async (req, res, next) => {
             reviewContent,
             productId
         } = req.body
-        const userId = req.session.userId;
+        const userId = res.locals.userId;
         /*
             -- Handle RATE product
             find data rate by {userId, productId}

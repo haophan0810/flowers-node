@@ -35,27 +35,20 @@ module.exports.getIndex = async (req, res, next) => {
       ]
     });
     const [productsHot, productsNew, productsSale] = dataProducts;
-    const userId = req.session.userId;
-    let dataUser;
-    if(userId){
-      dataUser = await db.User.findAll({
-        where: {
-          id: parseInt(userId)
-        },
-        include: [{
-          model: db.UserProfile
-        }]
-      });
-    }
-    // console.log('product hot',productsHot.Products);
-    // res.status(200).json(dataUser);
+    
+    console.log('locals user', res.locals)
+    
     res.render('index', {
         productsHot: productsHot,
         productsNew: productsNew,
         productsSale: productsSale,
         title: 'Flowers-shop | Home',
-        loggedIn : dataUser
-    });
+        path: req.originalUrl,
+        loggedIn : res.locals.loggedIn,
+        dataUser: res.locals.dataUser,        
+        cartItems: res.locals.cartItems
+    })
+
   } catch (error) {
     throw Error(error.message);
   }
