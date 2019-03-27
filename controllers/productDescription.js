@@ -4,6 +4,23 @@ const db = require('../models');
 
 const Op = Sequelize.Op;
 
+// get all level rate, notice: function use async await, use promise all up to perfomance
+async function getDateLevelRate (idProduct){
+    const dataLevelRate = [];
+    for (let i = 1; i<6; i++){
+        const rateLevel = db.UserVoteProduct.findAll({
+            where: {
+                rate: i,
+                productId: parseInt(idProduct)
+            }
+        });
+        dataLevelRate.push(rateLevel);
+    }
+    
+
+    return  Promise.all(dataLevelRate);
+}
+
 exports.getProductDescription = async (req, res, next) => {
     //thieu truong hop tim ten
 
@@ -16,7 +33,6 @@ exports.getProductDescription = async (req, res, next) => {
             idCategory
         } = req.params;
 
-        console.log(req.params)
         /*
         Get product by id and product name slug
         */
@@ -36,7 +52,7 @@ exports.getProductDescription = async (req, res, next) => {
                 }
             ]
         });
-
+        
 
         /**
          * Get Reviews product
@@ -61,104 +77,65 @@ exports.getProductDescription = async (req, res, next) => {
          * Get RATE folow level ( have 5 levels)
          */
 
-        const rateLevelOne = db.UserVoteProduct.findAll({
-            where: {
-                rate: 1,
-                productId: parseInt(idProduct)
-            }
-        })
+        
 
-        const rateLevelTwo = db.UserVoteProduct.findAll({
-            where: {
-                rate: 2,
-                productId: parseInt(idProduct)
-            }
-        })
-
-        const rateLevelThree = db.UserVoteProduct.findAll({
-            where: {
-                rate: 3,
-                productId: parseInt(idProduct)
-            }
-        })
+        const allRate = await getDateLevelRate(idProduct);
+        
 
 
-        const rateLevelFour = db.UserVoteProduct.findAll({
-            where: {
-                rate: 4,
-                productId: parseInt(idProduct)
-            }
-        })
+        // update user rate to product
 
-
-        const rateLevelFive = db.UserVoteProduct.findAll({
-            where: {
-                rate: 5,
-                productId: parseInt(idProduct)
-            }
-        });
-
-        const allRate = await Promise.all([rateLevelOne, rateLevelTwo, rateLevelThree, rateLevelFour, rateLevelFive])
-
-        // calc totalUserRate
-        let totalUser = 0;
-        for (let i = 0; i < 5; i++) {
-            const lengthEachRateLevel = allRate[i].length;
-            if (lengthEachRateLevel > 0) {
-                totalUser += lengthEachRateLevel;
-            }
-        }
-
+        const totalUserRate = product[0].totalUserVote;
         // calc % each rate level
         const percentRate = [];
-        let totalMark = 0;
+        
         for (let i = 0; i < 5; i++) {
             const lengthEachRateLevel = allRate[i].length;
-            const percentRateLevel = totalUser === 0 ? 0 : Math.ceil((lengthEachRateLevel / totalUser) * 100);
-            const pointLevel = (i + 1) * lengthEachRateLevel;
-            totalMark += pointLevel;
+            const percentRateLevel = totalUserRate ?  Math.ceil((lengthEachRateLevel / totalUserRate) * 100) : 0;            
             percentRate.push(percentRateLevel);
         }
-        const averageMarkRate = totalUser === 0 ? 0 : (totalMark / totalUser);
-        const finalAverageRate = totalUser === 0 ? 5 : parseFloat(((averageMarkRate + 5) / 2).toFixed(1));
+        
 
         // Update rate
 
         // res.json(finalAverageRate);
         /**
          * Get same products
+         * 
+         * tim cac product theo category, neu so luong it qua thi tim toan bo
          */
+        let isExistCategory = true;
         let sameProducts;
-        if (parseInt(idCategory) > 0) {
-            sameProducts = await db.Category.findAll({
+        sameProducts = await db.Category.findAll({
+            where: {
+                id: parseInt(idCategory)
+            },
+
+            include: [{
+                model: db.Product,
                 where: {
-                    id: parseInt(idCategory)
+                    id: {
+                        [Op.not]: parseInt(idProduct)
+                    }
                 },
-
+                order: [
+                    ['updated_at', 'DESC']
+                ],
                 include: [{
-                    model: db.Product,
-                    where: {
-                        id: {
-                            [Op.not]: parseInt(idProduct)
-                        }
+                        model: db.ProductDiscount
                     },
-                    order: [
-                        ['updated_at', 'DESC']
-                    ],
-                    include: [{
-                            model: db.ProductDiscount
-                        },
-                        {
-                            model: db.ProductImage
-                        },
-                        {
-                            model: db.ProductPricing
-                        }
-                    ]
+                    {
+                        model: db.ProductImage
+                    },
+                    {
+                        model: db.ProductPricing
+                    }
+                ]
 
-                }]
-            })
-        } else {
+            }]
+        })
+        if (sameProducts.length <2) {
+            isExistCategory = false;
             sameProducts = await db.Product.findAll({
 
                 where: {
@@ -185,19 +162,9 @@ exports.getProductDescription = async (req, res, next) => {
                 ]
             });
         }
+        // res.json(sameProducts);
+        
 
-        const userId = req.session.userId;
-        let dataUser;
-        if (userId !== undefined) {
-            dataUser = await db.User.findAll({
-                where: {
-                    id: parseInt(userId)
-                },
-                include: [{
-                    model: db.UserProfile
-                }]
-            });
-        }
         // console.log(userId, 'usderusudsu')
         // console.log('sameProducts', sameProducts)
         // res.status(200).json(product);
@@ -206,15 +173,15 @@ exports.getProductDescription = async (req, res, next) => {
         res.status(200).render('productDescription', {
             product: product,
             title: product[0].productName,
-            productsAdv: parseInt(idCategory) === 0 ? sameProducts : sameProducts[0].Products,
+            productsAdv: isExistCategory === false ? sameProducts : sameProducts[0].Products,
             idCategory: parseInt(idCategory),
             lengthReviews: lengthReviews,
-            userId: userId === undefined ? 'guest' : userId,
+            userId: res.locals.userId === undefined ? 'guest' : res.locals.userId,
             idProduct: idProduct,
             path: req.originalUrl,
             percentRate: percentRate,
-            totalUserRate: totalUser,
-            finalAverageRate: finalAverageRate,
+            totalUserRate: totalUserRate,
+            finalAverageRate: product[0].productStar,
             maxPage: Math.ceil(lengthReviews / numberReviewPerPage),
             reviews: reviews.slice((indexReview - 1) * numberReviewPerPage, indexReview * numberReviewPerPage),
             indexReview: indexReview,
@@ -239,41 +206,25 @@ module.exports.postProductDescriptionReview = async (req, res, next) => {
             reviewContent,
             productId
         } = req.body
-        const userId = res.locals.userId;
+        const userId = req.session.userId;
         /*
             -- Handle RATE product
             find data rate by {userId, productId}
             if exist -> update, else -> create new rate
         */
+        const product = await db.Product.findOne({
+            where: {
+                id: parseInt(productId)
+            }
+        })
+        console.log('product', product);
+
         const dataRateProduct = await db.UserVoteProduct.findOne({
             where: {
                 userId: userId,
                 productId: parseInt(productId)
             }
         });
-        if (dataRateProduct === null) {
-            const dataRate = {
-                userId,
-                productId: parseInt(productId),
-                rate: parseInt(rate)
-            }
-            const createRateProduct = await db.UserVoteProduct.create(dataRate);
-
-        } else {
-            if (dataRateProduct.rate !== parseInt(rate)) {
-                const updateRateProduct = await dataRateProduct.update({
-                    rate: parseInt(rate)
-                })
-            }
-        }
-
-
-
-        /*
-            hande Reviews products
-            
-        */
-
         const dataReviewProduct = {
             userId,
             productId: parseInt(productId),
@@ -283,6 +234,51 @@ module.exports.postProductDescriptionReview = async (req, res, next) => {
         }
 
         const createDataReviewProduct = await db.ReviewsProduct.create(dataReviewProduct);
+        if (dataRateProduct === null) {
+            const dataRate = {
+                userId,
+                productId: parseInt(productId),
+                rate: parseInt(rate)
+            }
+            const createRateProduct = await db.UserVoteProduct.create(dataRate);
+            // Khi tao mot rate cho product thi can phai update lai rate va total user vote
+            const allLevelRate = await getDateLevelRate(productId);
+            let totalMarkRate = 0;
+            for(let i = 0; i< 5; i++){
+                const lengthLevelRate = allLevelRate[i].length;
+                const totalMarkEachLevel = (i+1) * lengthLevelRate;
+                totalMarkRate += totalMarkEachLevel;
+            }
+
+            const totalUserRate = product.totalUserVote +1;
+
+            const averageRate = parseFloat((totalMarkRate/totalUserRate).toFixed(1));
+
+            const resUpdateTotalUserRate = await product.update({                
+                    totalUserVote: totalUserRate,
+                    productStar: averageRate
+                
+            })
+            console.log('resUpdateTotalUserRate', resUpdateTotalUserRate)
+
+        } else {
+            if (dataRateProduct.rate !== parseInt(rate)) {
+                const updateRateProduct = await dataRateProduct.update({
+                    rate: parseInt(rate)
+                });
+                //update lai rate
+            }
+
+        }
+
+
+
+        /*
+            hande Reviews products
+            
+        */
+
+
 
         /* 
             Get all reviews of product

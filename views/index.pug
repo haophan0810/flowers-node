@@ -11,6 +11,9 @@ mixin product(item, idCategory)
     - const isActiveProductDiscount = lengthProductDiscount ? item.ProductDiscounts[0].isActive : false
     - const costBase = item.ProductPricings[0].basePrice
     - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
+    - const productStar = parseInt(item.productStar);
+    - const productStarHalf = productStar < item.productStar? true : false
+
     - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
     - costDiscount = Math.round(costDiscount)
 
@@ -27,12 +30,20 @@ mixin product(item, idCategory)
                 a.card-link(href=`product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
                     h5.card-title.card--title #{nameProduct}
                 p.card-text
-                    - for(let i = 0 ; i<item.productStar; i++){
+                    - for(let i = 0 ; i<productStar; i++){
                         i.fas.fa-star.star--color
                     - }
-                    - for(let i = item.productStar ; i<5; i++){
-                        i.fas.fa-star.star--disable
-                    - }
+                    if productStarHalf
+                        i.fas.fa-star-half-alt.star--color
+                        - for(let i = productStar+1 ; i<5; i++){
+                            i.fas.fa-star.star--disable
+                        - }
+                    else
+                        - for(let i = productStar ; i<5; i++){
+                            i.fas.fa-star.star--disable
+                        - }
+                    span.ml-1(class= item.totalUserVote? '': 'd-none')
+                        |(#{item.totalUserVote === 1 ? `${item.totalUserVote} review` : `${item.totalUserVote} reviews`})
                 p.card-text
                     if lengthProductDiscount>0 && isActiveProductDiscount 
                         span.productCostDiscount.mr-2.cost #{costDiscount} $

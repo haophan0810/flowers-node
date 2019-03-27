@@ -1,19 +1,7 @@
 const db = require('../../models');
 
 module.exports.getAddProduct = (req, res, next) => {
-    // const auth = (req, res, next) => {
-//   if (req.headers && req.headers.auth && req.headers.auth.split(' ')[0] === 'JWT') {
-//     jwt.verify(req.headers.auth.split(' ')[1], SECRET, (error, decoded) => {
-//       if (error) return res.status(401).send()
-//       req.user = decoded
-//       console.log('authenticated as ', decoded.username)
-//       next()
-//     })
-//   } else return res.status(401).send()
-// }
-    console.log('1', req.headers);
-    console.log('2', req.headers.Authorization);
-    console.log('3', req.headers['Authorization']);
+
 
     res.render('./admin/addProduct', {
         title: 'Add product'
@@ -49,7 +37,8 @@ module.exports.postAddProduct = async (req, res, next) => {
             productNameSlug,
             productStar: 5,
             productQuantity,
-            productDescription
+            productDescription,
+            totalUserVote: 0
         };
     
         console.log(req.body);

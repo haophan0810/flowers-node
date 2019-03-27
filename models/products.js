@@ -14,13 +14,17 @@ module.exports = (sequelize, DataTypes) => {
       field: 'product_description',
     },
     productStar: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       field: 'product_star'
     },
     productQuantity: {
       type: DataTypes.INTEGER,
       field: 'product_quantity'
-    }
+    },
+    totalUserVote: {
+      type: DataTypes.INTEGER,
+      field: 'total_user_vote'
+    },
   }, {
     underscored: true,
     tableName: 'Products',

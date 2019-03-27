@@ -1,6 +1,8 @@
 extends includes/layout.pug
 
 mixin product(item)
+    - const productStar = parseInt(item.productStar);
+    - const productStarHalf = productStar < item.productStar? true : false
     .col-lg-3.mb-5        
         .card
             .card-img-top.product__relative
@@ -11,7 +13,7 @@ mixin product(item)
                             .btn.btn-danger(class=item.state) #{item.state}
             .card-body
                 a.card-link(href=`products/${item.productId}`)
-                    h5.card-title #{item.productName}
+                    h5.card-title #{item.star}
                 p.card-text
                     - for(let i = 0 ; i<item.star; i++){
                         i.fas.fa-star.star--color

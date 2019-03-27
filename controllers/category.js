@@ -40,7 +40,11 @@ exports.getProductOfCategory = async (req, res, next) => {
             title: indexPage ? `All products of ${categoryName} | page ${indexPage}` : 'All products',
             titleCategory: `All products of ${categoryName}`,
             products: dataProducts.slice((indexPage - 1) * 16, indexPage * 16),
-            indexPage: indexPage
+            indexPage: indexPage,
+            path: req.originalUrl,
+            loggedIn: res.locals.loggedIn,
+            dataUser: res.locals.dataUser,
+            cartItems: res.locals.cartItems
         })
     } catch (error) {
         res.status(404).send('404');

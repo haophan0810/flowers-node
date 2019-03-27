@@ -82,6 +82,8 @@ block nav
   - const isActiveProductDiscount = lengthProductDiscount ? product[0].ProductDiscounts[0].isActive : false
   - const costBase = product[0].ProductPricings[0].basePrice
   - const discountValue = lengthProductDiscount ? product[0].ProductDiscounts[0].discountValue : 0
+  - const productStar = parseInt(product[0].productStar);
+  - const productStarHalf = productStar < product[0].productStar? true : false
   - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
   - costDiscount = Math.round(costDiscount)
 
@@ -117,6 +119,21 @@ block nav
               else     
                 span#costBase.productCostBase.cost.h6.transitionElm(data-unit=costBase) #{costBase} $
             p.lead.font-weight-bold #{product[0].productName}
+            p.card-text
+              - for(let i = 0 ; i<productStar; i++){
+                  i.fas.fa-star.star--color
+              - }
+              if productStarHalf
+                  i.fas.fa-star-half-alt.star--color
+                  - for(let i = productStar+1 ; i<5; i++){
+                      i.fas.fa-star.star--disable
+                  - }
+              else
+                  - for(let i = productStar ; i<5; i++){
+                      i.fas.fa-star.star--disable
+                  - }
+              span.ml-1(class= product[0].totalUserVote? '': 'd-none')
+                |(#{product[0].totalUserVote === 1 ? `${product[0].totalUserVote} review` : `${product[0].totalUserVote} reviews`})
             p.mb-5 #{product[0].productDescription}
             form.d-flex.justify-content-left
               // Default input
@@ -228,41 +245,31 @@ block nav
       //
         ****************************************************
         Users reviews
+
         ****************************************************
-      .row        
-        each value in reviews
-          +review(value)
+      if(totalUserRate === 0)
+        .h4.m-3 No reviews yet
+      else
+        .row        
+          each value in reviews
+            +review(value)
 
-      nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
-        ul.pagination
-            li.page-item(class= indexReview<2? 'page-item--hidden': '')
-                a.page-link(href=`${path}?reviewPage=${indexReview-1}`) Previous
-            
-            li.page-item(class= indexReview>maxPage ? 'page-item--hidden': '')
-                a.page-link(href=`${path}?reviewPage=${indexReview}`) #{indexReview}
+        nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
+          ul.pagination
+              li.page-item(class= indexReview<2? 'page-item--hidden': '')
+                  a.page-link(href=`${path}?reviewPage=${indexReview-1}`) Previous
+              
+              li.page-item(class= indexReview>maxPage ? 'page-item--hidden': '')
+                  a.page-link(href=`${path}?reviewPage=${indexReview}`) #{indexReview}
 
-            li.page-item(class= indexReview+1>maxPage ? 'page-item--hidden': '')
-                a.page-link(href=`${path}?reviewPage=${indexReview+1}`) #{indexReview + 1}
-            
-            li.page-item(class= indexReview+2>maxPage ? 'page-item--hidden': '')
-                a.page-link(href=`${path}?reviewPage=${indexReview+2}`) #{indexReview + 2}
-                
-            li.page-item(class= indexReview+3>maxPage ? 'page-item--hidden': '')
-                a.page-link(href=`${path}?reviewPage=${indexReview+1}`) Next  
-
-            //- li.page-item
-            //-     a.page-link(href=`${path}?reviewPage=${indexPage}`, class= indexreviewPage===1? 'page-item--active' : '') #{indexPage}
-
-            //- li.page-item
-            //-     a.page-link(href=`${path}?reviewPage=${indexPage+1}`, class= indexreviewPage===1? '' : 'page-item--active') #{indexPage+1}
-                
-            //- li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
-            //-     a.page-link(href=`${path}?reviewPage=${indexPage+2}`) #{indexPage+2}
-                
-            
-
-
-      
+              li.page-item(class= indexReview+1>maxPage ? 'page-item--hidden': '')
+                  a.page-link(href=`${path}?reviewPage=${indexReview+1}`) #{indexReview + 1}
+              
+              li.page-item(class= indexReview+2>maxPage ? 'page-item--hidden': '')
+                  a.page-link(href=`${path}?reviewPage=${indexReview+2}`) #{indexReview + 2}
+                  
+              li.page-item(class= indexReview+3>maxPage ? 'page-item--hidden': '')
+                  a.page-link(href=`${path}?reviewPage=${indexReview+1}`) Next  
 block footer
   script(type='text/javascript').
     const inputTotalCostDOM = document.getElementById('inputTotalCost');

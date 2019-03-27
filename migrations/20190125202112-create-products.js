@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       product_star: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       product_quantity: {
         type: Sequelize.INTEGER

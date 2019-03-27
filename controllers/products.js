@@ -38,7 +38,11 @@ exports.getAllProducts = async (req, res, next) => {
             title: indexPage ? `All products | page ${indexPage}` : 'All products',
             products: products.slice((indexPage - 1) * 16, indexPage * 16),
             indexPage: indexPage,
-            titleCategory: `All Products`
+            titleCategory: `All Products`,
+            path: req.originalUrl,
+            loggedIn: res.locals.loggedIn,
+            dataUser: res.locals.dataUser,
+            cartItems: res.locals.cartItems
         });
 
     } catch (error) {

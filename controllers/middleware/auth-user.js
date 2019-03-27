@@ -28,7 +28,7 @@ module.exports.useLogin = async (req, res, next) => {
     res.locals.loggedIn = loggedIn;
     res.locals.dataUser = dataUser;
     res.locals.cartItems = cartItems;
-    res.locals.userId = req.session.userId;
+    res.locals.userId = userId;
     next();
   } catch (error) {
     throw Error(error.message);
