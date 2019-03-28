@@ -31,7 +31,6 @@ module.exports.postLogin = async (req, res, next) => {
         password,
         pathQuery
     } = req.body;
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors.array());
@@ -65,12 +64,14 @@ module.exports.postLogin = async (req, res, next) => {
             // const urlRedirect = 
             console.log('isCompare', response.id)
             if (isCompare) {
+                // req.session.destroy();
                 req.session.isLoggedIn = true;
                 // const token = await jwt.sign({ userId: response.id}, process.env.SECRET_KEY);
                 // console.log(req.headers);
                 // res.status(200).send({ auth: true, token: token });
                 req.session.userId = response.id;      
-                const pathRedirect = pathQuery ?  pathQuery : '/';      
+                const pathRedirect = pathQuery ?  pathQuery : '/';  
+                console.log(pathRedirect);    
                 // res.status(200).json({ resutl: response.id, httpCode: 200, token: token })
                 res.redirect(pathRedirect);
                 // res.redirect('./admin/add-product');

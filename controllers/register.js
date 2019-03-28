@@ -9,6 +9,7 @@ const {
 const db = require('../models');
 
 exports.getRegister = (req, res, next) => {
+
     res.render('register', {
         title: 'Register',
         oldData: {
@@ -18,17 +19,12 @@ exports.getRegister = (req, res, next) => {
             confirmPassword: ''
         },
         validationErrors: [],
-        validRegister: false
+        validRegister: false,
+        path: req.query.path
     });
 };
 
 exports.postRegister = async (req, res, next) => {
-    const {
-        username,
-        email,
-        password,
-        confirmPassword
-    } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -46,13 +42,24 @@ exports.postRegister = async (req, res, next) => {
         })
     }
     try {
+        const {
+            username,
+            email,
+            password,
+            confirmPassword,
+            pathRegister
+        } = req.body;
         const checkUserExist = await db.User.findAll({
             where: {
-                [Op.or]: [{username: username.toLowerCase()}, {email: email.toLowerCase()}]
+                [Op.or]: [{
+                    username: username.toLowerCase()
+                }, {
+                    email: email.toLowerCase()
+                }]
             }
         })
         console.log(checkUserExist);
-        if(checkUserExist.length !== 0) {
+        if (checkUserExist.length !== 0) {
             return res.status(422).render('register', {
                 title: 'register fail',
                 validationErrors: errors.array(),
@@ -76,7 +83,7 @@ exports.postRegister = async (req, res, next) => {
         }
         const responseCreateUser = await db.User.create(dataCreateUser);
 
-        
+
 
         if (responseCreateUser) {
 
@@ -91,7 +98,8 @@ exports.postRegister = async (req, res, next) => {
             //     resutl: response,
             //     httpCode: 200
             // })
-            res.redirect('/login');
+            // pathRedirect = pathRegister? pathRegister : '/';
+            res.redirect(`/login?path=${pathRegister}`);
         } else {
             next()
         }

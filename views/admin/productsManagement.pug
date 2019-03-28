@@ -34,7 +34,7 @@ mixin product(item)
                         i.fas.fa-star.star--disable
                     - }
                 p.card-text
-                    if lengthProductDiscount>0 && isActiveProductDiscount 
+                    if isActiveProductDiscount 
                         span.productCostDiscount.mr-2.cost #{costDiscount} $
                         span.productCostBase.productCostBase--line-through #{basePrice} $
                     else     

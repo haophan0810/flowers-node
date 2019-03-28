@@ -23,7 +23,7 @@ const logoutRoute = require('./routers/logout');
 const adminRouterProductsManagement = require('./routers/admin/productsManagement');
 // const adminRouterAddCategory = require('./routers/admin/addCategory');
 const adminCategoryManagement = require('./routers/admin/categoryManagement');
-
+const cartRoute = require('./routers/cart');
 console.log('check validate', body);
 
 const app = express();
@@ -80,5 +80,7 @@ app.use('/admin', adminRouterProductsManagement);
 // app.use('/admin', adminRouterAddCategory);
 app.use('/admin', adminCategoryManagement);
 
+
+app.use('/cart', cartRoute);
 
 app.listen(PORT, () => console.log(`listening port: ${PORT}`));

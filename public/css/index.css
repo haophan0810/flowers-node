@@ -277,3 +277,25 @@ body{
 .starVote {
     cursor: pointer;
 }
+
+a.dropdown-item.userName {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* config carousel */
+.carousel-caption {
+    left: 15%;
+    right: 0;
+    top: 30%;
+    text-align: unset;
+    width: 30%;
+}
+
+.line-break img {
+    width: 150px;
+}
+
+.line-throught {
+    text-decoration: line-through;
+}

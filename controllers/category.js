@@ -33,8 +33,12 @@ exports.getProductOfCategory = async (req, res, next) => {
             ]
 
         });
-        const categoryName = dataProducts[0].Categories[0].categoryName
+        if (dataProducts.length === 0){
+            return res.redirect('/products');
+        }
+        const categoryName = dataProducts[0].Categories[0].categoryName;
         // res.status(200).json(dataProducts[0].Categories[0].categoryName);
+        
         res.render('products', {
             maxPage: Math.ceil(dataProducts.length / 16),
             title: indexPage ? `All products of ${categoryName} | page ${indexPage}` : 'All products',
@@ -47,7 +51,7 @@ exports.getProductOfCategory = async (req, res, next) => {
             cartItems: res.locals.cartItems
         })
     } catch (error) {
-        res.status(404).send('404');
+        
         throw Error(error.message);
     }
 

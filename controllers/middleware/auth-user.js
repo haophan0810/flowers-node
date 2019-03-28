@@ -1,5 +1,7 @@
 const db = require('../../models');
 
+
+
 module.exports.useLogin = async (req, res, next) => {
   try {
     
@@ -39,12 +41,32 @@ module.exports.authUser = async (req, res, next) => {
   try {
     const userId = req.session.userId;
     if (userId) {
+      const loggedIn = true;
+      const dataUser = await db.User.findAll({
+        where: {
+          id: userId
+        },
+        include: [{
+          model: db.UserProfile
+        }]
+      });
+      const cartItems = await db.CartItem.findAll({
+        where: {
+          userId: userId
+        }
+      
+      });
+      res.locals.loggedIn = loggedIn;
+      res.locals.dataUser = dataUser;
+      res.locals.cartItems = cartItems;
+      res.locals.userId = userId;
       next();
-    }else {
-      res.send('401');
-    }
 
-    
+    }else {
+      const url = req.originalUrl;
+      const urlRedirect = url ? url : '/';
+      return res.status(401).redirect(`/login?path=${urlRedirect}`);
+    }
   } catch (error) {
     throw Error(error.message);
     

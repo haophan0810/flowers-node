@@ -13,6 +13,8 @@ mixin product(item)
     - const discountValue = lengthProductDiscount ? item.ProductDiscounts[0].discountValue : 0
     - let costDiscount = discountValue ? costBase - (discountValue*costBase)/100 : 0
     - costDiscount = Math.round(costDiscount)
+    - const productStar = parseInt(item.productStar);
+    - const productStarHalf = productStar < item.productStar? true : false
 
     
     .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
@@ -27,12 +29,20 @@ mixin product(item)
                 a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
                     h5.card-title.card--title #{nameProduct}
                 p.card-text
-                    - for(let i = 0 ; i<item.productStar; i++){
-                        i.fas.fa-star.star--color
-                    - }
-                    - for(let i = item.productStar ; i<5; i++){
-                        i.fas.fa-star.star--disable
-                    - }
+                  - for(let i = 0 ; i<productStar; i++){
+                      i.fas.fa-star.star--color
+                  - }
+                  if productStarHalf
+                      i.fas.fa-star-half-alt.star--color
+                      - for(let i = productStar+1 ; i<5; i++){
+                          i.fas.fa-star.star--disable
+                      - }
+                  else
+                      - for(let i = productStar ; i<5; i++){
+                          i.fas.fa-star.star--disable
+                      - }
+                  span.ml-1(class= item.totalUserVote? '': 'd-none')
+                    |(#{item.totalUserVote === 1 ? `${item.totalUserVote} review` : `${item.totalUserVote} reviews`})
                 p.card-text
                     if lengthProductDiscount>0 && isActiveProductDiscount 
                       span.productCostDiscount.mr-2.cost #{costDiscount} $
@@ -181,7 +191,8 @@ block nav
         **************************************************
     //- - const totalUserVote = all
     section.container.dark-grey-text.mt-5
-      h2.m-3.h4 Customers reviews
+
+      h2.mt-3.h4 Customers reviews
       .row.mt-5
         .col-lg-4
           
@@ -189,12 +200,20 @@ block nav
             .h5 Average Review
             div.total-review #{finalAverageRate}/5
             div
-              i.fas.fa-star
-              i.fas.fa-star
-              i.fas.fa-star
-              i.fas.fa-star
-              i.fas.fa-star            
-            p (#{totalUserRate >1 ? `${totalUserRate} votes` : `${totalUserRate} vote`})
+              - for(let i = 0 ; i<productStar; i++){
+                  i.fas.fa-star.star--color
+              - }
+              if productStarHalf
+                  i.fas.fa-star-half-alt.star--color
+                  - for(let i = productStar+1 ; i<5; i++){
+                      i.fas.fa-star.star--disable
+                  - }
+              else
+                  - for(let i = productStar ; i<5; i++){
+                      i.fas.fa-star.star--disable
+                  - }          
+            p(class=totalUserRate === 0? 'd-none' : '')
+              |(#{totalUserRate >1 ? `${totalUserRate} customer reviews` : `${totalUserRate} customer review`})
         .col-lg-4
           - for (let i = 4; i>=0; i--){
             +progressBarRate(i+1, percentRate[i])
@@ -241,7 +260,7 @@ block nav
               span Login to review product:
               a.btn.bgBtnMain(href=`/login?path=${path}`)
                 | Login
-      hr
+      hr.mb-5
       //
         ****************************************************
         Users reviews
