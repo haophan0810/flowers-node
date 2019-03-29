@@ -18,7 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       field: 'product_id'
     },
     quantity: DataTypes.INTEGER,
-    price: DataTypes.FLOAT
+    price: DataTypes.FLOAT,
+    priceOrigin: {
+      type: DataTypes.FLOAT,
+      field: 'price_origin'
+    },
+    discount: DataTypes.INTEGER,
+    urlProduct: {
+      type: DataTypes.STRING,
+      field: 'url_product'
+    }
+
   }, {
     underscored: true,
     timestampt: true,

@@ -3,7 +3,11 @@ const Op = Sequelize.Op;
 
 const db = require('../models');
 
-
+/**
+ * 
+ * GET CART
+ * 
+ */
 module.exports.getCart = async (req, res, next) => {
     try {
         const dataAddress = await db.UserAddress.findAll({
@@ -15,14 +19,27 @@ module.exports.getCart = async (req, res, next) => {
             ]
         });
 
+        console.log(res.locals.cartItems);
+        // res.json(res.locals.cartItems);
+        // calc total price of cart
 
+        const cartItems = res.locals.cartItems;
+        const lengthProductCart = cartItems.length;
+        let totalPrice = 0;
+        for (let i = 0; i< lengthProductCart; i++) {
+            const priceEachProduct = cartItems[i].CartItem.price;
+            totalPrice += priceEachProduct;
+        }
+        
         res.render('cart', {
             path: req.originalUrl,
             loggedIn: res.locals.loggedIn,
             dataUser: res.locals.dataUser,
-            cartItems: res.locals.cartItems,
+            cartItems: cartItems,
             title: `Cart of ${res.locals.dataUser[0].username}`,
-            dataAddress: dataAddress
+            dataAddress: dataAddress,
+            lengthProductCart: lengthProductCart,
+            totalPrice: totalPrice
         });
 
     } catch (error) {

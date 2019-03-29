@@ -50,15 +50,18 @@ module.exports.authUser = async (req, res, next) => {
           model: db.UserProfile
         }]
       });
-      const cartItems = await db.CartItem.findAll({
+      const cartItems = await db.User.findAll({
         where: {
-          userId: userId
-        }
+          id: userId
+        },
+        include: [{
+          model: db.Product
+        }]
       
       });
       res.locals.loggedIn = loggedIn;
       res.locals.dataUser = dataUser;
-      res.locals.cartItems = cartItems;
+      res.locals.cartItems = cartItems[0].Products;
       res.locals.userId = userId;
       next();
 
