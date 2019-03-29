@@ -6,4 +6,9 @@ const authUserMiddleWareController = require('../controllers/middleware/auth-use
 
 router.get('/', authUserMiddleWareController.authUser, cartController.getCart);
 
+router.post('/add-address', authUserMiddleWareController.authUser, cartController.postAddAddress);
+
+router.post('/active-address', authUserMiddleWareController.authUser, cartController.postActiveAddress);
+
+router.post('/delete-address', authUserMiddleWareController.authUser, cartController.postDeleteAddress);
 module.exports = router;

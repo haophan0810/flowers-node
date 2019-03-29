@@ -1,20 +1,26 @@
 extends includes/layout.pug
 
-mixin address
-  .row
+mixin address(item)
+  
+  .row.border.rounded.py-3
     .col-12
-      .h5 User Name
-      .phone phone
-      .address address
+      .d-flex.justify-content-between
+        .h5 #{item.fullName}
+        span.text-success(class= item.isActive? '': 'd-none') Default
+      .phone Phone: #{item.phoneNumber}
+      .address Address: #{`${item.address}, ${item.street} street, ${item.distric} distric, ${item.city} city`}
       .row
-        .col-4
-          .btn.btn-black.chooseAddress Choose Address
-        
-        .col-4
-          .btn.btn-black.chooseAddress Edit
-        
-        .col-4
-          .btn.btn-black.chooseAddress Delete
+        if item.isActive
+          .btn.light-green.darken-2.disabled.addressActive
+            |Address is Actived
+        else
+            form(method='POST', action='/cart/active-address')
+              input(type='hidden', value=item.id, name='idAddress')
+              button.btn.grey.chooseAddress(type='submit') Choose Address
+        form(method='POST', action='/cart/delete-address')
+          input(type='hidden', value=item.id, name='idDeleteAddress')
+
+          button.btn.deep-orange.darken-4.chooseAddress(type='submit') Delete
 
 mixin productCart(item)
   li.list-group-item.d-flex.justify-content-between.lh-condensed
@@ -23,6 +29,8 @@ mixin productCart(item)
       small.text-muted Brief description
     div so luong
     span.text-muted $12
+block head
+  link(rel='stylesheet', href='css/cart.css')
 
 block nav
   main.mt-5.pt-4
@@ -32,8 +40,6 @@ block nav
       h2.my-5.h2.text-center Checkout form
       // Grid row
       .row
-        
-        
         // Grid column
         .col-md-7.mb-4
           h4.d-flex.justify-content-between.align-items-center.mb-3
@@ -42,57 +48,67 @@ block nav
           // Card
           .card
             // Card content
-            form.card-body
-              .row
-                .col-12
-                  .h5 User Name
-                  .phone phone
-                  .address address
-                  .row.mt-2.pl-2               
-                    .btn.btn-grey.chooseAddress.px-3.py-2 Choose Address
-                    .btn.btn-green.chooseAddress.px-3.py-2 Edit
-                    .btn.btn-danger.chooseAddress.px-3.py-2 Delete
-              // Grid row
-              #addAddress.mt-5
+            .card-body
+              #dataAddress
+                - const lengthAddress = dataAddress.length
+                if dataAddress.length> 0
+                  - for (let i = 0; i<lengthAddress; i++){
+                    +address(dataAddress[i])
+                  - }
+                  #divShowAddAddress.text-primary.mt-3.mb-5.divShowAddAddress Click here to add new Address
+              
+              form#addAddress(class = lengthAddress ===0 ? '' : 'd-none', method='POST', action='/cart/add-address')
                 .h5 Add new address
-                .row                
+                .row            
                   // Grid column
                   .col-md-6.mb-2
                     // fullName
                     .md-form
-                      input#fullName.form-control(type='text')
+                      input#fullName.form-control(type='text', name='fullName')
                       label(for='fullName') Full Name
 
                   .col-md-6.mb-2
                     // phoneNumber
                     .md-form
-                      input#phoneNumber.form-control(type='text')
+                      input#phoneNumber.form-control(type='text', name='phoneNumber')
                       label(for='phoneNumber') Phone
                 .row
                   .col-md-6.mb2
                     // address
                     .md-form
-                      input#address.form-control(type='text')
+                      input#address.form-control(type='text', name='address')
                       label(for='address') Address
                   .col-md-6.mb2
                     //street
                     .md-form
-                      input#street.form-control(type='text')
+                      input#street.form-control(type='text', name='street')
                       label(for='street') Street
                 .row
                   .col-md-6.mb2
                     // distric
                     .md-form
-                      input#distric.form-control(type='text')
+                      input#distric.form-control(type='text', name='distric')
                       label(for='distric') Distric
                   .col-md-6.mb2
                     //city
                     .md-form
-                      input#city.form-control(type='text')
-                      label(for='city') City  
-                .row.ml-2.mb-5.d-flex.justify-content-end
-                  .btn.btn-primary Cancel
-                  .btn.bgBtnMain Add Address
+                      input#city.form-control(type='text', name='city')
+                      label(for='city') City 
+                .row
+                  .col-md-6.mb2
+                    // kind address
+                    label(for='kindAddress', style="color:#757575") Kind Address                      
+                    
+                    select#kindAddress.custom-select.d-block.w-100(required='', name='kindAddress')
+                      option(value='') Choose...
+                      option(value='personal') Personal
+                      option(value='home') Home
+                      option(value='company') Company
+                      option(value='other') Other
+
+                  .col-md-6.mb2.d-flex.justify-content-end             
+                    
+                    button.btn.bgBtnMain.mt-4(type='submit') Add Address
 
               //- .md-form.input-group.pl-0.mb-5
               //-   .input-group-prepend
@@ -179,12 +195,11 @@ block nav
               //-     input#cc-cvv.form-control(type='text', placeholder='', required='')
               //-     .invalid-feedback
               //-       | Security code required
-              hr.mb-4
-              button.btn.bgBtnMain.btn-lg.btn-block(type='submit') Order
+              
           // /.Card
         // Grid column
         // Grid column
-        .col-md-5.mb-4
+        form.col-md-5.mb-4
           // Heading
           h4.d-flex.justify-content-between.align-items-center.mb-3
             span.text-muted Your cart
@@ -219,12 +234,23 @@ block nav
             li.list-group-item.d-flex.justify-content-between
               span Total (USD)
               strong $20
+            li.list-group-item.d-flex.justify-content-between
+              button.btn.bgBtnMain.btn-lg.btn-block(type='submit') Order
           // Cart
           // Promo code
-          form.card.p-2
-            .input-group
-              input.form-control(type='text', placeholder='Promo code', aria-label="Recipient's username", aria-describedby='basic-addon2')
-              .input-group-append
-                button.btn.btn-secondary.btn-md.waves-effect.m-0(type='button') Redeem
+          //- form.card.p-2
+          //-   .input-group
+          //-     input.form-control(type='text', placeholder='Promo code', aria-label="Recipient's username", aria-describedby='basic-addon2')
+          //-     .input-group-append
+          //-       button.btn.btn-secondary.btn-md.waves-effect.m-0(type='button') Redeem
 
 block footer
+  script(type='text/javascript').
+    const divOpenAddNewAddress = document.getElementById('divShowAddAddress');
+    const formAddAddress = document.getElementById('addAddress');
+
+    divOpenAddNewAddress.addEventListener('click', (e) => {
+      formAddAddress.classList.remove('d-none');
+      formAddAddress.classList.add('mt-5')
+      divOpenAddNewAddress.classList.add('d-none');
+    })
