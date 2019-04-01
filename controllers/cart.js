@@ -195,12 +195,14 @@ module.exports.postOrder = async (req, res, next) => {
 
     try {
         const cartItems = res.locals.cartItems;
+        
+        const lengthItemOnCart = cartItems.length;
 
-        const updateProduct =  await cartItems.map(async item => {
-            const productQuantityOld = item.productQuantity;
-            const productQuantityNew = item.CartItem.quantity;
+        for (let i = 0; i< lengthItemOnCart; i++){
+            const productQuantityOld = cartItems[i].productQuantity;
+            const productQuantityNew = cartItems[i].CartItem.quantity;
             const productQuantityUpdate = productQuantityOld - productQuantityNew;
-            const productId = item.id;
+            const productId = cartItems[i].id;
             const dataProduct = await db.Product.findOne({
                 where: {
                     id: productId
@@ -209,9 +211,20 @@ module.exports.postOrder = async (req, res, next) => {
             const dataProductUpdate = await dataProduct.update({
                 productQuantity: productQuantityUpdate
             })
-            return dataProductUpdate;
+        }
+
+        // remove items on cart
+
+        const removeItemsOnCart = await db.CartItem.destroy({
+            where: {
+                userId: res.locals.userId
+            }
         })
-        res.json(updateProduct);
+        
+        res.render('cartOderDone', {
+            title: 'Oder done!',
+            showFooter: false
+        })
 
     } catch (error) {
         throw Error(error.message);

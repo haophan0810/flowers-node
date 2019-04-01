@@ -46,10 +46,10 @@ mixin product(item)
                         |(#{item.totalUserVote === 1 ? `${item.totalUserVote} review` : `${item.totalUserVote} reviews`})
                 p.card-text
                     if isActiveProductDiscount
-                        span.productCostDiscount.mr-2.cost #{costDiscount} $
-                        span.productCostBase.productCostBase--line-through #{costBase} $
+                        span.productCostDiscount.mr-2.cost $#{costDiscount}
+                        span.productCostBase.productCostBase--line-through $#{costBase}
                     else     
-                        span.productCostBase.cost #{costBase} $
+                        span.productCostBase.cost $#{costBase}
 
 block head
     link(rel='stylesheet', href='../css/index.css')

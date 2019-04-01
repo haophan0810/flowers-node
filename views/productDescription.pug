@@ -45,10 +45,10 @@ mixin product(item)
                     |(#{item.totalUserVote === 1 ? `${item.totalUserVote} review` : `${item.totalUserVote} reviews`})
                 p.card-text
                     if lengthProductDiscount>0 && isActiveProductDiscount 
-                      span.productCostDiscount.mr-2.cost #{costDiscount} $
-                      span.productCostBase.productCostBase--line-through #{costBase} $
+                      span.productCostDiscount.mr-2.cost $#{costDiscount}
+                      span.productCostBase.productCostBase--line-through $#{costBase}
                     else     
-                      span.productCostBase.cost #{costBase} $
+                      span.productCostBase.cost $#{costBase}
 mixin progressBarRate(level, percentLevel)
   .itemRate.d-flex.alignItemCenter
     .ratingNum.mr-3
