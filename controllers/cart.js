@@ -195,10 +195,10 @@ module.exports.postOrder = async (req, res, next) => {
 
     try {
         const cartItems = res.locals.cartItems;
-        
+
         const lengthItemOnCart = cartItems.length;
 
-        for (let i = 0; i< lengthItemOnCart; i++){
+        for (let i = 0; i < lengthItemOnCart; i++) {
             const productQuantityOld = cartItems[i].productQuantity;
             const productQuantityNew = cartItems[i].CartItem.quantity;
             const productQuantityUpdate = productQuantityOld - productQuantityNew;
@@ -220,10 +220,13 @@ module.exports.postOrder = async (req, res, next) => {
                 userId: res.locals.userId
             }
         })
-        
+
         res.render('cartOderDone', {
             title: 'Oder done!',
-            showFooter: false
+            showFooter: false,
+            loggedIn: res.locals.loggedIn,
+            dataUser: res.locals.dataUser,
+            cartItems: []
         })
 
     } catch (error) {
