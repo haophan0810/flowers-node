@@ -66,7 +66,8 @@ module.exports.authUser = async (req, res, next) => {
       next();
 
     }else {
-      const url = req.originalUrl;
+      const url = req.body.urlProduct || req.originalUrl;
+      
       const urlRedirect = url ? url : '/';
       return res.status(401).redirect(`/login?path=${urlRedirect}`);
     }
