@@ -79,7 +79,7 @@ mixin review(item)
   .col-lg-9.p-4
     .h5.commentTitle #{reviewTitle}
     span.commentContent #{reviewContent}
-    .h6 #{dateCreated}
+    //- .h6 #{dateCreated}
 
 block head
     link(rel='stylesheet', href='../../css/index.css')
@@ -145,7 +145,7 @@ block nav
               span.ml-1(class= product[0].totalUserVote? '': 'd-none')
                 |(#{product[0].totalUserVote === 1 ? `${product[0].totalUserVote} review` : `${product[0].totalUserVote} reviews`})
             p.mb-5 #{product[0].productDescription}
-            form.d-flex.justify-content-left
+            form(action='/cart/add-item-to-cart', method='POST').d-flex.justify-content-left
               // Default input
               input#productQuantity.form-control(
                 type='number'
@@ -155,10 +155,13 @@ block nav
                 is-discount=isActiveProductDiscount.toString()
                 min='1'
                 max=productQuantity
-                name='productQuantity')
+                name='quantity')
               input(type="hidden", value=idProduct, name='productId')
               input#inputTotalCost(type="hidden"
                 value=isActiveProductDiscount? costDiscount : costBase, name='price')
+              input#inputPriceOrigin(type='hidden', value=costBase, name='priceOrigin')
+              input(type='hidden', value=discountValue, name='discount')
+              input(type='hidden', value=path, name='urlProduct')
               input(type="hidden"
                 value= loggedIn ?  userId : 'guest'
                 name=loggedIn?  'userId' : 'guest' )
@@ -291,6 +294,7 @@ block nav
                   a.page-link(href=`${path}?reviewPage=${indexReview+1}`) Next  
 block footer
   script(type='text/javascript').
+    const inputPriceOriginDOM = document.getElementById('inputPriceOrigin');
     const inputTotalCostDOM = document.getElementById('inputTotalCost');
     const inputProductQuantity = document.getElementById('productQuantity');
     const isDiscount = inputProductQuantity.getAttribute('is-discount');
@@ -319,12 +323,15 @@ block footer
 
         costBaseDOM.innerHTML = `${totalCost}$`;
         costDiscountDOM.innerHTML = `${totalDiscount}$`;
-        savingMoneyDOM.innerHTML = savingMoney
-        inputTotalCostDOM.value = totalDiscount
+        savingMoneyDOM.innerHTML = savingMoney;
+        inputTotalCostDOM.value = totalDiscount;
+        inputPriceOriginDOM.value = totalCost;
       }else {
         const totalCost = value * unitBase;
         costBaseDOM.innerHTML = `${totalCost}$`;
         inputTotalCostDOM.value = totalCost;
+        inputPriceOriginDOM.value = totalCost;
+
       }
       
       

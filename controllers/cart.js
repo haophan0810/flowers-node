@@ -26,11 +26,11 @@ module.exports.getCart = async (req, res, next) => {
         const cartItems = res.locals.cartItems;
         const lengthProductCart = cartItems.length;
         let totalPrice = 0;
-        for (let i = 0; i< lengthProductCart; i++) {
+        for (let i = 0; i < lengthProductCart; i++) {
             const priceEachProduct = cartItems[i].CartItem.price;
             totalPrice += priceEachProduct;
         }
-        
+
         res.render('cart', {
             path: req.originalUrl,
             loggedIn: res.locals.loggedIn,
@@ -93,6 +93,8 @@ module.exports.postActiveAddress = async (req, res, next) => {
                 id: idAddress
             }
         })
+        //update all
+
         const updateAddressRest = await db.UserAddress.update({
             isActive: false
         }, {
@@ -114,7 +116,7 @@ module.exports.postActiveAddress = async (req, res, next) => {
 module.exports.postDeleteAddress = async (req, res, next) => {
     try {
         const idAddress = parseInt(req.body.idDeleteAddress);
-        
+
         const deleteAddressResponse = await db.UserAddress.destroy({
             where: {
                 id: idAddress
@@ -127,4 +129,93 @@ module.exports.postDeleteAddress = async (req, res, next) => {
         throw Error(error.message);
 
     }
+}
+
+
+module.exports.postAddItemToCart = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        const {
+            productId,
+            userId,
+            price,
+            priceOrigin,
+            quantity,
+            urlProduct,
+            discount
+        } = req.body;
+
+        //Check for product has this cart. if exist -> message
+        // console.log(res.locals.cartItems);
+        const cartItems = res.locals.cartItems;
+        const isProductCurrentOnCart = cartItems.find(product => product.id === parseInt(productId));
+        // console.log('isProductCurrentOnCart', isProductCurrentOnCart);
+
+        //add
+        if (isProductCurrentOnCart === undefined) {
+            const dataItem = {
+                productId: parseInt(productId),
+                userId: res.locals.userId,
+                price: parseFloat(price),
+                priceOrigin: parseFloat(priceOrigin),
+                quantity: parseInt(quantity),
+                urlProduct,
+                discount: parseInt(discount)
+            };
+
+            const addItemToCartResponse = await db.CartItem.create(dataItem);
+        } else {
+            // update
+            const dataItemUpdate = {
+                price: parseFloat(price),
+                priceOrigin: parseFloat(priceOrigin),
+                quantity: parseInt(quantity),
+                discount: parseInt(discount)
+            }
+
+            const updateItemOnCartResponse = await db.CartItem.update(dataItemUpdate, {
+                where: {
+                    userId: res.locals.userId,
+                    productId: parseInt(productId)
+                }
+            })
+        }
+
+        res.redirect(urlProduct);
+
+    } catch (error) {
+        throw Error(error.message);
+
+    }
+
+}
+
+
+module.exports.postOrder = async (req, res, next) => {
+
+    try {
+        const cartItems = res.locals.cartItems;
+
+        const updateProduct =  await cartItems.map(async item => {
+            const productQuantityOld = item.productQuantity;
+            const productQuantityNew = item.CartItem.quantity;
+            const productQuantityUpdate = productQuantityOld - productQuantityNew;
+            const productId = item.id;
+            const dataProduct = await db.Product.findOne({
+                where: {
+                    id: productId
+                }
+            })
+            const dataProductUpdate = await dataProduct.update({
+                productQuantity: productQuantityUpdate
+            })
+            return dataProductUpdate;
+        })
+        res.json(updateProduct);
+
+    } catch (error) {
+        throw Error(error.message);
+
+    }
+
 }

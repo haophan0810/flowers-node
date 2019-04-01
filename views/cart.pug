@@ -26,7 +26,7 @@ mixin productCart(item)
   
     li.list-group-item.d-flex.justify-content-between.lh-condensed
       .col-6
-        a(jref=item.CartItem.urlProduct).d-block.h6.my-0 #{item.productName}
+        a.linkItemProduct(href=item.CartItem.urlProduct).d-block.h6.my-0 #{item.productName}
         if item.CartItem.discount
           small.badge.red.mr-1 -#{item.CartItem.discount}%
       .col-3.text-center
@@ -34,7 +34,7 @@ mixin productCart(item)
         small #{item.CartItem.quantity}
       .col-3.text-right
         .h6.my-0 $#{item.CartItem.price}
-        if item.CartItem.priceOrigin
+        if item.CartItem.discount
           small.line-throught $#{item.CartItem.priceOrigin}
 block head
   link(rel='stylesheet', href='css/cart.css')
@@ -118,7 +118,7 @@ block nav
                     button.btn.bgBtnMain.mt-4(type='submit') Add Address
 
         
-        form.col-md-5.mb-4          
+        .col-md-5.mb-4          
             // Heading
             if lengthProductCart === 0
               .h4.text-center No Products of your cart
@@ -138,10 +138,13 @@ block nav
                 //-     small EXAMPLECODE
                 //-   span.text-success -$5
                 li.list-group-item.d-flex.justify-content-between
-                  span Total (USD)
-                  strong $#{totalPrice}
+                  .col-6
+                    .h5 Total (USD)
+                  .col-3.text-right
+                    .h5 $#{totalPrice}
                 if lengthProductCart> 0
-                  li.list-group-item.d-flex.justify-content-between
+                  
+                  form(action="/cart/order", method="post").list-group-item.d-flex.justify-content-between
                     button.btn.bgBtnMain.btn-lg.btn-block(type='submit') Order
           
           

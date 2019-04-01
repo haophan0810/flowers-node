@@ -11,4 +11,10 @@ router.post('/add-address', authUserMiddleWareController.authUser, cartControlle
 router.post('/active-address', authUserMiddleWareController.authUser, cartController.postActiveAddress);
 
 router.post('/delete-address', authUserMiddleWareController.authUser, cartController.postDeleteAddress);
+
+router.post('/add-item-to-cart', authUserMiddleWareController.authUser, cartController.postAddItemToCart);
+
+router.post('/order', authUserMiddleWareController.authUser, cartController.postOrder);
+
+
 module.exports = router;
