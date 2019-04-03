@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
 const Sequelize = require('sequelize');
 const {
@@ -26,27 +25,28 @@ module.exports.getLogin = (req, res, next) => {
 
 module.exports.postLogin = async (req, res, next) => {
     // res.setHeader('Set-Cookie', 'loggedIn=true');
-    const {
-        email,
-        password,
-        pathQuery
-    } = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        console.log(errors.array());
-        return res.status(422).render('login', {
-            title: 'login',
-            validationErrors: errors.array(),
-            oldData: {
-                email: email,
-                password: password
-            }
-        })
-    }
+    
 
     // res.cookie('loggedIn', 'true');
     
     try {
+        const {
+            email,
+            password,
+            pathQuery
+        } = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors.array());
+            return res.status(422).render('login', {
+                title: 'login',
+                validationErrors: errors.array(),
+                oldData: {
+                    email: email,
+                    password: password
+                }
+            })
+        }
         console.log(req.params)
         
         const response = await db.User.findOne({

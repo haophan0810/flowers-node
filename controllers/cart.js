@@ -1,3 +1,6 @@
+const {
+    validationResult
+} = require('express-validator/check');
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -31,6 +34,27 @@ module.exports.getCart = async (req, res, next) => {
             totalPrice += priceEachProduct;
         }
 
+        const oldData = {
+            fullName: req.query.fullName ? req.query.fullName : '',
+            phoneNumber: req.query.phoneNumber ? req.query.phoneNumber : '',
+            address: req.query.address ? req.query.address : '',
+            street: req.query.street ? req.query.street : '',
+            distric: req.query.distric ? req.query.distric : '',
+            city: req.query.city ? req.query.city : '',
+            kindAddress: req.query.kindAddress ? req.query.kindAddress : ''
+
+        }
+        console.log('oldData', oldData);
+        const errWhenAddAddress = {
+            validFullName: req.query.validFullName ? req.query.validFullName : '',
+            validPhoneNumber: req.query.validPhoneNumber ? req.query.validPhoneNumber : '',
+            validAddress: req.query.validAddress ? req.query.validAddress : '',
+            validStreet: req.query.validStreet ? req.query.validStreet : '',
+            validDistric: req.query.validDistric ? req.query.validDistric : '',
+            validCity: req.query.validCity ? req.query.validCity : '',
+            validKindAddress: req.query.validKindAddress ? req.query.validKindAddress : ''
+        }
+
         res.render('cart', {
             path: req.originalUrl,
             loggedIn: res.locals.loggedIn,
@@ -39,7 +63,9 @@ module.exports.getCart = async (req, res, next) => {
             title: `Cart of ${res.locals.dataUser[0].username}`,
             dataAddress: dataAddress,
             lengthProductCart: lengthProductCart,
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            oldData: oldData,
+            errWhenAddAddress: errWhenAddAddress
         });
 
     } catch (error) {
@@ -59,6 +85,45 @@ module.exports.postAddAddress = async (req, res, next) => {
             street,
             phoneNumber
         } = req.body
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors.array());
+            const validationErrors = errors.array();
+
+            const validFullName = validationErrors.find(e => e.param === 'fullName')
+            const validPhoneNumber = validationErrors.find(e => e.param === 'phoneNumber')
+            const validAddress = validationErrors.find(e => e.param === 'address');
+            const validStreet = validationErrors.find(e => e.param === 'street');
+            const validDistric = validationErrors.find(e => e.param === 'distric');
+            const validCity = validationErrors.find(e => e.param === 'city');
+            const validKindAddress = validationErrors.find(e => e.param === 'kindAddress');
+
+            const oldDataFullName = fullName ? `fullName=${fullName}`: '';
+            const oldDataPhoneNumber = phoneNumber ? `phoneNumber=${phoneNumber}`: '';
+            const oldDataAddress = address ? `address=${address}`: '';
+            const oldDataStreet = street ? `street=${street}`: '';
+            const oldDataDistric = distric ? `distric=${distric}`: '';
+            const oldDataCity = city ? `city=${city}`: '';
+            const oldDataKindAddress = kindAddress ? `kindAddress=${kindAddress}`: '';
+            
+            const queryOldData = `${oldDataFullName}&${oldDataPhoneNumber}&${oldDataAddress}&${oldDataStreet}&${oldDataDistric}&${oldDataCity}`;
+            console.log('qrodata', queryOldData);
+            
+            const fullNameErr = validFullName ? `validFullName=${validFullName.msg}` : ''
+            const phoneNumberErr = validPhoneNumber ? `validPhoneNumber=${validPhoneNumber.msg}` : ''
+            const addressErr = validAddress ? `validAddress=${validAddress.msg}` : ''
+            const streetErr = validStreet ? `validStreet=${validStreet.msg}` : ''
+            const districErr = validDistric ? `validDistric=${validDistric.msg}` : ''
+            const cityErr = validCity ? `validCity=${validCity.msg}` : '';
+            const kindAddressErr = validKindAddress ? `validKindAddress=${validKindAddress.msg}` : '';
+
+            const errMsgInput = `${fullNameErr}&${phoneNumberErr}&${addressErr}&${streetErr}&${districErr}&${cityErr}`
+
+            const fullPath =`/cart?${queryOldData}&${errMsgInput}`;
+
+            return res.redirect(fullPath)
+
+        }
 
         const dataAddress = {
             userId: res.locals.userId,

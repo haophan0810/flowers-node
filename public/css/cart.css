@@ -9,3 +9,30 @@
     color: #a4c078;
 }
 
+.validate {
+    border: 1px solid #e08484;
+  }
+  
+  .validate:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #e08484;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(230, 116, 116, 0.25)
+  }
+  
+  .errorValidate {
+    font-size: 0.8rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+    line-height: 0;
+  }
+  
+  .errorActive {
+    padding: var(--input-padding-y) var(--input-padding-x);
+    visibility: visible;
+    opacity: 1;
+    color: #e08484;
+    line-height: 1rem;
+  }

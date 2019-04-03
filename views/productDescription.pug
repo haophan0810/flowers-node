@@ -2,9 +2,9 @@ extends includes/layout.pug
 
 
 mixin product(item)
-    - const nameProductSlug = item.productNameSlug
+    - const productNameSlug = item.productNameSlug
     - const nameProduct = item.productName
-    - const idProduct = item.id
+    - const productId = item.id
     - const imageSrc = item.ProductImages[0].imageSrc
     - const nameImageProduct = item.ProductImages[0].imageName
     - const lengthProductDiscount = item.ProductDiscounts.length
@@ -20,13 +20,13 @@ mixin product(item)
     .col-sm-12.col-md-6.col-lg-3.mb-5.d-flex.align-items-stretch       
         .card
             .card-img-top.product__relative
-                a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
+                a.card-link(href=`/product/${productNameSlug}.${productId}.${categoryId}.html`)
                     img.productImg(src=imageSrc, alt=item.ProductImages.imageName)
                     if lengthProductDiscount>0 && isActiveProductDiscount
                         .lable-promotion
                             .btn.btn-danger.btn--sale -#{discountValue} %
             .card-body
-                a.card-link(href=`/product/${nameProductSlug}.${idProduct}.${idCategory}.html`)
+                a.card-link(href=`/product/${productNameSlug}.${productId}.${categoryId}.html`)
                     h5.card-title.card--title #{nameProduct}
                 p.card-text
                   - for(let i = 0 ; i<productStar; i++){
@@ -156,7 +156,7 @@ block nav
                 min='1'
                 max=productQuantity
                 name='quantity')
-              input(type="hidden", value=idProduct, name='productId')
+              input(type="hidden", value=productId, name='productId')
               input#inputTotalCost(type="hidden"
                 value=isActiveProductDiscount? costDiscount : costBase, name='price')
               input#inputPriceOrigin(type='hidden', value=costBase, name='priceOrigin')
@@ -227,36 +227,45 @@ block nav
           Send Reviews
           **************************************************
         .col-lg-4
+
           if loggedIn          
             .reviewLogged.d-flex.justify-content-end
-              form.text-center.w-100.px-3(
+              form#formReview.w-100.px-3(
                 action='/product/product-description-review'
                 method='POST'
 
               )
                 input#inputSendReviewPath(type="hidden" name='pathProduct' value=path)
-                input#inputSendReviewProductId(type="hidden" name='productId' value=idProduct)
+                input#inputSendReviewProductId(type="hidden" name='productId' value=productId)
 
                 .h4.text-center.mb-3 Send Review
-                .voteReview.d-flex
+                .voteReview
                   span.mr-3 vote
-                  p#starVote
-                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='1')
-                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='2')
-                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='3')
-                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='4')
-                    i.fas.fa-star.popovers.colorStarDisable.starVote(data-value='5')
-                    input#inputRate(type="hidden" name='rate' value='')
-                lable.d-flex(for='reviewTitle') Title
-                input#commentTitle.form-control.mb-4(type='text'
-                  placeholder='Title review'
-                  name='reviewTitle')
-                
-                .form-group
-                  lable.d-flex(for='reviewContent') Review
-                  textarea#reviewContent.form-control.rounded-0(rows='3'
-                  placeholder='Review content'
-                  name='reviewContent')
+                  span#starVote
+                    - for(let i = 0 ; i<oldData.rate; i++){
+                      i.fas.fa-star.popovers.colorStarActive.starVote(data-value=`${i+1}`)
+                    - }
+                    - for(let i = oldData.rate ; i<5; i++){
+                      i.fas.fa-star.popovers.colorStarDisable.starVote(data-value=`${i+1}`)
+                    - }
+                    
+                    input#inputRate(type="hidden" name='rate' value=oldData.rate)
+                  if errWhenSendReview.validRate
+                    .errorValidate.errorActive 
+                      |#{errWhenSendReview.validRate}
+                .md-form
+                  input#commentTitle.form-control(type='text', name='reviewTitle', value=oldData.titleReview)
+                  label(for='commentTitle') Title
+                  if errWhenSendReview.validTitle
+                    .errorValidate.errorActive 
+                      |#{errWhenSendReview.validTitle}          
+                .md-form
+                  lable(for='reviewContent') Review
+                  textarea#reviewContent.form-control.rounded-0.p-2(rows='3', name='reviewContent') #{oldData.contentReview}
+                  if errWhenSendReview.validContentTitle
+                    .errorValidate.errorActive 
+                      |#{errWhenSendReview.validContentTitle}
+
                 button.btn.btn-info.btn-block.my-4.bgBtnMain(type='submit') Send Review
           else
             .reviewsNoLogin.text-center
@@ -298,6 +307,7 @@ block footer
     const inputTotalCostDOM = document.getElementById('inputTotalCost');
     const inputProductQuantity = document.getElementById('productQuantity');
     const isDiscount = inputProductQuantity.getAttribute('is-discount');
+
     let costBaseDOM, costDiscountDOM, savingMoneyDOM;
     let unitBase, unitDiscount
     if(isDiscount === 'true') {
@@ -333,8 +343,6 @@ block footer
         inputPriceOriginDOM.value = totalCost;
 
       }
-      
-      
       
     })
     /*
@@ -382,3 +390,41 @@ block footer
     */
 
     divStarVote.addEventListener('click', handleRate)
+
+
+    /* 
+
+    Validation
+
+    */
+
+    //- const formReview = document.getElementById('formReview');
+    //- const errRate = document.getElementById('errorRate');
+    //- const errTitle = document.getElementById('errorTitle');
+    //- const errContent = document.getElementById('errorContent');
+    //- const commentTitle = document.getElementById('commentTitle');
+
+    //- formReview.addEventListener('submit', (event) => {
+    //-   const inputRateValue = inputRate.value;  
+    //-   if(!inputRateValue){
+    //-     errRate.classList.add('errorActive');
+    //-     errRate.innerHTML = 'You need to rate';
+    //-     even.preventDefault();
+    //-   }else {
+    //-     errRate.classList.remove('errorActive');
+
+    //-   }
+
+    //-   const inputTitleValue = commentTitle.value;
+    //-   const lengthInputTitle = inputTitleValue.length;
+    //-   if(lengthInputTitle<6 || lengthInputTitle >30){
+    //-     errTitle.classList.add('errorActive');
+    //-     errTitle.innerHTML = 'The Title must be 6- 30 characters long'
+
+    //-   }else {
+    //-     errTitle.classList.remove('errorActive');
+
+    //-   }
+
+      
+    

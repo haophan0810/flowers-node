@@ -71,36 +71,54 @@ block nav
                   .col-md-6.mb-2
                     // fullName
                     .md-form
-                      input#fullName.form-control(type='text', name='fullName')
-                      label(for='fullName') Full Name
+                      input#fullName.form-control(type='text', name='fullName', value=oldData.fullName)
+                      label(for='fullName') Full Name  
+                      if errWhenAddAddress.validFullName                  
+                        .errorValidate.errorActive 
+                          |#{errWhenAddAddress.validFullName}
 
                   .col-md-6.mb-2
                     // phoneNumber
                     .md-form
-                      input#phoneNumber.form-control(type='text', name='phoneNumber')
+                      input#phoneNumber.form-control(type='text', name='phoneNumber', value=oldData.phoneNumber)
                       label(for='phoneNumber') Phone
+                      if errWhenAddAddress.validPhoneNumber                  
+                        .errorValidate.errorActive 
+                          |#{errWhenAddAddress.validPhoneNumber}
                 .row
                   .col-md-6.mb2
                     // address
                     .md-form
-                      input#address.form-control(type='text', name='address')
+                      input#address.form-control(type='text', name='address', value=oldData.address)
                       label(for='address') Address
+                      if errWhenAddAddress.validAddress                  
+                        .errorValidate.errorActive 
+                          |#{errWhenAddAddress.validAddress}
                   .col-md-6.mb2
                     //street
                     .md-form
-                      input#street.form-control(type='text', name='street')
+                      input#street.form-control(type='text', name='street', value=oldData.street)
                       label(for='street') Street
+                      if errWhenAddAddress.validStreet                  
+                        .errorValidate.errorActive 
+                          |#{errWhenAddAddress.validStreet}
                 .row
                   .col-md-6.mb2
                     // distric
                     .md-form
-                      input#distric.form-control(type='text', name='distric')
+                      input#distric.form-control(type='text', name='distric', value=oldData.distric)
                       label(for='distric') Distric
+                      if errWhenAddAddress.validDistric                  
+                        .errorValidate.errorActive 
+                          |#{errWhenAddAddress.validDistric}
                   .col-md-6.mb2
                     //city
                     .md-form
-                      input#city.form-control(type='text', name='city')
-                      label(for='city') City 
+                      input#city.form-control(type='text', name='city', value=oldData.city)
+                      label(for='city') City
+                      if errWhenAddAddress.validCity                  
+                        .errorValidate.errorActive 
+                          |#{errWhenAddAddress.validCity} 
                 .row
                   .col-md-6.mb2
                     // kind address
@@ -112,6 +130,7 @@ block nav
                       option(value='home') Home
                       option(value='company') Company
                       option(value='other') Other
+                    
 
                   .col-md-6.mb2.d-flex.justify-content-end             
                     
