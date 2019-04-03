@@ -26,21 +26,7 @@ exports.getRegister = (req, res, next) => {
 
 exports.postRegister = async (req, res, next) => {
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        console.log(errors.array());
-        return res.status(422).render('register', {
-            title: 'register fail',
-            validationErrors: errors.array(),
-            oldData: {
-                username: username,
-                email: email,
-                password: password,
-                confirmPassword: confirmPassword
-            },
-            validRegister: false
-        })
-    }
+
     try {
         const {
             username,
@@ -49,6 +35,21 @@ exports.postRegister = async (req, res, next) => {
             confirmPassword,
             pathRegister
         } = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors.array());
+            return res.status(422).render('register', {
+                title: 'register fail',
+                validationErrors: errors.array(),
+                oldData: {
+                    username: username,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword
+                },
+                validRegister: false
+            })
+        }
         const checkUserExist = await db.User.findAll({
             where: {
                 [Op.or]: [{
