@@ -1,19 +1,58 @@
-## Mockup Database
-Em mockup sẵn các table rồi
+# Flowers Shop (NodeJs + PostgreSQL)
+
+## 1. Quick install
+* Clone this project
+* `npm install`
+* `npm start` (if you install nodemon, can use `npm run dev`)
+* config database
+* Project use `'Sequelize-cli'` so you must use command `sequelize db:migrate` for create databases
+
+## 2. Database Design
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554389414/flowers-shop_3.png "Database")
+
+## 3. Demos UI
+* Home page
+* Link: [flowers-shop.herokuapp.com](https://flowers-shop.herokuapp.com "Flowera shop home page")
 
 
-[Table Categories](https://www.mockaroo.com/667e02f0)
-Categories n:n với Products
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554390314/2019-04-04_220436.png "Database")
 
-[Table product_categories](https://www.mockaroo.com/fc314ab0)
-Bảng chứa 2 khóa của Products và Categories
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554390314/2019-04-04_220448.png "Database")
 
-[Table Products](https://www.mockaroo.com/9e78e580)
+* All Products
+* Link: [flowers-shop.herokuapp.com/products](https://flowers-shop.herokuapp.com/products "All Products")
 
-2 bảng dưới này không cần quan tâm( em cũng thiết kế SAI)
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554390529/2019-04-04_220807.png "All products")
 
-[Table Promotions](https://www.mockaroo.com/49434cf0)
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554390530/2019-04-04_220827.png "All products")
 
-[Table discount_codes](https://www.mockaroo.com/a9d3c7b0)
+* Products of category
+* Link: [Category Anniversary](https://flowers-shop.herokuapp.com/category/anniversary.5.html "Category Anniversary")
 
-Hiện tại em mới viết get ('/'). Và đã lấy ra được và hiển thị được rồi. Cái chính là em muốn thiết kế tốt 1:1, 1:n, n:n và join các bảng
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554390982/2019-04-04_221421.png "Anniversary")
+
+* Product Description
+* Link [Product Description](https://flowers-shop.herokuapp.com/product/rochester-flowers.35.5.html)
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391173/2019-04-04_221738.png "Product Description")
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391173/2019-04-04_221748.png "Product Description")
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391174/2019-04-04_221758.png "Product Description")
+
+* Login
+* Link [Login](https://flowers-shop.herokuapp.com/login)
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391291/2019-04-04_222102.png "Login")
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391291/2019-04-04_222113.png "Login Fail")
+
+* Register
+* Link [Register](https://flowers-shop.herokuapp.com/register "register")
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391557/2019-04-04_222518.png "Login Fail")
+
+* cart
+* Link [cart](https://flowers-shop.herokuapp.com/cart)
+
+![alt text](https://res.cloudinary.com/haophan/image/upload/v1554391685/2019-04-04_222713.png "cart")

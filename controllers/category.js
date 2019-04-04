@@ -38,7 +38,9 @@ exports.getProductOfCategory = async (req, res, next) => {
         }
         const categoryName = dataProducts[0].Categories[0].categoryName;
         // res.status(200).json(dataProducts[0].Categories[0].categoryName);
-        
+        const urlOrigin = req.originalUrl;
+        const pathOrigin = urlOrigin.split('?');
+        console.log(pathOrigin)
         res.render('products', {
             maxPage: Math.ceil(dataProducts.length / 16),
             title: indexPage ? `All products of ${categoryName} | page ${indexPage}` : 'All products',
@@ -48,7 +50,8 @@ exports.getProductOfCategory = async (req, res, next) => {
             path: req.originalUrl,
             loggedIn: res.locals.loggedIn,
             dataUser: res.locals.dataUser,
-            cartItems: res.locals.cartItems
+            cartItems: res.locals.cartItems,
+            pathOrigin: pathOrigin[0]
         })
     } catch (error) {
         

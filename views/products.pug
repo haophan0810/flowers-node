@@ -57,7 +57,7 @@ block head
 
 
 block nav  
-    - let currentPage = (indexPage === 1)? 2:indexPage
+    
     main.container.products#products
         h2.product-title.mb-5.text-center #{titleCategory}
             .line-break.text-center
@@ -69,18 +69,18 @@ block nav
     nav.container.d-flex.justify-content-end(aria-label='Page navigation example')
         ul.pagination
             li.page-item(class= indexPage<2? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${indexPage-1}`) Previous
+                a.page-link(href=`${pathOrigin}?page=${indexPage-1}`) Previous
 
             li.page-item(class= maxPage===1 ? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${currentPage-1}`, class= indexPage===1? 'page-item--active' : '') #{currentPage-1}
+                a.page-link.page-item--active(href=`${pathOrigin}?page=${indexPage}`) #{indexPage}
 
-            li.page-item(class= indexPage>maxPage ? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${currentPage}`, class= indexPage===1? '' : 'page-item--active') #{currentPage}
+            li.page-item(class= indexPage+1>maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${pathOrigin}?page=${indexPage+1}`) #{indexPage+1}
                 
-            li.page-item(class= indexPage>maxPage-1 ? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${currentPage+1}`) #{currentPage+1}
+            li.page-item(class= indexPage+2>maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${pathOrigin}?page=${indexPage+2}`) #{indexPage+2}
                 
-            li.page-item(class= indexPage>maxPage-2 ? 'page-item--hidden': '')
-                a.page-link(href=`/products?page=${indexPage+1}`) Next
+            li.page-item(class= indexPage>=maxPage ? 'page-item--hidden': '')
+                a.page-link(href=`${pathOrigin}?page=${indexPage+1}`) Next
 
 block footer
