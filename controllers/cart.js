@@ -288,7 +288,7 @@ module.exports.postOrder = async (req, res, next) => {
 
         res.render('cartOderDone', {
             title: 'Oder done!',
-            showFooter: false,
+            hiddenFooter: true,
             loggedIn: res.locals.loggedIn,
             dataUser: res.locals.dataUser,
             cartItems: []
